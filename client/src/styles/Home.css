@@ -1,0 +1,183 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+  }
+  .hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .hero_img {
+    width: 50%;
+    margin-top: -24vh;
+  }
+  .hero_img img {
+    width: 100%;
+    left: left;
+    margin-top: 0vh;
+    margin-left: -12px;
+    filter: drop-shadow(4px 4px 8px #999999);
+  }
+  .hero_text {
+    width: 43%;
+    text-align: center;
+  }
+  .hero_text h5 {
+    font-size: 31px;
+    margin-top: -114px;
+  }
+  .about {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .about_text h2,
+  h5 {
+    text-align: center;
+    font-weight: bold;
+  }
+  .about_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .reg img {
+    width: 20%;
+    filter: drop-shadow(9px 32px 6px grey);
+  }
+  .reg h6 {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  .reg {
+    text-align: center;
+  }
+  .contact {
+    display: flex;
+    height: 100vh;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 49px;
+  }
+  
+  .form-name {
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 8px 8px 14px grey;
+    margin-left: 120px;
+  }
+  input[type="text"],
+  [type="email"] {
+    margin-left: 26px;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+    color: black;
+  }
+  textarea {
+    margin-left: 10px;
+    border: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+  }
+  input[type="text"],
+  input[type="email"],
+  textarea:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid black;
+    background-color: transparent;
+  }
+  .input {
+    margin-top: 30px;
+  }
+  label {
+    font-weight: bold;
+  }
+  button {
+    padding: 9px;
+    height: 49px;
+    margin-top: 40px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  center {
+    margin-top: 30px;
+  }
+  label {
+    margin-top: 20px;
+  }
+  .contact img {
+    width: 34%;
+    filter: drop-shadow(9px 32px 6px grey);
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: aliceblue;
+  }
+  .header h1 {
+    font-weight: bold;
+    color: purple;
+    background-color: aliceblue;
+    padding: 0 10px;
+  }
+  .main {
+    margin-top: 70px;
+  }
+  .dashboard {
+    display: flex;
+    justify-content: space-between;
+    height: 70%;
+  }
+  .left-side {
+    color: aliceblue;
+    background-color: purple;
+    width: 15%;
+    height: 600px;
+  }
+  .right-side {
+    color: purple;
+    background-color: aliceblue;
+  }
+  button ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 100%; /* Ensure the ul takes the full height of its parent */
+    padding: 0; /* Remove default padding */
+    margin: 0;
+    list-style: none;
+  }
+  li {
+    list-style: none;
+  }
+  ul{
+      display: block;
+      align-items: center;
+      justify-content: center;
+  }
+   ul li button {
+    list-style: none;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0; /* Add margin to space out the list items vertically */
+  }
+  .right-side {
+    background-color: aliceblue;
+    color: purple;
+    width: 85%;
+  }
+  

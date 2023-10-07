@@ -1,0 +1,129 @@
+
+.box{
+    display:flex;
+
+}
+.box-left{
+    width:48%;
+    display: block;
+}
+.box-right{
+    margin-top: 38px;
+    display:block;
+}
+.user-detail{
+    height: 48vh;
+    background-color: rgba(203, 210, 255, 1);
+    margin: 40px;
+    width: 40vw;
+    display: flex;
+    box-shadow: 8px 9px 11px grey;
+
+}
+.book-detail{
+    height: 48vh;
+    background-color: rgba(203, 210, 255, 1);
+    margin: 40px;
+    width: 40vw;
+    box-shadow: 8px 9px 11px grey;
+}
+.details{
+    background-color: rgba(130, 17, 64, 1);
+    height: 43vh;
+    margin-left: 20px;
+    margin-top: 19px;
+    width: 22vw;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+}
+.user-img{
+    background-color: rgba(130, 17, 64, 1);
+    height: 20vh;
+    width: 12vw;
+    MARGIN-LEFT: 34px;
+    MARGIN-TOP: 78PX;
+    border-radius: 20px;
+}
+.user-img img{
+    width: 71%;
+    margin-left: 23px;
+    height: 96%;
+    margin-top: 3px;
+    border-radius: 50%;
+}
+.detail-box{
+    display: block;
+    padding: 19px;
+}
+.request{
+    height:10vh;
+    background-color: rgba(130, 17, 64, 1);
+    margin-top:20px;
+}
+.issue{
+    height:10vh;
+    background-color: rgba(130, 17, 64, 1);
+    margin-top:20px;
+}
+.taken{
+    height:10vh;
+    background-color: rgba(130, 17, 64, 1);
+    margin-top:20px;
+}
+.book-detail h5{
+    text-align: center;
+    text-transform: uppercase;
+    text-rendering: optimizeSpeed;
+    color: aliceblue;
+    padding-top: 12px;
+    transition: all 0.15s ease-in-out;
+}
+.book-avail{
+    height: 49vh;
+    max-height: 49vh;
+    position: relative;
+    background-color: rgba(203, 210, 255, 1);
+    width: 50vw;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    padding: 28px;
+    box-shadow: -8px 9px 11px grey;
+     
+     
+}
+.book{
+    display: flex;
+    justify-content: space-between;
+    margin-top:12px;
+    background-color: rgba(130, 17, 64, 1);
+    padding:8px;
+    align-items: center;
+}
+.book h5{
+    color: white;
+}
+.book button{
+    height: 5vh;
+    border: none;
+}
+.my-book{
+    height: 48vh;
+    max-height: 48vh;
+    position: relative;
+    background-color: rgba(203, 210, 255, 1);
+    width: 50vw;
+   margin-top:30px;
+   padding:12px;
+   box-shadow: -8px 9px 11px grey;
+     
+}
+.custom-arrow{
+    background-color: black;
+    border-radius: 20px;
+}
+.card-img-top{
+    margin-top:12px;
+    margin-left:20px;
+    width: 53%;
+}

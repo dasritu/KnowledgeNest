@@ -1,0 +1,99 @@
+html {
+  scroll-behavior: smooth;
+}
+a {
+  color: white;
+}
+.nav {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #7d1540;
+  color: white;
+  padding: 5px 15px;
+}
+.logo img {
+  height: 75px;
+  width: 75px;
+  margin: 5px;
+}
+.icon {
+  padding-right: 15px;
+  font-size: 40px;
+  cursor: pointer;
+  text-align: center;
+}
+.nav-link {
+  color: white;
+  font-weight: bold;
+  
+}
+
+/* Style for the side navigation menu */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: rgba(
+    96,
+    95,
+    95,
+    0.5
+  ); /* Transparent white background with 50% opacity */
+  backdrop-filter: blur(10px); /* Background color of the sidebar */
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+/* Style for the links in the side navigation menu */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  cursor: pointer;
+  margin-top: 43px;
+  font-weight: bold;
+}
+.sidenav a h2 {
+  margin: 15px;
+  font-size: 25px;
+}
+
+/* Style for the close button in the side navigation menu */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 30px;
+  margin-left: 50px;
+}
+
+/* Style for the links when hovering over them */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style to open the side navigation menu */
+.open {
+  width: 250px;
+}
+
+/* Style for the button to open the side navigation menu */
+#main {
+  transition: margin-right 0.5s;
+}
+
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,44 @@
+.hero {
+  display: flex;
+  justify-content: space-evenly;
+  height: 600px;
+  margin: 0;
+  height: 100vh;
+}
+
+.left {
+  width: 18%;
+  background-color: #cbd2ff;
+  color: white;
+  margin: 20px;
+  padding: 15px;
+  height: 75vh;
+}
+
+.right {
+  background-color: #cbd2ff;
+  width: 70%;
+  margin: 20px 20px 20px 0;
+  height: 71vh;
+}
+.button {
+  display: flex;
+  flex-direction: column; /* Make buttons stack vertically */
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.bttn h2 {
+  margin: 10px;
+  background-color: #7d1540;
+  padding: 10px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  cursor: pointer;
+  font-size: 25px;
+  border-radius: 10px;
+}
