@@ -17,9 +17,7 @@ const bookSchema=new mongoose.Schema({
         type:Number,
         
     },
-    isNew:{
-        type:Boolean
-    }
+   
     
     
 })
