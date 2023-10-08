@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../App";
 import "../styles/Navbar.css";
-
-
+import read from "../image/reading.png";
 
 export default function Navbar() {
   const [role, setRole] = useState("user");
@@ -81,7 +80,6 @@ export default function Navbar() {
           <>
             <li className="nav-item">
               <NavLink className="nav-link" to="/">
-                
                 Dasboard
               </NavLink>
             </li>
@@ -103,7 +101,7 @@ export default function Navbar() {
       return (
         <>
           <li className="nav-item">
-            <NavLink className="nav-link "  aria-current="page" to="/">
+            <NavLink className="nav-link " aria-current="page" to="/">
               Home
             </NavLink>
           </li>
@@ -138,12 +136,15 @@ export default function Navbar() {
         style={{ background: "purple" }}
       >
         <div className="container-fluid">
+          <div className="logo">
+            <img src={read} alt="" />
+          </div>
           <a
             className="navbar-brand custom-brand"
             href="/"
             style={{ fontWeight: "bold", "font-size": "28px", color: "white" }}
           >
-            Library Path
+            KnowledgeNest
           </a>
           <button
             className="navbar-toggler"
