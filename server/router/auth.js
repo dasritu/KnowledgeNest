@@ -275,6 +275,22 @@ router.post("/request-book",async(req,res)=>{
   }
   
 
-})
+});
+router.get("/requested-books", async (req, res) => {
+  const { studentName, bookName, bookAuthor } = req.query;
+  try {
+    const existingRequest = await Request.find({
+      studentName,
+      bookName,
+      bookAuthor,
+    });
+
+    res.json(existingRequest);
+  } catch (error) {
+    console.error("Error fetching existing requests:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 module.exports = router;
