@@ -148,10 +148,9 @@ const BookManagementComponent = () => {
                 </button>
               </>
             ) : (
-                <button onClick={handleAddRecord} style={{ color: "white" }}>
-                  + Add Book
-                </button>
-              
+              <button onClick={handleAddRecord} style={{ color: "white" }}>
+                + Add Book
+              </button>
             )}
           </div>
         </h2>
