@@ -43,7 +43,7 @@ export default function Login() {
           </figure>
 
           <div className="form-info">
-            <div className="heading"></div>
+            <div className="heading">Login</div>
             <div className="name"></div>
             <div className="email">
               <label htmlFor="">Email:</label>

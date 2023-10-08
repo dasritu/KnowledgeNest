@@ -11,6 +11,9 @@ import { ImBooks } from "react-icons/im";
 import { IoIosPeople } from "react-icons/io";
 import { BiSolidNotification } from "react-icons/bi";
 import BookManagementComponent from "./BookManagementComponent";
+import Request from "./Request";
+import Accept from "./Accept";
+import { FcAcceptDatabase } from "react-icons/fc";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -70,7 +73,11 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick(<BookManagementComponent/>)}>
+                  <button
+                    onClick={() =>
+                      handleNavLinkClick(<BookManagementComponent />)
+                    }
+                  >
                     <ImBooks />
                     Books
                   </button>
@@ -84,11 +91,15 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <button
-                    onClick={() => handleNavLinkClick(<CustomizedTables />)}
-                  >
+                  <button onClick={() => handleNavLinkClick(<Request />)}>
                     <BiSolidNotification />
                     Requests
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => handleNavLinkClick(<Accept />)}>
+                    <FcAcceptDatabase  />
+                    Return
                   </button>
                 </li>
               </ul>
