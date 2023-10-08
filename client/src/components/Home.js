@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import Admin from './Admin';
 //import Chart from './Chart';
-import Books from "./Books";
+// import Books from "./Books";
 import "../styles/Home.css";
 import AdminDashboard from "./AdminDashboard";
 import CustomizedTables from "./Table";
@@ -10,6 +10,7 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { ImBooks } from "react-icons/im";
 import { IoIosPeople } from "react-icons/io";
 import { BiSolidNotification } from "react-icons/bi";
+import BookManagementComponent from "./BookManagementComponent";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -69,7 +70,7 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick(<Books />)}>
+                  <button onClick={() => handleNavLinkClick(<BookManagementComponent/>)}>
                     <ImBooks />
                     Books
                   </button>
