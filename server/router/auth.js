@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 require('../db/conn');
 const User = require('../model/userSchema');
 const Book = require('../model/bookSchema');
-const Quantity=require('../model/quantitySchema');
+const Quantity=require('../model/qSchema');
 
 router.post('/register', async (req, res) => {
   const { name,email,stream,year,phone,password,cpassword,role}=req.body;
@@ -141,19 +141,24 @@ router.get('/logout',(req,res)=>{
 router.post('/addbook', async (req, res) => {
   const { name, author, purchasedate, accessionnumber } = req.body;
 
-  // if (!name || !author || !purchasedate) {
-  //   console.log("Incomplete Data")
-  //   return res.status(400).json({ error: 'Incomplete data. Please provide name, author, and purchasedate.' });
-  // }
+  try { 
+    console.log('Received request with name:', name);
+    let existingBook = await Quantity.findOneAndUpdate(
+      { bookName: name },
+      { $inc: { quantity: 1 } }, // Increment quantity if book already exists
+      { new: true, upsert: true } // Create a new record if it doesn't exist
+    );
 
-  try {
+
     const newBook = new Book({ name, author, purchasedate, accessionnumber });
     await newBook.save();
+    console.log('Received request with name:', newBook)
     res.json(newBook);
   } catch (error) {
     console.error('Error adding a new book:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+  
 });
 
 
