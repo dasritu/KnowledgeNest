@@ -11,9 +11,12 @@ import { ImBooks } from "react-icons/im";
 import { IoIosPeople } from "react-icons/io";
 import { BiSolidNotification } from "react-icons/bi";
 import BookManagementComponent from "./BookManagementComponent";
+
+import UserDashboard from "./UserDashboard";
 import Request from "./Request";
 import Accept from "./Accept";
 import { FcAcceptDatabase } from "react-icons/fc";
+
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -113,9 +116,13 @@ export default function Home() {
     return (
       <div>
         <p className="pt-5 mt-5">WELCOME</p>
+        <h3>KnowledgeNest</h3>
         <h1>{userName}</h1>
-        <h1>{show ? "Hello User" : "This is Home Page"}</h1>
+        
+      {show && <h1>Hello User</h1>}
+      {show && <UserDashboard />}
       </div>
     );
   }
+ 
 }

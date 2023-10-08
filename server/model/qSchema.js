@@ -2,9 +2,12 @@
 const mongoose = require('mongoose');
 
 const quantitySchema = new mongoose.Schema({
+  bookAuthor: {
+    type: String,
+  },
   bookName: {
     type: String,
-    default: "",
+    unique: false, // Set to false to allow multiple records with the same bookName
   },
   quantity: {
     type: Number,
@@ -12,8 +15,9 @@ const quantitySchema = new mongoose.Schema({
   },
 });
 
-quantitySchema.index({ bookName: 1, quantity: 1 }, { unique: true });
+quantitySchema.index({ bookName: 1, bookAuthor: 1 }, { unique: false });
 
 const Quantity = mongoose.model('qbook', quantitySchema);
 
 module.exports = Quantity;
+

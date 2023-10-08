@@ -46,7 +46,7 @@ require('../db/conn');
 const User = require('../model/userSchema');
 const Book = require('../model/bookSchema');
 const Quantity=require('../model/qSchema');
-
+const Request=require('../model/requestSchema');
 router.post('/register', async (req, res) => {
   const { name,email,stream,year,phone,password,cpassword,role}=req.body;
 
@@ -141,25 +141,36 @@ router.get('/logout',(req,res)=>{
 router.post('/addbook', async (req, res) => {
   const { name, author, purchasedate, accessionnumber } = req.body;
 
-  try { 
-    console.log('Received request with name:', name);
-    let existingBook = await Quantity.findOneAndUpdate(
-      { bookName: name },
-      { $inc: { quantity: 1 } }, // Increment quantity if book already exists
-      { new: true, upsert: true } // Create a new record if it doesn't exist
-    );
+  try {
+    console.log('Received request with name and author:', name, author);
 
+    // Check if the book with the same name and author exists in Quantity schema
+    const existingBook = await Quantity.findOne({ bookAuthor: author, bookName: name });
 
+    // If the book with the same name and author doesn't exist, create a new record with quantity 1
+    if (!existingBook) {
+      const newQuantity = new Quantity({ bookAuthor: author, bookName: name, quantity: 1 });
+      await newQuantity.save();
+    } else {
+      // If the book with the same name and author exists, increment its quantity by 1
+      existingBook.quantity += 1;
+      await existingBook.save();
+    }
+
+    // Add a new record to the Book schema
     const newBook = new Book({ name, author, purchasedate, accessionnumber });
     await newBook.save();
-    console.log('Received request with name:', newBook)
+
+    console.log('Added a new book:', newBook);
     res.json(newBook);
   } catch (error) {
-    console.error('Error adding a new book:', error);
+    console.error('Error adding/updating a book:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-  
 });
+
+
+
 
 
 
@@ -197,6 +208,12 @@ router.delete('/deletebook/:id', async (req, res) => {
   try {
     // Use the appropriate method to find and delete the book by ID
     const deletedBook = await Book.findByIdAndDelete(bookId);
+     
+  await Quantity.findOneAndUpdate({
+    bookName:deletedBook.name,bookAuthor:deletedBook.author},
+    {$inc:{quantity:-1}},
+    {new:true}
+  );
 
     if (deletedBook) {
       res.json({ message: 'Book deleted successfully' });
@@ -245,5 +262,19 @@ router.put('/updatebook/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+router.post("/request-book",async(req,res)=>{
+  const { studentName, cardNumber,stream,bookName,bookAuthor } = req.body;
+  try { 
+    const newRequest = new Request({ studentName,cardNumber, stream,bookName,bookAuthor });
+    await newRequest.save();
+    res.json(newRequest);
+  } catch (error) {
+    console.error('Error adding a new request:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
+
+})
 
 module.exports = router;

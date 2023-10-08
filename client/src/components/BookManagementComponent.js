@@ -22,7 +22,7 @@ const BookManagementComponent = () => {
     const fetchBooks = async () => {
       try {
         const response = await axios.get("/showbooks");
-        setBooks(response.data);
+        setBooks(response.data.reverse());
       } catch (error) {
         console.error("Error fetching books:", error);
       }
@@ -83,31 +83,29 @@ const BookManagementComponent = () => {
   };
 
   const handleAddRecord = () => {
-    setBooks([
-      ...books,
-      {
-        id: "new",
-        name: "",
-        author: "",
-        purchasedate: "",
-        accessionnumber: "",
-      },
-    ]);
     // Set the editable book to the newly added record
-    setEditableBook({
+    const newEditableBook = {
       id: "new",
       name: "",
       author: "",
       purchasedate: "",
       accessionnumber: "",
-    });
+    };
+  
+    // Add the new record at the beginning of the books array
+    setBooks([newEditableBook, ...books]);
+  
+    // Set the editable book
+    setEditableBook(newEditableBook);
   };
+  
 
   const handleAddBook = async () => {
     try {
-      const newBooks = books.filter((book) => book.id !== "new");
       const response = await axios.post("/addbook", editableBook);
-      const updatedBooks = [...newBooks, response.data];
+      const updatedBooks = books.map((book) =>
+        book.id === "new" ? response.data : book
+      );
       setBooks(updatedBooks);
       setEditableBook({
         id: "",
@@ -120,7 +118,6 @@ const BookManagementComponent = () => {
       console.error("Error adding a new book:", error);
     }
   };
-
   return (
     <>
       <div>
@@ -245,7 +242,7 @@ const BookManagementComponent = () => {
                   <td>
                     {book._id === editableBook.id ? (
                       <>
-                        <button onClick={handleUpdateBook}>Update</button>
+                        <button onClick={handleUpdateBook} style={{ color: "black" }}>Update</button>
                         <button
                           onClick={() =>
                             setEditableBook({
@@ -255,7 +252,7 @@ const BookManagementComponent = () => {
                               purchasedate: "",
                               accessionnumber: "",
                             })
-                          }
+                          } style={{ color: "black" }}
                         >
                           Cancel
                         </button>
