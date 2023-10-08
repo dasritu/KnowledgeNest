@@ -1,0 +1,50 @@
+.heading1 {
+  background-color: purple;
+  color: white;
+  padding: 0 5px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  height: 50px;
+}
+.table-container {
+  max-height: 580px;
+  overflow: auto;
+  position: relative;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+th {
+  padding: 8px;
+  text-align: center;
+}
+
+/* Style for the table body */
+tbody {
+  display: block; /* Enable block display for tbody */
+  max-height: 500px; /* Set your desired maximum height for the body */
+  overflow-y: auto; /* Enable vertical scrolling for the body */
+}
+
+/* Style for the table body row */
+tr {
+  display: table; /* Ensure rows are displayed as a table */
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Style for the table body cells */
+td {
+  padding: 8px; /* Set your desired padding for the cells */
+  text-align: center; /* Align cell text to the left or your preference */
+}
