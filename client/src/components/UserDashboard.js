@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default function UserDashboard() {
   const [books, setBooks] = useState([]);
+  const[samebook,setsamebook]=useState(false);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -17,43 +18,55 @@ export default function UserDashboard() {
     fetchBooks();
   }, []);
 
-  const handleRequest = async (bookId,bookName,bookAuthor) => {
+  const handleRequest = async (bookId, bookName, bookAuthor) => {
+  
     try {
-        const response = await fetch("/about", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          });
-    
+      const response = await fetch("/about", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
       const data = await response.json();
       const studentName = data.name;
       const cardNumber = data.cardNo;
-      const stream=data.stream;
-      console.log("Name:",studentName);
-      // Make a request to store the information in the requestSchema
-      const confirmRequest= window.confirm(
+      const stream = data.stream;
+  
+      // Check if the student has already requested the book
+      const existingRequest = await axios.get("/requested-books", {
+        params: { studentName, bookName, bookAuthor },
+      });
+  
+      if (existingRequest.data.length > 0) {
+        alert("You have already requested this book.");
+        setsamebook(true);
+        return;
+      }
+  
+      const confirmRequest = window.confirm(
         "Are you sure you want to request this book?"
       );
   
       if (!confirmRequest) {
         return;
       }
+  
       await axios.post("/request-book", {
         studentName,
         cardNumber,
         stream,
         bookName,
-        bookAuthor
+        bookAuthor,
       });
-      
+  
       console.log(`Requested book with ID ${bookId}`);
     } catch (error) {
       console.error("Error making request:", error);
     }
   };
-
+  
   return (
     <div>
       <h2>Book List</h2>
@@ -71,9 +84,9 @@ export default function UserDashboard() {
               <td>{book.name}</td>
               <td>{book.author}</td>
               <td>
-                <button onClick={() => handleRequest(book._id,book.name,book.author)} style={{ color: 'black' }}>
-                  Request
-                </button>
+                 
+                 <button onClick={() => handleRequest(book._id,book.name,book.author)} style={{ color: 'black' }} >Request</button>
+                  
               </td>
             </tr>
           ))}
