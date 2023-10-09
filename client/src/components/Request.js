@@ -48,17 +48,17 @@ const ApproveButton = styled(Button)(({ theme }) => ({
     "&:hover": {
       backgroundColor: "red", // Keep it red on hover
       opacity: 0.8, // You can adjust the opacity
-      cursor: "not-allowed", // Show the disabled cursor on hover
+      // cursor: "not-allowed", // Show the disabled cursor on hover
     },
   }));
 
 export default function Request() {
   const [users, setUsers] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/showstudent", {
+        const response = await fetch("/show-request", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -80,6 +80,63 @@ export default function Request() {
     fetchData();
   }, []);
 
+  const handleApprove = async (user) => {
+    try {
+      const bookDetails = {
+        bookName: user.bookName,
+        bookAuthor: user.bookAuthor,
+      };
+  
+      // Check if the book details are present in the quantitySchema
+      const response = await fetch("/check-quantity", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(bookDetails),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+  
+        // If quantity is greater than or equal to 1, proceed with approval
+        if (data.quantity >= 1) {
+          // Make a request to approve the book
+          const approveResponse = await fetch(`/approve-book/${user._id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          });
+  
+          if (approveResponse.ok) {
+            const approveData = await approveResponse.json();
+            console.log(approveData);
+  
+            // Show an alert after successful approval
+            alert("Book approved successfully!");
+            setUsers((prevUsers) =>
+            prevUsers.filter((prevUser) => prevUser._id !== user._id)
+          );
+            // Update the state or perform any other actions as needed
+          } else {
+            console.error(`Error approving book`);
+          }
+        } else {
+          console.log("Not enough quantity to approve");
+          alert('Not Enough Quantity To approve')
+        }
+      } else {
+        console.error(`Error checking quantity`);
+      }
+    } catch (error) {
+      console.error("Error approving book:", error);
+    }
+  };
+  
+  
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -97,13 +154,14 @@ export default function Request() {
         <TableBody>
           {users.map((user) => (
             <StyledTableRow key={user._id}>
-              <StyledTableCell align="left">{user.cardNo}</StyledTableCell>
-              <StyledTableCell align="center">{user.name}</StyledTableCell>
+              <StyledTableCell align="left">{user.cardNumber}</StyledTableCell>
+              <StyledTableCell align="center">{user.studentName}</StyledTableCell>
               <StyledTableCell align="center">{user.stream}</StyledTableCell>
-              <StyledTableCell align="center">{user.bname}</StyledTableCell>
-              <StyledTableCell align="center">{user.author}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookName}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
               <StyledTableCell align="center">
-                <ApproveButton>
+                <ApproveButton onClick={() => handleApprove(user)}
+                >
                   Approve
                   <SendIcon />
                 </ApproveButton>

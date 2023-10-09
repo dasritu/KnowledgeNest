@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const requestSchema=new mongoose.Schema({
+const approveScehma=new mongoose.Schema({
     studentName:{
         type:String,
         
@@ -19,15 +19,15 @@ const requestSchema=new mongoose.Schema({
    bookAuthor:{
     type:String,
    },
-   accessionnumber:{
-      type:String,
-   }
+    accessionNumber:{
+        type:String
+    }
     
 })
 
 
 //we are generating token
 
-const RequestBook = mongoose.model('requestbook',requestSchema);
+const approveBook = mongoose.model('approve-book',approveScehma);
 
-module.exports =RequestBook;
+module.exports =approveBook;

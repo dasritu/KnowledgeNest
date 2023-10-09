@@ -177,7 +177,7 @@ const BookManagementComponent = () => {
                   <td>
                     {book._id === editableBook.id || book.id === "new" ? (
                       <input
-                        type="number"
+                        type="text"
                         value={editableBook.accessionnumber}
                         onChange={(e) =>
                           setEditableBook({

@@ -47,6 +47,7 @@ const User = require('../model/userSchema');
 const Book = require('../model/bookSchema');
 const Quantity=require('../model/qSchema');
 const Request=require('../model/requestSchema');
+const ApproveBook=require('../model/approve-bookSchema')
 router.post('/register', async (req, res) => {
   const { name,email,stream,year,phone,password,cpassword,role}=req.body;
 
@@ -264,9 +265,9 @@ router.put('/updatebook/:id', async (req, res) => {
 });
 
 router.post("/request-book",async(req,res)=>{
-  const { studentName, cardNumber,stream,bookName,bookAuthor } = req.body;
+  const { studentName, cardNumber,stream,bookName,bookAuthor,accessionnumber } = req.body;
   try { 
-    const newRequest = new Request({ studentName,cardNumber, stream,bookName,bookAuthor });
+    const newRequest = new Request({ studentName,cardNumber, stream,bookName,bookAuthor,accessionnumber });
     await newRequest.save();
     res.json(newRequest);
   } catch (error) {
@@ -283,6 +284,7 @@ router.get("/requested-books", async (req, res) => {
       studentName,
       bookName,
       bookAuthor,
+
     });
 
     res.json(existingRequest);
@@ -292,5 +294,70 @@ router.get("/requested-books", async (req, res) => {
   }
 });
 
+router.get("/show-request",async(req,res)=>{
+  const request= await Request.find();
+  res.json(request);
+})
+
+router.post("/check-quantity",async(req,res)=>{
+  const{bookName,bookAuthor}=req.body;
+  try{
+    const quantity=await Quantity.findOne({bookAuthor:bookAuthor,bookName:bookName});
+    // console.log("Quantity >1");
+    if (quantity && quantity.quantity >= 1) {
+      return res.json({ quantity: quantity.quantity });
+      
+    } else {
+      return res.json({ quantity: 0 });
+    }
+  } catch (error) {
+    console.error("Error checking quantity:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+router.post("/approve-book/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find the requested book by ID in your Request schema
+    const requestedBook = await Request.findById(id);
+
+    // Decrease quantity in quantitySchema
+    await Quantity.findOneAndUpdate(
+      { bookAuthor: requestedBook.bookAuthor, bookName: requestedBook.bookName },
+      { $inc: { quantity: -1 } }
+    );
+
+    // Create a new entry in the ApprovedBook schema
+    await ApproveBook.create({
+      studentName: requestedBook.studentName,
+      cardNumber:requestedBook.cardNumber,
+      bookName: requestedBook.bookName,
+      bookAuthor: requestedBook.bookAuthor,
+      accessionNumber:requestedBook.accessionnumber
+    });
+    
+    const user_data=await User.findOne({cardNo:requestedBook.cardNumber});
+
+    const email=user_data.email
+
+    console.log("Book Approved");
+    const bookrecord=await Book.findOne({accessionnumber:requestedBook.accessionnumber});
+    const id_book=bookrecord._id;
+    await Book.findByIdAndDelete(id_book);
+    // Delete the approved request
+    await Request.findByIdAndDelete(id);
+    const emailText = `${requestedBook.studentName} Your requested book ${requestedBook.bookName},Author: ${requestedBook.bookAuthor} is approved of card no: ${requestedBook.cardNumber}. Please collect your book from Library.`;
+              sendEmail(email, 'Book Approved', emailText);
+    // Send a success response
+    return res.json({ message: "Book approved successfully" });
+
+  } catch (error) {
+    console.error("Error approving book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 module.exports = router;

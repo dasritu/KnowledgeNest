@@ -18,7 +18,7 @@ export default function UserDashboard() {
     fetchBooks();
   }, []);
 
-  const handleRequest = async (bookId, bookName, bookAuthor) => {
+  const handleRequest = async (bookId, bookName, bookAuthor,accessionnumber) => {
   
     try {
       const response = await fetch("/about", {
@@ -59,6 +59,7 @@ export default function UserDashboard() {
         stream,
         bookName,
         bookAuthor,
+        accessionnumber
       });
   
       console.log(`Requested book with ID ${bookId}`);
@@ -75,6 +76,7 @@ export default function UserDashboard() {
           <tr>
             <th>Name</th>
             <th>Author</th>
+            <th>Accession Number</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -83,9 +85,10 @@ export default function UserDashboard() {
             <tr key={book._id}>
               <td>{book.name}</td>
               <td>{book.author}</td>
+              <td>{book.accessionnumber}</td>
               <td>
                  
-                 <button onClick={() => handleRequest(book._id,book.name,book.author)} style={{ color: 'black' }} >Request</button>
+                 <button onClick={() => handleRequest(book._id,book.name,book.author,book.accessionnumber)} style={{ color: 'black' }} >Request</button>
                   
               </td>
             </tr>
