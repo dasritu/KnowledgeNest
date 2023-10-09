@@ -33,24 +33,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 const ApproveButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "green",
+  color: theme.palette.common.white,
+  "&:hover": {
     backgroundColor: "green",
-    color: theme.palette.common.white,
-    "&:hover": {
-      backgroundColor: "green",
-      opacity: 0.8, 
-      
-    },
-  }));
-  
-  const RejectButton = styled(Button)(({ theme }) => ({
-    backgroundColor: "red",
-    color: theme.palette.common.white,
-    "&:hover": {
-      backgroundColor: "red", // Keep it red on hover
-      opacity: 0.8, // You can adjust the opacity
-      // cursor: "not-allowed", // Show the disabled cursor on hover
-    },
-  }));
+    opacity: 0.8,
+  },
+}));
+
+const RejectButton = styled(Button)(({ theme }) => ({
+  backgroundColor: "red",
+  color: theme.palette.common.white,
+  "&:hover": {
+    backgroundColor: "red", // Keep it red on hover
+    opacity: 0.8, // You can adjust the opacity
+     // Show the disabled cursor on hover
+  },
+}));
 
 export default function Request() {
   const [users, setUsers] = useState([]);
