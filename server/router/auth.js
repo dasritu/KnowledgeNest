@@ -16,13 +16,13 @@ const sendEmail = async (to, subject, text) => {
     const transporter = nodemailer.createTransport({
       service: 'Gmail', // Example: 'Gmail'
       auth: {
-        user: 'rituparnadas67@gmail.com',
-        pass: 'zdgu bdmn wszj bhvi',
+        user: 'knowledgenestsr23@gmail.com',
+        pass: 'fzfa ybwg uouj qeyo',
       },
     });
 
     const mailOptions = {
-      from: 'rituparnadas67@gmail.com',
+      from: 'knowledgenestsr23@gmail.com',
       to,
       subject,
       text,
@@ -209,12 +209,19 @@ router.delete('/deletebook/:id', async (req, res) => {
   try {
     // Use the appropriate method to find and delete the book by ID
     const deletedBook = await Book.findByIdAndDelete(bookId);
-     
-  await Quantity.findOneAndUpdate({
-    bookName:deletedBook.name,bookAuthor:deletedBook.author},
-    {$inc:{quantity:-1}},
-    {new:true}
-  );
+
+    // Update the quantity in the Quantity schema
+    const updatedQuantity = await Quantity.findOneAndUpdate(
+      { bookName: deletedBook.name, bookAuthor: deletedBook.author },
+      { $inc: { quantity: -1 } },
+      { new: true }
+    );
+
+    // Check if the updated quantity is less than or equal to 0
+    if (updatedQuantity && updatedQuantity.quantity <= 0) {
+      // If so, remove the quantity record
+      await Quantity.findOneAndDelete({bookName:deletedBook.name,bookAuthor:deletedBook.author});
+    }
 
     if (deletedBook) {
       res.json({ message: 'Book deleted successfully' });
@@ -226,6 +233,7 @@ router.delete('/deletebook/:id', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 router.get("/showbooks", async (req, res) => {
   try {
@@ -251,13 +259,44 @@ router.get("/showstudent",async(req,res)=>{
 // Update a book by ID
 router.put('/updatebook/:id', async (req, res) => {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const bookId = req.params.id;
+    const prevBook = await Book.findById(bookId);
+
+    // Check if the author or book name has been updated
+    if (
+      (req.body.author && req.body.author !== prevBook.author) ||
+      (req.body.name && req.body.name !== prevBook.name)
+    ) {
+      // Decrease quantity of the previous book
+      const prevQuantity = await Quantity.findOneAndUpdate(
+        { bookAuthor: prevBook.author, bookName: prevBook.name },
+        { $inc: { quantity: -1 } },
+        { new: true }
+      );
+
+      // Check if the previous book is no longer in stock, delete the quantity record
+      if (prevQuantity && prevQuantity.quantity <= 0) {
+        await Quantity.findOneAndDelete({
+          bookAuthor: prevBook.author,
+          bookName: prevBook.name,
+        });
+      }
+
+      // Increase quantity for the new book
+      const newQuantity = await Quantity.findOneAndUpdate(
+        { bookAuthor: req.body.author, bookName: req.body.name },
+        { $inc: { quantity: 1 } },
+        { upsert: true, new: true }
+      );
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
 
     if (!updatedBook) {
       return res.status(404).json({ error: 'Book not found' });
     }
 
-    res.json(updatedBook); // Send the updated book data in the response
+    res.json(updatedBook);
   } catch (error) {
     console.error('Error updating book:', error);
     res.status(500).json({ error: 'Internal Server Error' });
