@@ -22,7 +22,7 @@ const approveScehma=new mongoose.Schema({
     accessionNumber:{
         type:String
     },
-    returnDate:{
+    returnDate :{
         type:Date
     }
     
@@ -31,6 +31,6 @@ const approveScehma=new mongoose.Schema({
 
 //we are generating token
 
-const approveBook = mongoose.model('approve-book',approveScehma);
+const returnBook = mongoose.model('return-book',approveScehma);
 
-module.exports =approveBook;
+module.exports =returnBook;
