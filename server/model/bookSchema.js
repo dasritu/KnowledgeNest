@@ -14,7 +14,7 @@ const bookSchema=new mongoose.Schema({
         
     },
     accessionnumber:{
-        type:Number,
+        type:String,
         
     },
    
