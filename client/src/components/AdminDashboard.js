@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../styles/AdminDashboard.css";
 import { FaUserGraduate } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
+import { default as PieArcLabel } from "../components/Piechart";
 
 export class AdminDashboard extends Component {
   render() {
@@ -116,7 +117,7 @@ export class AdminDashboard extends Component {
             </div>
           </div>
           <div className="second">
-            <h1>World</h1>
+            <PieArcLabel />
           </div>
         </div>
       </>

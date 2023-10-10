@@ -30,18 +30,7 @@
     font-size: 50px;
   }
   
-  .second {
-    height: 350px;
-    color: black;
-    background-color: pink;
-    text-align: center;
-    border-radius: 10px;
-    margin: 0 5px;
-    margin-top: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
   /* AdminDashboard.css */
   
   .item {
@@ -110,3 +99,15 @@
     }
   }
   
+  .second {
+    height: 350px;
+    color: black;
+    background-color: transparent;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0 5px;
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
