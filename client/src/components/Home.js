@@ -11,12 +11,12 @@ import { ImBooks } from "react-icons/im";
 import { IoIosPeople } from "react-icons/io";
 import { BiSolidNotification } from "react-icons/bi";
 import BookManagementComponent from "./BookManagementComponent";
-
+import { FcApproval } from "react-icons/fc";
 import UserDashboard from "./UserDashboard";
 import Request from "./Request";
 import Accept from "./Accept";
 import { FcAcceptDatabase } from "react-icons/fc";
-
+import Approve from "./Approve";
 
 export default function Home() {
   const [userName, setUserName] = useState("");
@@ -100,8 +100,14 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
+                  <button onClick={() => handleNavLinkClick(<Approve />)}>
+                    <FcApproval />
+                    Approve
+                  </button>
+                </li>
+                <li>
                   <button onClick={() => handleNavLinkClick(<Accept />)}>
-                    <FcAcceptDatabase  />
+                    <FcAcceptDatabase />
                     Return
                   </button>
                 </li>
@@ -115,14 +121,12 @@ export default function Home() {
   } else {
     return (
       <div>
-        <p className="pt-5 mt-5">WELCOME</p>
-        <h3>KnowledgeNest</h3>
-        <h1>{userName}</h1>
-        
-      {show && <h1>Hello User</h1>}
-      {show && <UserDashboard />}
+        <div className="heading-user">
+          <h3>Student</h3>
+          <h3>Welcome {userName}</h3>
+        </div>
+        {show && <UserDashboard />}
       </div>
     );
   }
- 
 }

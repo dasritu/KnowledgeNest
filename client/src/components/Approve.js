@@ -29,7 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function CustomizedTables() {
+export default function Approve() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -63,12 +63,10 @@ export default function CustomizedTables() {
         <TableHead>
           <TableRow>
             <StyledTableCell align="left">Card No. </StyledTableCell>
-            <StyledTableCell align="right">Student Name</StyledTableCell>
-            <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Stream</StyledTableCell>
-            <StyledTableCell align="right">Year</StyledTableCell>
-            <StyledTableCell align="right">PhoneNumber</StyledTableCell>
-            {/* Add other headers as needed */}
+            <StyledTableCell align="center">Student Name</StyledTableCell>
+            <StyledTableCell align="center">Accession No.</StyledTableCell>
+            <StyledTableCell align="center">Book Name</StyledTableCell>
+            <StyledTableCell align="center">Book Author</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -78,12 +76,10 @@ export default function CustomizedTables() {
               <StyledTableCell component="th" scope="row">
                 {user.cardNo}
               </StyledTableCell>
-              <StyledTableCell align="right">{user.name}</StyledTableCell>
-              <StyledTableCell align="right">{user.email}</StyledTableCell>
-              <StyledTableCell align="right">{user.stream}</StyledTableCell>
-              <StyledTableCell align="right">{user.year}</StyledTableCell>
-              <StyledTableCell align="right">{user.phone}</StyledTableCell>
-              {/* Add other cells as needed */}
+              <StyledTableCell align="center">{user.name}</StyledTableCell>
+              <StyledTableCell align="center">{user.email}</StyledTableCell>
+              <StyledTableCell align="center">{user.stream}</StyledTableCell>
+              <StyledTableCell align="center">{user.year}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

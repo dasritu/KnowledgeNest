@@ -47,13 +47,13 @@ const RejectButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: "red", // Keep it red on hover
     opacity: 0.8, // You can adjust the opacity
-     // Show the disabled cursor on hover
+    // Show the disabled cursor on hover
   },
 }));
 
 export default function Request() {
   const [users, setUsers] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -85,7 +85,7 @@ export default function Request() {
         bookName: user.bookName,
         bookAuthor: user.bookAuthor,
       };
-  
+
       // Check if the book details are present in the quantitySchema
       const response = await fetch("/check-quantity", {
         method: "POST",
@@ -95,10 +95,10 @@ export default function Request() {
         credentials: "include",
         body: JSON.stringify(bookDetails),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
-  
+
         // If quantity is greater than or equal to 1, proceed with approval
         if (data.quantity >= 1) {
           // Make a request to approve the book
@@ -109,23 +109,23 @@ export default function Request() {
             },
             credentials: "include",
           });
-  
+
           if (approveResponse.ok) {
             const approveData = await approveResponse.json();
             console.log(approveData);
-  
+
             // Show an alert after successful approval
             alert("Book approved successfully!");
             setUsers((prevUsers) =>
-            prevUsers.filter((prevUser) => prevUser._id !== user._id)
-          );
+              prevUsers.filter((prevUser) => prevUser._id !== user._id)
+            );
             // Update the state or perform any other actions as needed
           } else {
             console.error(`Error approving book`);
           }
         } else {
           console.log("Not enough quantity to approve");
-          alert('Not Enough Quantity To approve')
+          alert("Not Enough Quantity To approve");
         }
       } else {
         console.error(`Error checking quantity`);
@@ -134,8 +134,7 @@ export default function Request() {
       console.error("Error approving book:", error);
     }
   };
-  
-  
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -152,15 +151,19 @@ export default function Request() {
         </TableHead>
         <TableBody>
           {users.map((user) => (
-            <StyledTableRow key={user._id}>
+            <StyledTableRow key={user._id}
+            sx={{ height: '50px' }}>
               <StyledTableCell align="left">{user.cardNumber}</StyledTableCell>
-              <StyledTableCell align="center">{user.studentName}</StyledTableCell>
+              <StyledTableCell align="center">
+                {user.studentName}
+              </StyledTableCell>
               <StyledTableCell align="center">{user.stream}</StyledTableCell>
               <StyledTableCell align="center">{user.bookName}</StyledTableCell>
-              <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
               <StyledTableCell align="center">
-                <ApproveButton onClick={() => handleApprove(user)}
-                >
+                {user.bookAuthor}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                <ApproveButton onClick={() => handleApprove(user)}>
                   Approve
                   <SendIcon />
                 </ApproveButton>
