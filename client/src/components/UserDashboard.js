@@ -5,6 +5,62 @@ import "../styles/UserDashboard.css";
 export default function UserDashboard() {
   const [books, setBooks] = useState([]);
   const [samebook, setsamebook] = useState(false);
+  const [requestedBooks, setRequestedBooks] = useState([]);
+  const [approvedBooks, setApprovedBooks] = useState([]);
+
+  const fetchRequestedBooks = async () => {
+    try {
+      const response = await fetch("/about", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      const cardNumber = data.cardNo;
+
+      const requestedBooksResponse = await axios.get("/request-find", {
+        params: { cardNo: cardNumber },
+      });
+
+      setRequestedBooks(
+        Array.isArray(requestedBooksResponse.data)
+          ? requestedBooksResponse.data
+          : [requestedBooksResponse.data]
+      );
+    } catch (error) {
+      console.error("Error fetching requested books:", error);
+    }
+  };
+
+  const fetchApprovedBooks = async () => {
+    try {
+      const response = await fetch("/about", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      const data = await response.json();
+      const cardNumber = data.cardNo;
+
+      const approvedBooksResponse = await axios.get("/approve-find", {
+        params: { cardNo: cardNumber },
+      });
+
+      setApprovedBooks(
+        Array.isArray(approvedBooksResponse.data)
+          ? approvedBooksResponse.data
+          : [approvedBooksResponse.data]
+      );
+    } catch (error) {
+      console.error("Error fetching approved books:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -17,6 +73,8 @@ export default function UserDashboard() {
     };
 
     fetchBooks();
+    fetchRequestedBooks();
+    fetchApprovedBooks();
   }, []);
 
   const handleRequest = async (
@@ -35,12 +93,13 @@ export default function UserDashboard() {
       });
 
       const data = await response.json();
-      const studentName = data.name;
-      const cardNumber = data.cardNo;
-      const stream = data.stream;
+      const { name: studentName, cardNo: cardNumber, stream } = data;
 
-      // Check if the student has already requested the book
       const existingRequest = await axios.get("/requested-books", {
+        params: { studentName, bookName, bookAuthor },
+      });
+
+      const existingApproval = await axios.get("/approved-books", {
         params: { studentName, bookName, bookAuthor },
       });
 
@@ -50,14 +109,20 @@ export default function UserDashboard() {
         return;
       }
 
-      const confirmRequest = window.confirm(
-        "Are you sure you want to request this book?"
-      );
-
-      if (!confirmRequest) {
+      if (existingApproval.data.length > 0) {
+        alert("You have already been approved for this book.");
+        setsamebook(true);
         return;
       }
 
+      const confirmRequest = window.confirm(
+        "Are you sure you want to request this book?"
+      );
+  
+      if (!confirmRequest) {
+        return;
+      }
+  
       await axios.post("/request-book", {
         studentName,
         cardNumber,
@@ -66,13 +131,68 @@ export default function UserDashboard() {
         bookAuthor,
         accessionnumber,
       });
-
+  
       console.log(`Requested book with ID ${bookId}`);
+  
+      // Update the state to include the newly requested book
+      setRequestedBooks((prevRequestedBooks) => [
+        ...prevRequestedBooks,
+        {
+          _id: bookId, // Adjust the ID based on your API response
+          bookName,
+          bookAuthor,
+          studentName,
+        },
+      ]);
     } catch (error) {
       console.error("Error making request:", error);
     }
   };
 
+  const handleReturn = async (
+    id,
+    bookName,
+    bookAuthor,
+    accessionNumber
+  ) => {
+    try {
+      const response = await fetch("/about", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
+      const data = await response.json();
+      const { name: studentName, cardNo: cardNumber } = data;
+      const currentDate = new Date().toLocaleDateString();
+  
+      // Make the API call to return the book
+      await axios.post("/return-book", {
+        id,
+        studentName,
+        cardNumber,
+        bookName,
+        bookAuthor,
+        accessionNumber,
+        returnDate: currentDate,
+      });
+  
+      // Update the state to remove the returned book
+      setApprovedBooks((prevApprovedBooks) =>
+        prevApprovedBooks.filter((book) => book._id !== id)
+      );
+  
+      // Optionally, you can update the requestedBooks state as well if needed
+  
+      console.log(`Returned book with ID ${id}`);
+      alert("Book Returned");
+    } catch (error) {
+      console.error("Error returning book:", error);
+    }
+  };
+  
   return (
     <>
       <div className="sec1">
@@ -102,7 +222,12 @@ export default function UserDashboard() {
                           book.accessionnumber
                         )
                       }
-                      style={{ color: "black", backgroundColor:"#149d14", color:"white",  borderRadius:"5px" }}
+                      style={{
+                        color: "black",
+                        backgroundColor: "#149d14",
+                        color: "white",
+                        borderRadius: "5px",
+                      }}
                       className="table-data"
                     >
                       Request
@@ -132,6 +257,70 @@ export default function UserDashboard() {
             </ol>
           </ul>
         </div>
+        <div className="requestedbook"></div>
+      </div>
+      <div className="sec-2">
+        <h1>Your Requested Books</h1>
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th className="table-heading">Book Name</th>
+              <th className="table-heading">Book Author</th>
+              <th className="table-heading">Student Name</th>
+            </tr>
+          </thead>
+          <tbody className="tbody">
+            {requestedBooks.map((requestedBook) => (
+              <tr key={requestedBook._id}>
+                <td className="table-data">{requestedBook.bookName}</td>
+                <td className="table-data">{requestedBook.bookAuthor}</td>
+                <td className="table-data">{requestedBook.studentName}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="sec-2">
+        <h1>Your Approved Books</h1>
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th className="table-heading">Book Name</th>
+              <th className="table-heading">Book Author</th>
+              <th className="table-heading">Student Name</th>
+              <th className="table-heading">Action</th>
+            </tr>
+          </thead>
+          <tbody className="tbody">
+            {approvedBooks.map((approvedBook) => (
+              <tr key={approvedBook._id}>
+                <td className="table-data">{approvedBook.bookName}</td>
+                <td className="table-data">{approvedBook.bookAuthor}</td>
+                <td className="table-data">{approvedBook.studentName}</td>
+                <td>
+                  <button
+                    onClick={() =>
+                      handleReturn(
+                        approvedBook._id,
+                        approvedBook.bookName,
+                        approvedBook.bookAuthor,
+                        approvedBook.accessionNumber
+                      )
+                    }
+                    style={{
+                      color: "white",
+                      backgroundColor: "#149d14",
+                      borderRadius: "5px",
+                    }}
+                    className="table-data"
+                  >
+                    Return
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );

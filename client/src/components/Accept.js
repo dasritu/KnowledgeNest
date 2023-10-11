@@ -12,7 +12,6 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "purple", // Change to your desired background color
@@ -57,7 +56,7 @@ export default function Accept() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/showstudent", {
+        const response = await fetch("/showreturn", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -79,6 +78,37 @@ export default function Accept() {
     fetchData();
   }, []);
 
+  const calculateFine = (returnDate) => {
+    const finePerDay = 1; // 1 rupee per day
+    const currentDate = new Date();
+    const returnedDate = new Date(returnDate);
+    const timeDifference = currentDate - returnedDate;
+    const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    const fine = daysDifference * finePerDay;
+
+    return fine > 0 ? fine : 0;
+  };
+  const handleAccept = async (id, bookName, bookAuthor, accessionNumber) => {
+    try {
+      // Make a POST request to the /accept-book/:id route
+      const response = await fetch(`/accept-book/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      // Assuming your server returns a JSON response, you can handle it here if needed
+      const result = await response.json();
+      console.log("Accept Book Response:", result);
+
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+    } catch (error) {
+      console.error("Error accepting book:", error);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -86,9 +116,11 @@ export default function Accept() {
           <TableRow>
             <StyledTableCell align="left">Card No. </StyledTableCell>
             <StyledTableCell align="center">Student Name</StyledTableCell>
-            <StyledTableCell align="center">Stream</StyledTableCell>
+            <StyledTableCell align="center">AcceaaionNumber</StyledTableCell>
             <StyledTableCell align="center">Book Name</StyledTableCell>
             <StyledTableCell align="center">Author</StyledTableCell>
+            <StyledTableCell align="center">Return Date</StyledTableCell>
+            <StyledTableCell align="center">Fine </StyledTableCell>
             <StyledTableCell align="center">Accept</StyledTableCell>
             <StyledTableCell align="center">Fine & Accept</StyledTableCell>
           </TableRow>
@@ -96,13 +128,15 @@ export default function Accept() {
         <TableBody>
           {users.map((user) => (
             <StyledTableRow key={user._id}>
-              <StyledTableCell align="left">{user.cardNo}</StyledTableCell>
-              <StyledTableCell align="center">{user.name}</StyledTableCell>
-              <StyledTableCell align="center">{user.stream}</StyledTableCell>
-              <StyledTableCell align="center">{user.bname}</StyledTableCell>
-              <StyledTableCell align="center">{user.author}</StyledTableCell>
+              <StyledTableCell align="left">{user.cardNumber}</StyledTableCell>
+              <StyledTableCell align="center">{user.studentName}</StyledTableCell>
+              <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookName}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
+              <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
+              <StyledTableCell align="center">{calculateFine(user.returnDate)}</StyledTableCell>
               <StyledTableCell align="center">
-                <ApproveButton>
+                <ApproveButton onClick={() => handleAccept(user._id, user.bookName, user.bookAuthor, user.accessionNumber)}> 
                   Accept
                   <SendIcon />
                 </ApproveButton>
