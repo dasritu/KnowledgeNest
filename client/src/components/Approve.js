@@ -35,7 +35,7 @@ export default function Approve() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/showstudent", {
+        const response = await fetch("/show-approrve", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -64,9 +64,13 @@ export default function Approve() {
           <TableRow>
             <StyledTableCell align="left">Card No. </StyledTableCell>
             <StyledTableCell align="center">Student Name</StyledTableCell>
+            {/* <StyledTableCell align="center">Stream</StyledTableCell> */}
             <StyledTableCell align="center">Accession No.</StyledTableCell>
+            
             <StyledTableCell align="center">Book Name</StyledTableCell>
             <StyledTableCell align="center">Book Author</StyledTableCell>
+            <StyledTableCell align="center">Return Date</StyledTableCell>
+           
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,12 +78,14 @@ export default function Approve() {
           {users.map((user) => (
             <StyledTableRow key={user._id}>
               <StyledTableCell component="th" scope="row">
-                {user.cardNo}
+                {user.cardNumber}
               </StyledTableCell>
-              <StyledTableCell align="center">{user.name}</StyledTableCell>
-              <StyledTableCell align="center">{user.email}</StyledTableCell>
-              <StyledTableCell align="center">{user.stream}</StyledTableCell>
-              <StyledTableCell align="center">{user.year}</StyledTableCell>
+              <StyledTableCell align="center">{user.studentName}</StyledTableCell>
+              {/* <StyledTableCell align="center">{user.stream}</StyledTableCell> */}
+              <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookName}</StyledTableCell>
+              <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
+              <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
