@@ -3,6 +3,7 @@ import "../styles/AdminDashboard.css";
 import { FaUserGraduate } from "react-icons/fa";
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { default as PieArcLabel } from "../components/Piechart";
+import { default as BasicLineChart } from "./Linediagram";
 
 export class AdminDashboard extends Component {
   render() {
@@ -117,7 +118,12 @@ export class AdminDashboard extends Component {
             </div>
           </div>
           <div className="second">
-            <PieArcLabel />
+            <div className="linediagram">
+              <BasicLineChart />
+            </div>
+            <div className="pie">
+              <PieArcLabel />
+            </div>
           </div>
         </div>
       </>

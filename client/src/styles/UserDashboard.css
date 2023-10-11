@@ -4,6 +4,21 @@
   justify-content: center;
   align-items: center;
 }
+.sec-2 {
+  display: flex;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+
+.part1{
+  padding:5px;
+}
+.part2{
+  padding: 5px;
+}
+
 .book-show {
   width: 70%;
   height: 100%;
@@ -49,13 +64,13 @@
 .notice {
   background: #f2f2f2; /* Background color for the notice container */
   padding: 20px; /* Add padding for spacing */
-  border-left: 6px solid #4CAF50; /* Add a left border with a green color (you can change the color) */
-  margin: 10px ; /* Add margin for spacing */
+  border-left: 6px solid #4caf50; /* Add a left border with a green color (you can change the color) */
+  margin: 10px; /* Add margin for spacing */
 }
 
 /* Style the notice icon */
-.notice::before { 
-  color: #4CAF50; /* Color of the icon (you can change it) */
+.notice::before {
+  color: #4caf50; /* Color of the icon (you can change it) */
   font-size: 20px; /* Size of the icon */
   padding-right: 10px; /* Add padding to separate the icon from the text */
 }

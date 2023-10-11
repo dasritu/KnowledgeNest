@@ -1,113 +1,124 @@
 .container {
-    display: block;
-    justify-content: center;
-    align-items: center;
-  }
-  .first {
-    height: 250px;
-    color: black;
-    text-align: center;
-    display: flex;
-    /* justify-content: space-around; */
-    align-items: center;
-  }
-  .stream {
-    margin: 0 5px;
-    background-color: white;
-    color: purple;
-    height: 250px;
-    width: 245px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .item {
-    display: block;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 50px;
-  }
-  
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+.first {
+  height: 250px;
+  color: black;
+  text-align: center;
+  display: flex;
+  /* justify-content: space-around; */
+  align-items: center;
+}
+.stream {
+  margin: 0 5px;
+  background-color: white;
+  color: purple;
+  height: 250px;
+  width: 245px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  /* AdminDashboard.css */
-  
-  .item {
-    transition: transform 0.2s; /* Add a smooth transition effect */
-  }
-  
-  .item:hover {
-    transform: scale(1.1); /* Scale up the item on hover */
-  }
-  /* AdminDashboard.css */
-  
-  .item {
-    perspective: 1000px; /* Add perspective to create the 3D effect */
-  
-    .flip-card {
-      width: 250px;
-      height: 150px;
-      position: relative;
+.item {
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 50px;
+}
+
+/* AdminDashboard.css */
+
+.item {
+  transition: transform 0.2s; /* Add a smooth transition effect */
+}
+
+.item:hover {
+  transform: scale(1.1); /* Scale up the item on hover */
+}
+/* AdminDashboard.css */
+
+.item {
+  perspective: 1000px; /* Add perspective to create the 3D effect */
+
+  .flip-card {
+    width: 250px;
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s; /* Add a transition effect for the flip */
+
+    .flip-card-inner {
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s; /* Add a transition effect for the inner card flip */
       transform-style: preserve-3d;
-      transition: transform 0.5s; /* Add a transition effect for the flip */
-  
-      .flip-card-inner {
-        width: 100%;
-        height: 100%;
-        transition: transform 0.5s; /* Add a transition effect for the inner card flip */
-        transform-style: preserve-3d;
-      }
-  
-      .flip-card-front,
-      .flip-card-back {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        backface-visibility: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: font-size 0.8s;
-      }
-  
-      .flip-card-front {
-        background-color: transparent;
-        transform: rotateY(0deg);
-        display: block; /* Initial state: facing front */
-      }
-  
-      .flip-card-back {
-        background-color: transparent;
-        transform: rotateY(180deg); /* Initial state: facing back, hidden */
-        p {
-          text-align: center;
-        }
-      }
-      .flip-card-back p {
-        font-size: 12px;
-        width: 200px;
-        font-weight: bold;
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: font-size 0.8s;
+    }
+
+    .flip-card-front {
+      background-color: transparent;
+      transform: rotateY(0deg);
+      display: block; /* Initial state: facing front */
+    }
+
+    .flip-card-back {
+      background-color: transparent;
+      transform: rotateY(180deg); /* Initial state: facing back, hidden */
+      p {
+        text-align: center;
       }
     }
-  
-    &:hover .flip-card {
-      transform: rotateY(180deg); /* Flip the card on hover */
-    }
-    &:hover .flip-card-front {
-      font-size: 0.8rem; /* Reduce the font size on hover */
+    .flip-card-back p {
+      font-size: 12px;
+      width: 200px;
+      font-weight: bold;
     }
   }
-  
-  .second {
-    height: 350px;
-    color: black;
-    background-color: transparent;
-    text-align: center;
-    border-radius: 10px;
-    margin: 0 5px;
-    margin-top: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+  &:hover .flip-card {
+    transform: rotateY(180deg); /* Flip the card on hover */
   }
+  &:hover .flip-card-front {
+    font-size: 0.8rem; /* Reduce the font size on hover */
+  }
+}
+
+.second {
+  height: 350px;
+  width: 100%;
+  color: black;
+  background-color: transparent;
+  text-align: center;
+  border-radius: 10px;
+  margin: 0 5px;
+  margin-top: 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.linediagram {
+  padding: 25px;
+  height: 100%;
+}
+.pie {
+  padding: 25px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -118,11 +118,11 @@ export default function UserDashboard() {
       const confirmRequest = window.confirm(
         "Are you sure you want to request this book?"
       );
-  
+
       if (!confirmRequest) {
         return;
       }
-  
+
       await axios.post("/request-book", {
         studentName,
         cardNumber,
@@ -131,9 +131,9 @@ export default function UserDashboard() {
         bookAuthor,
         accessionnumber,
       });
-  
+
       console.log(`Requested book with ID ${bookId}`);
-  
+
       // Update the state to include the newly requested book
       setRequestedBooks((prevRequestedBooks) => [
         ...prevRequestedBooks,
@@ -149,12 +149,7 @@ export default function UserDashboard() {
     }
   };
 
-  const handleReturn = async (
-    id,
-    bookName,
-    bookAuthor,
-    accessionNumber
-  ) => {
+  const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
     try {
       const response = await fetch("/about", {
         method: "GET",
@@ -163,11 +158,11 @@ export default function UserDashboard() {
         },
         credentials: "include",
       });
-  
+
       const data = await response.json();
       const { name: studentName, cardNo: cardNumber } = data;
       const currentDate = new Date().toLocaleDateString();
-  
+
       // Make the API call to return the book
       await axios.post("/return-book", {
         id,
@@ -178,21 +173,21 @@ export default function UserDashboard() {
         accessionNumber,
         returnDate: currentDate,
       });
-  
+
       // Update the state to remove the returned book
       setApprovedBooks((prevApprovedBooks) =>
         prevApprovedBooks.filter((book) => book._id !== id)
       );
-  
+
       // Optionally, you can update the requestedBooks state as well if needed
-  
+
       console.log(`Returned book with ID ${id}`);
       alert("Book Returned");
     } catch (error) {
       console.error("Error returning book:", error);
     }
   };
-  
+
   return (
     <>
       <div className="sec1">
@@ -260,67 +255,70 @@ export default function UserDashboard() {
         <div className="requestedbook"></div>
       </div>
       <div className="sec-2">
-        <h1>Your Requested Books</h1>
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th className="table-heading">Book Name</th>
-              <th className="table-heading">Book Author</th>
-              <th className="table-heading">Student Name</th>
-            </tr>
-          </thead>
-          <tbody className="tbody">
-            {requestedBooks.map((requestedBook) => (
-              <tr key={requestedBook._id}>
-                <td className="table-data">{requestedBook.bookName}</td>
-                <td className="table-data">{requestedBook.bookAuthor}</td>
-                <td className="table-data">{requestedBook.studentName}</td>
+        <div className="part1">
+          <h1 style={{fontSize: "30px"}}><b>Your Requested Books</b></h1>
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th className="table-heading">Book Name</th>
+                <th className="table-heading">Book Author</th>
+                <th className="table-heading">Student Name</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div className="sec-2">
-        <h1>Your Approved Books</h1>
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th className="table-heading">Book Name</th>
-              <th className="table-heading">Book Author</th>
-              <th className="table-heading">Student Name</th>
-              <th className="table-heading">Action</th>
-            </tr>
-          </thead>
-          <tbody className="tbody">
-            {approvedBooks.map((approvedBook) => (
-              <tr key={approvedBook._id}>
-                <td className="table-data">{approvedBook.bookName}</td>
-                <td className="table-data">{approvedBook.bookAuthor}</td>
-                <td className="table-data">{approvedBook.studentName}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      handleReturn(
-                        approvedBook._id,
-                        approvedBook.bookName,
-                        approvedBook.bookAuthor,
-                        approvedBook.accessionNumber
-                      )
-                    }
-                    style={{
-                      color: "white",
-                      backgroundColor: "#149d14",
-                      borderRadius: "5px",
-                    }}
-                    className="table-data"
-                  >
-                    Return
-                  </button>
-                </td>
+            </thead>
+            <tbody className="tbody">
+              {requestedBooks.map((requestedBook) => (
+                <tr key={requestedBook._id}>
+                  <td className="table-data">{requestedBook.bookName}</td>
+                  <td className="table-data">{requestedBook.bookAuthor}</td>
+                  <td className="table-data">{requestedBook.studentName}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="part2">
+          <h1 style={{fontSize: "30px"}}><b>Your Approved Books</b></h1>
+          <table className="user-table">
+            <thead>
+              <tr>
+                <th className="table-heading">Book Name</th>
+                <th className="table-heading">Book Author</th>
+                <th className="table-heading">Student Name</th>
+                <th className="table-heading">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="tbody">
+              {approvedBooks.map((approvedBook) => (
+                <tr key={approvedBook._id}>
+                  <td className="table-data">{approvedBook.bookName}</td>
+                  <td className="table-data">{approvedBook.bookAuthor}</td>
+                  <td className="table-data">{approvedBook.studentName}</td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        handleReturn(
+                          approvedBook._id,
+                          approvedBook.bookName,
+                          approvedBook.bookAuthor,
+                          approvedBook.accessionNumber
+                        )
+                      }
+                      style={{
+                        color: "white",
+                        backgroundColor: "#149d14",
+                        borderRadius: "5px",
+                      }}
+                      className="table-data"
+                    >
+                      Return
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );
