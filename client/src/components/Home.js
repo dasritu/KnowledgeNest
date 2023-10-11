@@ -18,6 +18,7 @@ import Accept from "./Accept";
 import { FcAcceptDatabase } from "react-icons/fc";
 import Approve from "./Approve";
 
+
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [role, setRole] = useState("user");
@@ -120,13 +121,15 @@ export default function Home() {
     );
   } else {
     return (
-      <div>
-        <div className="heading-user">
-          <h3>Student</h3>
-          <h3>Welcome {userName}</h3>
+      <>
+        <div>
+          <div className="heading-user">
+            <h3>Student</h3>
+            <h3>Welcome {userName}</h3>
+          </div>
+          {show && <UserDashboard />}
         </div>
-        {show && <UserDashboard />}
-      </div>
+      </>
     );
   }
 }
