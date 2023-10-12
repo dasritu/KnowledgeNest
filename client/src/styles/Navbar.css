@@ -2,26 +2,24 @@ html {
   scroll-behavior: smooth;
 }
 a {
-  color: white;
+  color: purple;
 }
 .nav {
   height: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #7d1540;
-  color: white;
+  background-color: transparent;
+  color: purple;
   padding: 5px 15px;
 }
 .logo img {
   height: 45px;
   width: 45px;
   margin-right: 15px;
-  filter: invert(1) sepia(0) saturate(0) hue-rotate(0deg);
+
   /* Change "invert(1)" and "hue-rotate(0deg)" to the desired color and hue rotation */
 }
-
-
 
 .icon {
   padding-right: 15px;
@@ -30,9 +28,8 @@ a {
   text-align: center;
 }
 .nav-link {
-  color: white;
+  color: purple;
   font-weight: bold;
-  
 }
 
 /* Style for the side navigation menu */

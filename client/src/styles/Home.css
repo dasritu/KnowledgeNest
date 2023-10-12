@@ -113,10 +113,7 @@ center {
 label {
   margin-top: 20px;
 }
-.contact img {
-  width: 34%;
-  filter: drop-shadow(9px 32px 6px grey);
-}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -138,10 +135,11 @@ label {
   height: 70%;
 }
 .left-side {
-  color: aliceblue;
-  background-color: purple;
+  color: purple;
+  background-color: white;
   width: 15%;
   height: 600px;
+  border-radius: 10px;
 }
 .right-side {
   color: purple;
@@ -167,6 +165,7 @@ ul {
 }
 ul li button {
   list-style: none;
+  color: purple;
   cursor: pointer;
   font-weight: bold;
   font-size: 20px;

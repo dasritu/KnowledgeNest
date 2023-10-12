@@ -133,16 +133,16 @@ export default function Navbar() {
     <div>
       <nav
         className="navbar fixed-top navbar-expand-lg "
-        style={{ background: "purple" }}
+        style={{ background: "transparent" }}
       >
         <div className="container-fluid">
           <div className="logo">
-            <img src={read} alt="" />
+            <img src={read} alt=""  />
           </div>
           <a
             className="navbar-brand custom-brand"
             href="/"
-            style={{ fontWeight: "bold", "font-size": "28px", color: "white" }}
+            style={{ fontWeight: "bold", "font-size": "28px", color: "purple" }}
           >
             KnowledgeNest
           </a>
