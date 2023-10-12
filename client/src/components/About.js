@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import '../styles/About.css';
+import login from '../image/About.png'
 export default function About() {
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -37,19 +38,43 @@ export default function About() {
 
   return (
     <div>
-      <form method="GET" className='about' style={{display:'block'}}>
-        
+      <div className="aboutbody">
+      <form method="GET" className='about' style={{ display: 'block' }}>
+
         <div className="filed">
-        <h1 className="mt-5">WELCOME <span style={{color:'blue',textTransform:'uppercase'}}>{userData.name}</span> </h1>
+          <h1 className="mt-5" style={{
+            textTransform: 'uppercase', color: 'black',
+            'text-transform': 'uppercase',
+            'font-stretch': 'expanded',
+            'font-family': 'monospace'
+          }}>WELCOME <span style={{
+            textTransform: 'uppercase', color: '#5e1d55',
+            'text-transform': 'uppercase',
+            'font-stretch': 'expanded',
+            'font-family': 'monospace'
+          }}>{userData.name}</span> </h1>
         </div>
-         <div className="details" >
-          <h4>Email:{userData.email}</h4>
-          <h4>Stream:{userData.stream}</h4>
-          <h4>Year:{userData.year}</h4>
-          <h4>PhoneNo:{userData.phone}</h4>
-          
-         </div>
+
+        <div className="details" >
+          <div className="img">
+            <img src={login} alt="" />
+          </div>
+          <div className="detail-data">
+            <div className="card-heading">
+              <h4>STUDENT</h4>
+            </div>
+            <div className="body">
+              <h4>Email: {userData.email}</h4>
+              <h4>Stream: {userData.stream}</h4>
+              <h4>Year: {userData.year}</h4>
+              <h4>Phone Number: {userData.phone}</h4>
+              <h4>Card Number: {userData.cardNo}</h4>
+            </div>
+
+          </div>
+        </div>
       </form>
+      </div>
     </div>
   );
 }

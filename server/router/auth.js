@@ -49,6 +49,7 @@ const Quantity=require('../model/qSchema');
 const Request=require('../model/requestSchema');
 const ApproveBook=require('../model/approve-bookSchema')
 const Return=require('../model/returnScehma');
+const AllBook=require('../model/AlllBookScehma');
 
 
 
@@ -167,7 +168,8 @@ router.post('/addbook', async (req, res) => {
     // Add a new record to the Book schema
     const newBook = new Book({ name, author, purchasedate, accessionnumber });
     await newBook.save();
-
+    const allnewbook=new AllBook({name,author,purchasedate,accessionnumber});
+    await allnewbook.save();
     console.log('Added a new book:', newBook);
     res.json(newBook);
   } catch (error) {
@@ -247,7 +249,8 @@ router.put('/updatebook/:id', async (req, res) => {
   try {
     const bookId = req.params.id;
     const prevBook = await Book.findById(bookId);
-
+    const books=await AllBook.findOne({accessionnumber:prevBook.accessionnumber});
+    const booksId=books._id;
     // Check if the author or book name has been updated
     if (
       (req.body.author && req.body.author !== prevBook.author) ||
@@ -277,6 +280,7 @@ router.put('/updatebook/:id', async (req, res) => {
     }
 
     const updatedBook = await Book.findByIdAndUpdate(bookId, req.body, { new: true });
+    const updateAllBook = await AllBook.findByIdAndUpdate(booksId,req.body,{new:true});
 
     if (!updatedBook) {
       return res.status(404).json({ error: 'Book not found' });
@@ -519,10 +523,19 @@ router.post("/accept-book/:id", async (req, res) => {
     }
 
     // Create a new Book record
-    const newBook = new Book({ name:bookName, author:bookAuthor, accessionnumber:accessionNumber });
+    
+   
+    const purchasedate_data=await AllBook.findOne({accessionnumber:accessionNumber});
+    const purchasedate=purchasedate_data.purchasedate;
+    const newBook = new Book({ name:bookName, author:bookAuthor, accessionnumber:accessionNumber,purchasedate:purchasedate});
     await newBook.save();
 
     res.json({ message: 'Book accepted successfully' });
+    const user_data = await User.findOne({ cardNo: returnBook.cardNumber });
+    const email = user_data.email;
+    const emailText = `${returnBook.studentName} Your returned book ${returnBook.bookName}, Author: ${returnBook.bookAuthor} is accepted of card no: ${returnBook.cardNumber}`;
+    sendEmail(email, 'Book Accepted', emailText);
+
   } catch (error) {
     console.error('Error accepting book:', error);
     res.status(500).json({ error: 'Internal Server Error' });

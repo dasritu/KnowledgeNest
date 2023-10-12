@@ -29,9 +29,10 @@ export default function Login() {
     } else {
       navigate("/");
       dispatch({ type: "USER", payload: true });
+      // window.alert("Login Successfull");
     }
 
-    window.alert("Login Successfull");
+    
   };
 
   return (
