@@ -1,0 +1,70 @@
+*{
+    margin:0;
+    box-sizing: border-box;
+}
+
+.details{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+.details .img{
+    width:40%;
+
+}
+.details .img img{
+    width: 100%;
+}
+.card-heading{
+    height:10vh;
+    background-color: purple;
+    color:white;
+    text-transform: uppercase;
+    text-align: center;
+  
+}
+.card-heading h4{
+    padding-top:20px ;
+}
+.body{
+    padding:10px;
+    padding: 8px;
+    margin-top: 12px;
+    text-align: center;
+   
+}
+.body h4{
+    font-size: 17px;
+    font-family: monospace;
+}
+.detail-data{
+    height: 41vh;
+    border-radius: 30px;
+    box-shadow: 15px 10px 21px grey;
+    background: #e7c3de;
+}
+.card-heading{
+    height: 10vh;
+    background-color: #97468c;
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
+.card-heading h4{
+    font-family: monospace;
+    font-size: 30px;
+}
+.filed{
+    display: flex;
+    
+    margin-top:20px;
+   
+}
+.filed h1{
+    text-align: center;
+}
+.aboutbody{
+    background:url('../image/AboutBackground.png');
+    background-size: cover;
+}
