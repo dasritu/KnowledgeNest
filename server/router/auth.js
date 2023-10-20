@@ -303,8 +303,6 @@ router.post("/request-book",async(req,res)=>{
     console.error('Error adding a new request:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-  
-
 });
 
 router.post("/return-book", async (req, res) => {
@@ -349,6 +347,55 @@ router.get("/requested-books", async (req, res) => {
     });
 
     res.json(existingRequest);
+  } catch (error) {
+    console.error("Error fetching existing requests:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//to check how many request are there for each student  
+
+router.get("/user-requested-books", async (req, res) => {
+  const { cardNumber } = req.query;
+  try {
+    const existingBooks = await Request.find({
+      cardNumber,
+    });
+
+    // Extract relevant data from existingBooks
+    const extractedData = existingBooks.map((book) => ({
+      _id: book._id,
+      bookName: book.bookName,
+      bookAuthor: book.bookAuthor,
+      studentName: book.studentName,
+      // Add other relevant fields as needed
+    }));
+
+    res.json(extractedData);
+  } catch (error) {
+    console.error("Error fetching existing requests:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//to-check in approve table
+router.get("/user-approved-books", async (req, res) => {
+  const { cardNumber } = req.query;
+  try {
+    const existingBooks = await ApproveBook.find({
+      cardNumber,
+    });
+
+    // Extract relevant data from existingBooks
+    const extractedData = existingBooks.map((book) => ({
+      _id: book._id,
+      bookName: book.bookName,
+      bookAuthor: book.bookAuthor,
+      studentName: book.studentName,
+      // Add other relevant fields as needed
+    }));
+
+    res.json(extractedData);
   } catch (error) {
     console.error("Error fetching existing requests:", error);
     res.status(500).json({ error: "Internal Server Error" });
