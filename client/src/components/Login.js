@@ -37,7 +37,7 @@ export default function Login() {
 
   return (
     <div>
-      <form method="POST">
+      <form method="POST" className="signup-form">
         <div className="form">
           <figure>
             <img src={login} alt="" />

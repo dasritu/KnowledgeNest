@@ -1,0 +1,166 @@
+.guestbody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../image/AboutBackground.png");
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+}
+
+.hero-guest1 {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-guest1 img {
+  width: 100%;
+}
+.hero-guest2 {
+  width: 40%;
+}
+.text-guest {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin-top: -20px;
+}
+.text-guest h3 {
+  font-weight: bold;
+  font-size: 40px;
+}
+.text-guest p {
+  text-align: center;
+  padding: 30px;
+  font-size: 25px;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.guest-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.guest-logo img {
+  width: 150px;
+  height: 150px;
+  margin: 25px;
+}
+.guest-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.guest-footer h4 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 25px;
+}
+.guest_about {
+  height: 100vh;
+}
+.guest-heading {
+  margin-top: 76px;
+  text-align: center;
+}
+.guest-about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin-top: -100px;
+}
+.firstdiv {
+  width: 30%;
+  height: 50%;
+  padding: 25px;
+  margin: 20px;
+  box-shadow: 5px 5px 10px purple;
+  display: block;
+  text-align: center;
+  border-radius: 15px;
+}
+.seconddiv {
+  width: 30%;
+  height: 50%;
+  padding: 25px;
+  margin: 20px;
+  box-shadow: 5px 5px 10px purple;
+  display: block;
+  text-align: center;
+  border-radius: 15px;
+}
+.thirddiv {
+  width: 30%;
+  padding: 25px;
+  height: 50%;
+  margin: 20px;
+  box-shadow: 5px 5px 10px purple;
+  display: block;
+  text-align: center;
+  border-radius: 15px;
+}
+/* Style the contact container */
+.contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+  margin-top: 25px;
+}
+.contact-image {
+  flex: 60%; /* Image takes 60% of the container width */
+  padding: 20px; /* Add padding to create some spacing */
+  text-align: center;
+}
+
+.contact-image img {
+  width: 100%;
+  max-width: 100%; /* Ensure the image doesn't exceed its container */
+  height: auto;
+}
+
+.guest-contact {
+  flex: 40%; /* Form takes 40% of the container width */
+  padding: 20px; /* Add padding to create some spacing */
+  text-align: center;
+}
+.guest-heading {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.guest-form {
+  margin: 20px;
+  padding: 25px;
+  text-align: center;
+}
+
+.guest-input {
+  /* Style for input elements */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.guest-input-msg {
+  /* Style for the message input */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.submit {
+  /* Style for the submit button */
+  background-color: #0074d9;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}

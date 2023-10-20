@@ -16,12 +16,18 @@ import Admin from './components/Admin';
 export const UserContext = createContext();
 
 function App() {
- 
-  const [state,dispatch] =useReducer(reducer,initialState);
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <>
-    <UserContext.Provider value={{state,dispatch}}>
-      <Navbar />
+      <UserContext.Provider value={{ state, dispatch }}>
+        <Navbar scrollToSection={scrollToSection} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

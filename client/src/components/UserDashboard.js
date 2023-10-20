@@ -7,7 +7,7 @@ export default function UserDashboard() {
   const [samebook, setsamebook] = useState(false);
   const [requestedBooks, setRequestedBooks] = useState([]);
   const [approvedBooks, setApprovedBooks] = useState([]);
-
+  const [name, setName] = useState();
   const fetchRequestedBooks = async () => {
     try {
       const response = await fetch("/about", {
@@ -20,6 +20,7 @@ export default function UserDashboard() {
 
       const data = await response.json();
       const cardNumber = data.cardNo;
+      setName(data.name)
 
       const requestedBooksResponse = await axios.get("/request-find", {
         params: { cardNo: cardNumber },
@@ -190,6 +191,10 @@ export default function UserDashboard() {
 
   return (
     <>
+                <div className="heading-user">
+            <h3>Student</h3>
+            <h3>Welcome {name}</h3>
+          </div>
       <div className="sec1">
         <div className="book-show">
           <table className="user-table">
