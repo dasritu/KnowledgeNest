@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/UserDashboard.css";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function UserDashboard() {
   const [books, setBooks] = useState([]);
   const [samebook, setsamebook] = useState(false);
@@ -166,6 +167,8 @@ export default function UserDashboard() {
     } catch (error) {
       console.error("Error making request:", error);
     }
+    toast.success(`Book ${bookName} requested successfully!`);
+
   };
 
   const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
@@ -209,6 +212,7 @@ export default function UserDashboard() {
 
   return (
     <>
+     <ToastContainer position="top-right" autoClose={3000} />
       <div className="sec1">
         <div className="book-show">
           <table className="user-table">

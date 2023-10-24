@@ -12,7 +12,8 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
 import Stack from "@mui/material/Stack";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "purple", // Change to your desired background color
@@ -115,7 +116,7 @@ export default function Request() {
             console.log(approveData);
 
             // Show an alert after successful approval
-            alert("Book approved successfully!");
+            toast.success(`Book  Approved successfully!`);
             setUsers((prevUsers) =>
               prevUsers.filter((prevUser) => prevUser._id !== user._id)
             );
@@ -136,6 +137,8 @@ export default function Request() {
   };
 
   return (
+    <>
+    <ToastContainer position="top-right" autoClose={3000} />
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -179,5 +182,6 @@ export default function Request() {
         </TableBody>
       </Table>
     </TableContainer>
+    </>
   );
 }
