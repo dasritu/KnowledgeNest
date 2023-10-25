@@ -2,13 +2,16 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
+import axios from "axios";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import Modal from 'react-modal';
+import { ToastContainer, toast } from "react-toastify";
+import { MdClose } from "react-icons/md";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "purple", // Change to your desired background color
@@ -31,7 +34,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function CustomizedTables() {
   const [users, setUsers] = useState([]);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const[cardNumber,setCardNumber]=useState(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,8 +61,27 @@ export default function CustomizedTables() {
 
     fetchData();
   }, []);
-
+  const handleUserClick = async (user) => {
+    try {
+      const requestedBooksResponse = await axios.get("/approve-find", {
+        params: { cardNo: user.cardNo },
+      });
+      const data = await requestedBooksResponse.data;
+      // Assuming data is an array of approved books for the selected student
+      setSelectedUser({ ...user, approvedBooks: data });
+      setIsModalOpen(true)
+      console.log(data)
+    } catch (error) {
+      console.error("Error fetching approved books:", error);
+      // Handle error or show a notification
+      toast.error("Error fetching approved books");
+    }
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
+    <div>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -78,7 +102,10 @@ export default function CustomizedTables() {
               <StyledTableCell component="th" scope="row">
                 {user.cardNo}
               </StyledTableCell>
-              <StyledTableCell align="right">{user.name}</StyledTableCell>
+              <button style={{cursor:"ponter"}
+                }><StyledTableCell align="center" onClick={() => handleUserClick(user)} >
+                  {user.name}
+                </StyledTableCell></button>
               <StyledTableCell align="right">{user.email}</StyledTableCell>
               <StyledTableCell align="right">{user.stream}</StyledTableCell>
               <StyledTableCell align="right">{user.year}</StyledTableCell>
@@ -89,5 +116,40 @@ export default function CustomizedTables() {
         </TableBody>
       </Table>
     </TableContainer>
+    <Modal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        style={{
+          content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            boxShadow:"17px 24px 48px grey",
+            background:"rgb(190 166 194)",
+            height:"50vh",
+            borderRadius:"30px"
+          },
+         
+        }}
+      >
+        <h2>Approved Books for {selectedUser?.name}</h2>
+        <MdClose size={24} onClick={handleCloseModal} style={{ cursor: "pointer" }} />
+        <ul>
+  {selectedUser?.approvedBooks && selectedUser.approvedBooks.length > 0 ? (
+    selectedUser.approvedBooks.map((book) => (
+      <li key={book._id}>
+        {book.bookName} by {book.bookAuthor}
+      </li>
+    ))
+  ) : (
+    <li>No books approved</li>
+  )}
+</ul>
+
+      </Modal>
+    </div>
   );
 }
