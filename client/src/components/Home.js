@@ -17,7 +17,7 @@ import Request from "./Request";
 import Accept from "./Accept";
 import { FcAcceptDatabase } from "react-icons/fc";
 import Approve from "./Approve";
-// import Guest from "./Guest";
+import Guest from "./Guest";
 
 
 export default function Home() {
@@ -124,11 +124,11 @@ export default function Home() {
     return (
       <>
         <div>
-          <div className="heading-user">
+          {/* <div className="heading-user">
             <h3>Student</h3>
             <h3>Welcome {userName}</h3>
-          </div>
-          {/* {show && <Guest />} */}
+          </div> */}
+          {!show && <Guest />}
           {show && <UserDashboard />}
         </div>
       </>

@@ -71,7 +71,7 @@ h5 {
 }
 input[type="text"],
 [type="email"] {
-  margin-left: 26px;
+  margin-left: 0;
   border: none;
   border-bottom: 2px solid black;
   background-color: transparent;
@@ -83,16 +83,9 @@ textarea {
   border-bottom: 2px solid black;
   background-color: transparent;
 }
-input[type="text"],
-input[type="email"],
-textarea:focus {
-  border: none;
-  outline: none;
-  border-bottom: 2px solid black;
-  background-color: transparent;
-}
+
 .input {
-  margin-top: 30px;
+  margin-top: 5px;
 }
 label {
   font-weight: bold;

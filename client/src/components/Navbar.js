@@ -5,7 +5,7 @@ import { UserContext } from "../App";
 import "../styles/Navbar.css";
 import read from "../image/reading.png";
 
-export default function Navbar() {
+export default function Navbar({ scrollToSection }) {
   const [role, setRole] = useState("user");
 
   const { state, dispatch } = useContext(UserContext);
@@ -101,18 +101,35 @@ export default function Navbar() {
       return (
         <>
           <li className="nav-item">
-            <NavLink className="nav-link " aria-current="page" to="/">
+            <NavLink
+              className="nav-link"
+              to="/"
+              onClick={() => scrollToSection("home")}
+            >
               Home
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/about">
-              Student Profile
-            </NavLink>
+            <span
+              className="nav-link"
+              onClick={() => scrollToSection("about")}
+              style={{ cursor: "pointer" }}
+            >
+              About Us
+            </span>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/contact">
+            <span
+              className="nav-link"
+              onClick={() => scrollToSection("contact")}
+              style={{ cursor: "pointer" }}
+            >
               Contact
+            </span>
+          </li>
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/about">
+              Student Profile
             </NavLink>
           </li>
           <li className="nav-item">
@@ -137,7 +154,7 @@ export default function Navbar() {
       >
         <div className="container-fluid">
           <div className="logo">
-            <img src={read} alt=""  />
+            <img src={read} alt="" />
           </div>
           <a
             className="navbar-brand custom-brand"

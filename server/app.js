@@ -1,6 +1,5 @@
 const dotenv=require("dotenv");
 const express=require('express');
-
 const cookieParser = require('cookie-parser');
 const app=express();
 app.use(cookieParser());
@@ -16,7 +15,9 @@ app.get('/',(req,res)=>{
 });
 
 //MIddleware
-
+// app.use(cors({
+//     origin:"http://localhost:3000",
+// }));
 const middleware=(req,res,next)=>{
     console.log("hello my Middleware");
     next();
