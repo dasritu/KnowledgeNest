@@ -7,7 +7,8 @@ import { FiSave } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
 import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const BookManagementComponent = () => {
   const [books, setBooks] = useState([]);
   const [editableBook, setEditableBook] = useState({
@@ -62,6 +63,7 @@ const BookManagementComponent = () => {
     } catch (error) {
       console.error("Error updating book:", error);
     }
+    toast.success(`Book Updated successfully!`);
   };
 
   const handleDeleteBook = async (id) => {
@@ -77,9 +79,12 @@ const BookManagementComponent = () => {
       await axios.delete(`/deletebook/${id}`);
       const updatedBooks = books.filter((book) => book._id !== id);
       setBooks(updatedBooks);
+      const BookName=updatedBooks.name;
+      toast.success(`Book ${BookName} Deleted successfully!`);
     } catch (error) {
       console.error("Error deleting book:", error);
     }
+   
   };
 
   const handleAddRecord = () => {
@@ -117,9 +122,11 @@ const BookManagementComponent = () => {
     } catch (error) {
       console.error("Error adding a new book:", error);
     }
+    toast.success(`Book  Added successfully!`);
   };
   return (
     <>
+    <ToastContainer position="top-right" autoClose={3000} />
       <div>
         <h2 className="heading1">
           <div> Books </div>
