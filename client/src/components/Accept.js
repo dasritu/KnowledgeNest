@@ -11,6 +11,8 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SendIcon from "@mui/icons-material/Send";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,6 +72,8 @@ export default function Accept() {
         // Set the data directly to the state
         setUsers(data);
         console.log(users);
+       
+   
       } catch (e) {
         console.error("Catch Error:", e);
       }
@@ -102,7 +106,7 @@ export default function Accept() {
       // Assuming your server returns a JSON response, you can handle it here if needed
       const result = await response.json();
       console.log("Accept Book Response:", result);
-
+      toast.success(`Book ${bookName} accepted successfully!`);
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error accepting book:", error);
@@ -110,6 +114,7 @@ export default function Accept() {
   };
 
   return (
+    <>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -148,6 +153,10 @@ export default function Accept() {
           ))}
         </TableBody>
       </Table>
+      
     </TableContainer>
+    <ToastContainer position="top-right" autoClose={3000} />
+    </>
+    
   );
 }
