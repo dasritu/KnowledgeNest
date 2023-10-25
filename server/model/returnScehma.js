@@ -23,7 +23,7 @@ const approveScehma=new mongoose.Schema({
         type:String
     },
     returnDate :{
-        type:Date
+        type:String
     }
     
 })
