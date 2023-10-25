@@ -121,7 +121,7 @@ export default function Accept() {
           <TableRow>
             <StyledTableCell align="left">Card No. </StyledTableCell>
             <StyledTableCell align="center">Student Name</StyledTableCell>
-            <StyledTableCell align="center">AcceaaionNumber</StyledTableCell>
+            <StyledTableCell align="center">AccessionNumber</StyledTableCell>
             <StyledTableCell align="center">Book Name</StyledTableCell>
             <StyledTableCell align="center">Author</StyledTableCell>
             <StyledTableCell align="center">Return Date</StyledTableCell>
