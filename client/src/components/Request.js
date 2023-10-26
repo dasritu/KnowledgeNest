@@ -149,7 +149,7 @@ export default function Request() {
             <StyledTableCell align="center">Book Name</StyledTableCell>
             <StyledTableCell align="center">Author</StyledTableCell>
             <StyledTableCell align="center">Approve</StyledTableCell>
-            <StyledTableCell align="center">Reject</StyledTableCell>
+            {/* <StyledTableCell align="center">Reject</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -171,12 +171,12 @@ export default function Request() {
                   <SendIcon />
                 </ApproveButton>
               </StyledTableCell>
-              <StyledTableCell align="center">
+              {/* <StyledTableCell align="center">
                 <RejectButton>
                   Reject
                   <DeleteIcon />
                 </RejectButton>
-              </StyledTableCell>
+              </StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>

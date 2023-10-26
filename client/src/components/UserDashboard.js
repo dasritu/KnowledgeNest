@@ -21,7 +21,7 @@ export default function UserDashboard() {
 
       const data = await response.json();
       const cardNumber = data.cardNo;
-      setName(data.name)
+      setName(data.name);
 
       const requestedBooksResponse = await axios.get("/request-find", {
         params: { cardNo: cardNumber },
@@ -110,21 +110,29 @@ export default function UserDashboard() {
         setsamebook(true);
         return;
       }
-      const userRequestedBooksResponse = await axios.get("/user-requested-books", {
-        params: { cardNumber: cardNumber },
-      });
-      const userApprovedBooksResponse = await axios.get("/user-approved-books", {
-        params: { cardNumber: cardNumber },
-      });
+      const userRequestedBooksResponse = await axios.get(
+        "/user-requested-books",
+        {
+          params: { cardNumber: cardNumber },
+        }
+      );
+      const userApprovedBooksResponse = await axios.get(
+        "/user-approved-books",
+        {
+          params: { cardNumber: cardNumber },
+        }
+      );
       const userApprovedBooksCount = userApprovedBooksResponse.data.length;
       if (userApprovedBooksCount >= 5) {
-        alert("You cannot request more thann 5 books because your 5 books are already approved..");
+        alert(
+          "You cannot request more thann 5 books because your 5 books are already approved.."
+        );
         return;
       }
       // console.warn("data,",userRequestedBooksResponse);
       const userRequestedBooksCount = userRequestedBooksResponse.data.length;
-      
-      console.log(userRequestedBooksCount)
+
+      console.log(userRequestedBooksCount);
       // Check if the user has already requested or been approved for this book
       if (userRequestedBooksCount >= 5) {
         alert("You cannot request more than 5 books.");
@@ -169,7 +177,6 @@ export default function UserDashboard() {
       console.error("Error making request:", error);
     }
     toast.success(`Book ${bookName} requested successfully!`);
-
   };
 
   const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
@@ -213,11 +220,11 @@ export default function UserDashboard() {
 
   return (
     <>
-              <div className="heading-user">
-            <h3>Student</h3>
-            <h3>Welcome {name}</h3>
-          </div>
-     <ToastContainer position="top-right" autoClose={3000} />
+      <div className="heading-user">
+        <h3>Student</h3>
+        <h3>Welcome {name}</h3>
+      </div>
+      <ToastContainer position="top-right" autoClose={3000} />
       <div className="sec1">
         <div className="book-show">
           <table className="user-table">
@@ -284,7 +291,9 @@ export default function UserDashboard() {
       </div>
       <div className="sec-2">
         <div className="part1">
-          <h1 style={{fontSize: "30px"}}><b>Your Requested Books</b></h1>
+          <h1 style={{ fontSize: "30px" }}>
+            <b>Your Requested Books</b>
+          </h1>
           <table className="user-table">
             <thead>
               <tr>
@@ -306,7 +315,9 @@ export default function UserDashboard() {
         </div>
 
         <div className="part2">
-          <h1 style={{fontSize: "30px"}}><b>Your Approved Books</b></h1>
+          <h1 style={{ fontSize: "30px" }}>
+            <b>Your Approved Books</b>
+          </h1>
           <table className="user-table">
             <thead>
               <tr>

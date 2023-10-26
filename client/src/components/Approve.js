@@ -128,22 +128,47 @@ export default function Approve() {
             bottom: "auto",
             marginRight: "-50%",
             transform: "translate(-50%, -50%)",
-            boxShadow:"17px 24px 48px grey",
-            background:"rgb(190 166 194)",
-            height:"50vh",
-            borderRadius:"30px"
+            boxShadow: "17px 24px 48px grey",
+            background: "purple",
+            height: "50vh",
+            width: "50vw",
+            borderRadius: "30px",
           },
-         
         }}
       >
-        <h2>Approved Books for {selectedUser?.studentName}</h2>
-        <MdClose size={24} onClick={handleCloseModal} style={{ cursor: "pointer" }} />
+        <div className="toast-heading">
+          <h2 style={{ textAlign: "center", color: "white", fontSize:"30px" }}>
+            Approved Books for <strong>{selectedUser?.studentName}</strong>
+          </h2>
+          <MdClose
+            size={24}
+            onClick={handleCloseModal}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
         <ul>
-          {selectedUser?.approvedBooks.map((book) => (
-            <li key={book._id}>
-              {book.bookName} by {book.bookAuthor}
-            </li>
-          ))}
+          {selectedUser?.approvedBooks && selectedUser.approvedBooks.length > 0 ? (
+            <table className="toaster-books">
+              <thead className="toaster-head">
+                <tr>
+                  <th style={{ textAlign: "center" }}>Book Accession Number</th>
+                  <th style={{ textAlign: "center" }}>Book Name</th>
+                  <th style={{ textAlign: "center" }}>Author Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedUser.approvedBooks.map((book) => (
+                  <tr key={book._id}>
+                  <td style={{ textAlign: "center" , color:"white"}}>{book.accessionNumber}</td>
+                  <td style={{ textAlign: "center" , color:"white"}}>{book.bookName}</td>
+                  <td style={{ textAlign: "center" , color:"white"}}>{book.bookAuthor}</td>
+                </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+              <li style={{ textAlign: "center", color: "white" }}>No books approved</li>
+          )}
         </ul>
       </Modal>
 
