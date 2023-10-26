@@ -102,7 +102,7 @@ export default function Guest() {
               <input type="email" id="email" class="guest-input" />
               <label for="message">Message:</label>
               <input type="text" id="message" class="guest-input-msg" />
-              <input type="submit" class="submit" value="Submit" />
+              <input type="submit" class="submit-guest" value="Submit" />
             </form>
           </div>
         </div>

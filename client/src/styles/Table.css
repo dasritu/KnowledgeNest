@@ -1,0 +1,13 @@
+.toast-heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toaster-books{
+    height: 100%;
+    width: 100%;
+}
+.toaster-head{
+    background-color: transparent;
+    color: white;
+}
