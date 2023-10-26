@@ -213,6 +213,10 @@ export default function UserDashboard() {
 
   return (
     <>
+              <div className="heading-user">
+            <h3>Student</h3>
+            <h3>Welcome {name}</h3>
+          </div>
      <ToastContainer position="top-right" autoClose={3000} />
       <div className="sec1">
         <div className="book-show">
