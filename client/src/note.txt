@@ -1,3 +1,8 @@
-navbar color change on scrolling
-responsive
-active button
+1.Navbar
+2.Responsive of navbar
+3.active navar
+4.admin profile create
+5.Book add ,edit and delete remove
+6.Home Page Modify
+7.Fine and accept change
+8.Date stringify during print
