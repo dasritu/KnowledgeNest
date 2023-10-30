@@ -62,10 +62,18 @@
 }
 .guest_about {
   height: 100vh;
+  margin-top: 162px;
+  
 }
 .guest-heading {
-  margin-top: 76px;
+  margin-top: 146px;
   text-align: center;
+  font-size: 45px;
+  padding-top: 90px;
+}
+.guest-heading-contact{
+  font-size: 45px;
+  padding-top: 20px;
 }
 .guest-about {
   display: flex;
@@ -109,13 +117,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 40px;
-  margin-top: 25px;
+  /* padding: 40px; */
+  /* margin-top: 25px; */
 }
 .contact-image {
-  flex: 60%; /* Image takes 60% of the container width */
-  padding: 20px; /* Add padding to create some spacing */
+  flex: 46%; 
+  
   text-align: center;
 }
 
@@ -123,19 +130,17 @@
   width: 100%;
   max-width: 100%; /* Ensure the image doesn't exceed its container */
   height: auto;
+  margin-top: 85px;
 }
 
 .guest-contact {
   flex: 40%; /* Form takes 40% of the container width */
-  padding: 20px; /* Add padding to create some spacing */
+  padding: 8px; /* Add padding to create some spacing */
   text-align: center;
+  box-shadow: 5px 5px 10px purple;
+  margin: 40px;
+  border-radius: 15px;
 }
-.guest-heading {
-  font-size: 24px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
 .guest-form {
   margin: 20px;
   padding: 25px;
@@ -156,11 +161,13 @@
   margin-bottom: 10px;
 }
 
-.submit-guest{
+.submit-guest {
   /* Style for the submit button */
   /* background-color: #0074d9; */
   color: #fff;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  background-color: purple;
+  border-radius: 10px;
 }

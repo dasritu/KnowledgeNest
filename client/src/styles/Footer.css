@@ -1,17 +1,12 @@
-footer{
-    background-color: #7d1540;
-    color: white;
-    bottom: 0;
-    width: 100%;
+.social-icons {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.social-icon {
+    margin-right: 10px; /* Add some spacing between the icons */
+    width: 50px;
     height: 50px;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-}
-p{
-    margin-top: 20px;
-    margin-bottom: 1rem;
-    text-align: center;
-    font-size: 14px;
-}
+  }
+  

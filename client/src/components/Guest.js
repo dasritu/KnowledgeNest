@@ -8,6 +8,7 @@ import { GrContactInfo } from "react-icons/gr";
 import { default as img1 } from "../image/online-learning.png";
 import { default as img2 } from "../image/book-stack.png";
 import { default as img3 } from "../image/notebook.png";
+import Footer from "./Footer";
 export default function Guest() {
   return (
     <>
@@ -35,12 +36,12 @@ export default function Guest() {
           </div>
         </div>
       </div>
-      <div className="guest_about" id="about">
-        <h1 className="guest-heading">
-          <GrContactInfo />
+      <div className="guest_about" >
+        <h1 className="guest-heading" id="about">
+          <GrContactInfo style={{margin: "10px"}} />
           About US
         </h1>
-        <div className="guest-about">
+        <div className="guest-about" >
           <div className="firstdiv">
             <div className="icon-g">
               <img src={img1} style={{ height: "75px", width: "75px" }} />
@@ -86,13 +87,13 @@ export default function Guest() {
           </div>
         </div>
         <div class="contact-container">
-          <div class="contact-image">
+          <div class="contact-image" id="contact">
             <img src={contact} alt="Contact Image" />
           </div>
-          <div class="guest-contact" id="contact">
-            <h1 class="guest-heading">
-              <GrContactInfo />
-              Contact US
+          <div class="guest-contact" >
+            <h1 class="guest-heading-contact">
+              {/* <GrContactInfo /> */}
+              <strong>Contact US</strong>
             </h1>
 
             <form action="" class="guest-form">
@@ -107,13 +108,7 @@ export default function Guest() {
           </div>
         </div>
 
-        <div className="guest-footer">
-          <h4>Techno College Hooghly</h4>
-          <br />
-          <h4>A Technical & Management College Under Techno India Group</h4>
-          <br />
-          <h4>Affilated to MATAUT, WB formerly WBUT</h4>
-        </div>
+        <Footer />
       </div>
     </>
   );
