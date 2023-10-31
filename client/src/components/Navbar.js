@@ -7,9 +7,23 @@ import read from "../image/reading.png";
 
 export default function Navbar({ scrollToSection }) {
   const [role, setRole] = useState("user");
-
+  const [scrolling, setScrolling] = useState(false);
   const { state, dispatch } = useContext(UserContext);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
 
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const userHome = async () => {
     try {
       const response = await fetch("/about", {
@@ -47,7 +61,7 @@ export default function Navbar({ scrollToSection }) {
       dispatch({ type: "USER", payload: false });
     }
   }, []);
-
+  const navbarClass = scrolling ? "navbar scrolled" : "navbar";
   const RenderMenu = () => {
     if (state) {
       if (role === "user") {
@@ -148,9 +162,9 @@ export default function Navbar({ scrollToSection }) {
   };
   return (
     <div>
-      <nav
-        className="navbar fixed-top navbar-expand-lg "
-        style={{ background: "transparent" }}
+        <nav
+        className={`${navbarClass} fixed-top navbar-expand-lg`}
+        style={{ background: scrolling ? "rgb(158 149 149)" : "transparent" }}
       >
         <div className="container-fluid">
           <div className="logo">
