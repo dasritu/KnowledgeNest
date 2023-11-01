@@ -98,7 +98,7 @@ export default function Accept() {
   const calculateFine = (returnDate) => {
     const finePerDay = 1; // 1 rupee per day
     const currentDate = new Date();
-    const returnedDate = new Date(returnDate);
+    const returnedDate = returnDate
     const timeDifference = currentDate - returnedDate;
     const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
     const fine = daysDifference * finePerDay;

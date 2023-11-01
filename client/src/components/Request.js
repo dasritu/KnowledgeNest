@@ -87,22 +87,7 @@ export default function Request() {
         bookAuthor: user.bookAuthor,
       };
 
-      // Check if the book details are present in the quantitySchema
-      const response = await fetch("/check-quantity", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(bookDetails),
-      });
 
-      if (response.ok) {
-        const data = await response.json();
-
-        // If quantity is greater than or equal to 1, proceed with approval
-        if (data.quantity >= 1) {
-          // Make a request to approve the book
           const approveResponse = await fetch(`/approve-book/${user._id}`, {
             method: "POST",
             headers: {
@@ -124,13 +109,7 @@ export default function Request() {
           } else {
             console.error(`Error approving book`);
           }
-        } else {
-          console.log("Not enough quantity to approve");
-          alert("Not Enough Quantity To approve");
-        }
-      } else {
-        console.error(`Error checking quantity`);
-      }
+        
     } catch (error) {
       console.error("Error approving book:", error);
     }
@@ -148,6 +127,8 @@ export default function Request() {
             <StyledTableCell align="center">Stream</StyledTableCell>
             <StyledTableCell align="center">Book Name</StyledTableCell>
             <StyledTableCell align="center">Author</StyledTableCell>
+            <StyledTableCell align="center">Accsession Number</StyledTableCell>
+            <StyledTableCell align="center">Requested Time</StyledTableCell>
             <StyledTableCell align="center">Approve</StyledTableCell>
             {/* <StyledTableCell align="center">Reject</StyledTableCell> */}
           </TableRow>
@@ -164,6 +145,12 @@ export default function Request() {
               <StyledTableCell align="center">{user.bookName}</StyledTableCell>
               <StyledTableCell align="center">
                 {user.bookAuthor}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {user.accessionnumber}
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {user.requestDateTime}
               </StyledTableCell>
               <StyledTableCell align="center">
                 <ApproveButton onClick={() => handleApprove(user)}>

@@ -3,7 +3,16 @@ import { FaUserGraduate } from "react-icons/fa";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import BasicLineChart from "./Linediagram";
 import "../styles/AdminDashboard.css";
-
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
 class AdminDashboard extends Component {
   constructor() {
     super();
@@ -20,7 +29,7 @@ class AdminDashboard extends Component {
 
   fetchData = async () => {
     try {
-      const response = await fetch("showquantitystudent", {
+      const response = await fetch("/showquantitystudent", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +45,7 @@ class AdminDashboard extends Component {
   };
   fetchLineChartData = async () => {
     try {
-      const response = await fetch("showbookquantity", {
+      const response = await fetch("/showbookquantity", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +54,13 @@ class AdminDashboard extends Component {
       });
 
       const lineChartData = await response.json();
-      this.setState({ lineChartData });
+      const updatedLineChartData = lineChartData.map((entry) => ({
+        ...entry,
+        bookNameAuthor: `${entry.bookName}-${entry.bookAuthor}`,
+      }));
+    
+      this.setState({ lineChartData: updatedLineChartData });
+      console.log("Updated lineChartData:", updatedLineChartData);
     } catch (error) {
       console.error("Catch Error:", error);
     }
@@ -79,19 +94,28 @@ class AdminDashboard extends Component {
   };
 
   render() {
-    const { streamData } = this.state;
-
+    const { lineChartData, streamData } = this.state;
+    
     const transformedData = streamData.map(({ quantity, stream }) => ({
       value: quantity,
       label: stream,
     }));
-
+    console.log(lineChartData);
     return (
       <div className="container">
         <div className="first">{this.renderStreamCards()}</div>
         <div className="second">
-          <div className="linediagram">
-           <BasicLineChart />
+        <div className="linediagram" style={{width:"50%"}}>
+            <ResponsiveContainer width="100%" height={300} minWidth={116}>
+              <BarChart data={lineChartData}>
+                <CartesianGrid strokeDasharray="5 5" />
+                <XAxis dataKey="bookNameAuthor" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="quantity" fill="purple" />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
           <div className="pie-container">
             <div className="pie-3d-effect"></div>
