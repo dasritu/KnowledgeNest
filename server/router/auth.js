@@ -50,7 +50,7 @@ const Request=require('../model/requestSchema');
 const ApproveBook=require('../model/approve-bookSchema')
 const Return=require('../model/returnScehma');
 const AllBook=require('../model/AlllBookScehma');
-
+const QuantityStudent=require('../model/qstudent')
 
 
 
@@ -83,8 +83,18 @@ router.post('/register', async (req, res) => {
       
       // const cardNo = crypto.randomBytes(4).toString('hex'); // Adjust the length as needed
     const new_user =new User({name,email,stream,year,phone,cardNo,password,cpassword,role});
-
+    
     const user_reg=await new_user.save();
+
+    const existstream= await QuantityStudent.findOne({stream})
+    if(!existstream){
+      const newQuantity=new QuantityStudent({stream,quantity:1})
+      await newQuantity.save()
+    }
+    else{
+      existstream.quantity+=1;
+      await existstream.save();
+    }
              if(user_reg){
               const emailText = `Thank you for registering in Student Library Path. Your card number is: ${cardNo}`;
               sendEmail(email, 'Registration Confirmation', emailText);
@@ -245,6 +255,38 @@ router.get("/showstudent",async(req,res)=>{
 // Assuming you have something like this in your server code
 
 // Update a book by ID
+
+router.get("/showquantitystudent",async(req,res)=>{
+  try{
+    const quantity=await QuantityStudent.find();
+    res.json(quantity)
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+})
+router.put('/updatestudent/:id', async (req, res) => {
+  try {
+    const stdid = req.params.id;
+
+    // Extract non-sensitive fields from req.body
+    const { name, email, stream, year, phone } = req.body;
+
+    // Update the user with non-sensitive fields only
+    const updateStudent = await User.findByIdAndUpdate(
+      stdid,
+      { name, email, stream, year, phone },
+      { new: true }
+    );
+
+    res.json(updateStudent);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 router.put('/updatebook/:id', async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -593,6 +635,16 @@ router.post("/accept-book/:id", async (req, res) => {
 router.get("/showreturn",async(req,res)=>{
   try{
     const return_book = await Return.find();
+    res.json(return_book);
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+});
+
+router.get("/showbookquantity",async(req,res)=>{
+  try{
+    const return_book = await Quantity.find();
     res.json(return_book);
   }
   catch(error){

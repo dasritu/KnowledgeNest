@@ -53,7 +53,9 @@ const RejectButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function Accept() {
-  const [users, setUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,17 +72,28 @@ export default function Accept() {
         console.log(data);
 
         // Set the data directly to the state
-        setUsers(data);
-        console.log(users);
-       
-   
+        setAllUsers(data);
+        setFilteredUsers(data);
       } catch (e) {
         console.error("Catch Error:", e);
       }
     };
 
-    fetchData();
+    // Use a timeout to debounce the fetchData function
+    const timeoutId = setTimeout(fetchData, 300);
+
+    // Clear the timeout on component unmount or when searchQuery changes
+    return () => clearTimeout(timeoutId);
   }, []);
+
+  useEffect(() => {
+    // Filter the users based on the searchQuery
+    const filteredUsers = allUsers.filter((user) =>
+      user.cardNumber.includes(searchQuery)||
+      user.studentName.includes(searchQuery)
+    );
+    setFilteredUsers(filteredUsers);
+  }, [searchQuery, allUsers]);
 
   const calculateFine = (returnDate) => {
     const finePerDay = 1; // 1 rupee per day
@@ -92,6 +105,7 @@ export default function Accept() {
 
     return fine > 0 ? fine : 0;
   };
+
   const handleAccept = async (id, bookName, bookAuthor, accessionNumber) => {
     try {
       // Make a POST request to the /accept-book/:id route
@@ -107,7 +121,10 @@ export default function Accept() {
       const result = await response.json();
       console.log("Accept Book Response:", result);
       toast.success(`Book ${bookName} accepted successfully!`);
-      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+
+      // Update both allUsers and filteredUsers after accepting
+      setAllUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
+      setFilteredUsers((prevUsers) => prevUsers.filter((user) => user._id !== id));
     } catch (error) {
       console.error("Error accepting book:", error);
     }
@@ -115,48 +132,63 @@ export default function Accept() {
 
   return (
     <>
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell align="left">Card No. </StyledTableCell>
-            <StyledTableCell align="center">Student Name</StyledTableCell>
-            <StyledTableCell align="center">AccessionNumber</StyledTableCell>
-            <StyledTableCell align="center">Book Name</StyledTableCell>
-            <StyledTableCell align="center">Author</StyledTableCell>
-            <StyledTableCell align="center">Return Date</StyledTableCell>
-            <StyledTableCell align="center">Fine </StyledTableCell>
-            <StyledTableCell align="center">Accept</StyledTableCell>
-            <StyledTableCell align="center">Fine & Accept</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {users.map((user) => (
-            <StyledTableRow key={user._id}>
-              <StyledTableCell align="left">{user.cardNumber}</StyledTableCell>
-              <StyledTableCell align="center">{user.studentName}</StyledTableCell>
-              <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
-              <StyledTableCell align="center">{user.bookName}</StyledTableCell>
-              <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
-              <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
-              <StyledTableCell align="center">{calculateFine(user.returnDate)}</StyledTableCell>
-              <StyledTableCell align="center">
-                <ApproveButton onClick={() => handleAccept(user._id, user.bookName, user.bookAuthor, user.accessionNumber)}> 
-                  Accept
-                  <SendIcon />
-                </ApproveButton>
-              </StyledTableCell>
-              <StyledTableCell align="center">
-                <RejectButton>Fine & Accept</RejectButton>
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-      
-    </TableContainer>
-    <ToastContainer position="top-right" autoClose={3000} />
+      <div style={{ marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Search by Card Number or Name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="left">Card No. </StyledTableCell>
+              <StyledTableCell align="center">Student Name</StyledTableCell>
+              <StyledTableCell align="center">AccessionNumber</StyledTableCell>
+              <StyledTableCell align="center">Book Name</StyledTableCell>
+              <StyledTableCell align="center">Author</StyledTableCell>
+              <StyledTableCell align="center">Return Date</StyledTableCell>
+              <StyledTableCell align="center">Fine </StyledTableCell>
+              <StyledTableCell align="center">Accept</StyledTableCell>
+              <StyledTableCell align="center">Fine & Accept</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredUsers.map((user) => (
+              <StyledTableRow key={user._id}>
+                <StyledTableCell align="left">{user.cardNumber}</StyledTableCell>
+                <StyledTableCell align="center">{user.studentName}</StyledTableCell>
+                <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
+                <StyledTableCell align="center">{user.bookName}</StyledTableCell>
+                <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
+                <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
+                <StyledTableCell align="center">{calculateFine(user.returnDate)}</StyledTableCell>
+                <StyledTableCell align="center">
+                  <ApproveButton
+                    onClick={() =>
+                      handleAccept(
+                        user._id,
+                        user.bookName,
+                        user.bookAuthor,
+                        user.accessionNumber
+                      )
+                    }
+                  >
+                    Accept
+                    <SendIcon />
+                  </ApproveButton>
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  <RejectButton>Fine & Accept</RejectButton>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
-    
   );
 }
