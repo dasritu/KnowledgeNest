@@ -99,3 +99,10 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+
+@media screen and (max-width: 360px) {
+  .nav-title {
+    font-size: 19px;
+  }
+}

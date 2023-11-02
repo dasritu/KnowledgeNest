@@ -171,9 +171,9 @@ export default function Navbar({ scrollToSection }) {
             <img src={read} alt="" />
           </div>
           <a
-            className="navbar-brand custom-brand"
+            className="navbar-brand custom-brand nav-title"
             href="/"
-            style={{ fontWeight: "bold", "font-size": "28px", color: "purple" }}
+            style={{ fontWeight: "bold",  color: "purple" }}
           >
             KnowledgeNest
           </a>
