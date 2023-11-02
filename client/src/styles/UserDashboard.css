@@ -1,12 +1,12 @@
 .sec1 {
   display: flex;
-  height: 300px;
+  /* height: 300px; */
   justify-content: center;
   align-items: center;
 }
 .sec-2 {
   display: flex;
-  height: 300px;
+  /* height: 300px; */
   justify-content: center;
   align-items: center;
   margin-top: 35px;
@@ -43,9 +43,10 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   margin: 20px;
-  height: 100%;
-  width: 30%;
+  /* height: 100%;
+  width: 30%; */
   color: black;
+  overflow-y: hidden;
 }
 
 .notice ul li {
@@ -76,3 +77,10 @@
   font-size: 20px; /* Size of the icon */
   padding-right: 10px; /* Add padding to separate the icon from the text */
 }
+
+@media screen and (max-width: 952px)  {
+  .sec-2{
+    margin-top:82px;
+  }
+}
+
