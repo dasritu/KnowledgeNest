@@ -152,15 +152,15 @@ export default function UserDashboard() {
         return;
       }
       const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleString('en-US', {
-        month: '2-digit',
-        day: '2-digit',
-        year: '2-digit',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
+      const formattedDate = currentDate.toLocaleString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "2-digit",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
       });
-      
+
       await axios.post("/request-book", {
         studentName,
         cardNumber,
@@ -168,7 +168,7 @@ export default function UserDashboard() {
         bookName,
         bookAuthor,
         accessionnumber,
-        requestDateTime:formattedDate,
+        requestDateTime: formattedDate,
       });
 
       console.log(`Requested book with ID ${bookId}`);
@@ -198,11 +198,13 @@ export default function UserDashboard() {
         },
         credentials: "include",
       });
-  
+
       const returnData = await responsereturn.json();
-      
-      const isAlreadyReturned = returnData.some(returnedBook => returnedBook.accessionNumber === accessionNumber);
-  
+
+      const isAlreadyReturned = returnData.some(
+        (returnedBook) => returnedBook.accessionNumber === accessionNumber
+      );
+
       if (isAlreadyReturned) {
         toast.warning(`Book already returned`);
         return;
@@ -238,7 +240,6 @@ export default function UserDashboard() {
       // Optionally, you can update the requestedBooks state as well if needed
 
       toast.success(`Returned book `);
-    
     } catch (error) {
       console.error("Error returning book:", error);
     }
@@ -246,7 +247,8 @@ export default function UserDashboard() {
 
   return (
     <>
-      <div className="heading-user">
+      <div style={{paddingLeft:"10px"}}>
+      <div className="heading-user" style={{paddingRight:"10px"}}>
         <h3>Student</h3>
         <h3>Welcome {name}</h3>
       </div>
@@ -323,17 +325,19 @@ export default function UserDashboard() {
           <table className="user-table">
             <thead>
               <tr>
+                <th className="table-heading">Accession Number</th>
                 <th className="table-heading">Book Name</th>
                 <th className="table-heading">Book Author</th>
-                <th className="table-heading">Student Name</th>
               </tr>
             </thead>
             <tbody className="tbody">
               {requestedBooks.map((requestedBook) => (
                 <tr key={requestedBook._id}>
+                  <td className="table-data">
+                    {requestedBook.accessionNumber}
+                  </td>
                   <td className="table-data">{requestedBook.bookName}</td>
                   <td className="table-data">{requestedBook.bookAuthor}</td>
-                  <td className="table-data">{requestedBook.studentName}</td>
                 </tr>
               ))}
             </tbody>
@@ -347,18 +351,20 @@ export default function UserDashboard() {
           <table className="user-table">
             <thead>
               <tr>
+                <th className="table-heading">Accession Number</th>
                 <th className="table-heading">Book Name</th>
                 <th className="table-heading">Book Author</th>
-                <th className="table-heading">Student Name</th>
+
                 <th className="table-heading">Action</th>
               </tr>
             </thead>
             <tbody className="tbody">
               {approvedBooks.map((approvedBook) => (
                 <tr key={approvedBook._id}>
+                  <td className="table-data">{approvedBook.accessionNumber}</td>
                   <td className="table-data">{approvedBook.bookName}</td>
                   <td className="table-data">{approvedBook.bookAuthor}</td>
-                  <td className="table-data">{approvedBook.studentName}</td>
+
                   <td>
                     <button
                       onClick={() =>
@@ -384,7 +390,8 @@ export default function UserDashboard() {
             </tbody>
           </table>
         </div>
-      </div>
+        </div>
+        </div>
     </>
   );
 }
