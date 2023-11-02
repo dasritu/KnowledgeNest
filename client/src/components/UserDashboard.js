@@ -151,7 +151,16 @@ export default function UserDashboard() {
       if (!confirmRequest) {
         return;
       }
-
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: '2-digit',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      });
+      
       await axios.post("/request-book", {
         studentName,
         cardNumber,
@@ -159,6 +168,7 @@ export default function UserDashboard() {
         bookName,
         bookAuthor,
         accessionnumber,
+        requestDateTime:formattedDate,
       });
 
       console.log(`Requested book with ID ${bookId}`);
@@ -181,6 +191,22 @@ export default function UserDashboard() {
 
   const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
     try {
+      const responsereturn = await fetch("/showreturn", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+  
+      const returnData = await responsereturn.json();
+      
+      const isAlreadyReturned = returnData.some(returnedBook => returnedBook.accessionNumber === accessionNumber);
+  
+      if (isAlreadyReturned) {
+        toast.warning(`Book already returned`);
+        return;
+      }
       const response = await fetch("/about", {
         method: "GET",
         headers: {
@@ -211,8 +237,8 @@ export default function UserDashboard() {
 
       // Optionally, you can update the requestedBooks state as well if needed
 
-      console.log(`Returned book with ID ${id}`);
-      alert("Book Returned");
+      toast.success(`Returned book `);
+    
     } catch (error) {
       console.error("Error returning book:", error);
     }

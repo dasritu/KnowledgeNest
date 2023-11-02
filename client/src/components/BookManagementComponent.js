@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const BookManagementComponent = () => {
   const [books, setBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [editableBook, setEditableBook] = useState({
     id: "",
     name: "",
@@ -30,8 +31,19 @@ const BookManagementComponent = () => {
     };
 
     fetchBooks();
-  }, []);
+    const timeoutId = setTimeout(fetchBooks, 300);
 
+    // Clear the timeout on component unmount or when searchQuery changes
+    return () => clearTimeout(timeoutId);
+  }, []);
+  // useEffect(() => {
+  //   // Filter the users based on the searchQuery
+  //   const filteredUsers = books.filter((user) =>
+  //     user.accessionnumber.includes(searchQuery)||
+  //     user.name.includes(searchQuery)
+  //   );
+  //   setBooks(filteredUsers);
+  // }, [searchQuery, books]);
   const handleEditBook = (id) => {
     const selectedBook = books.find((book) => book._id === id);
     setEditableBook({
@@ -126,6 +138,14 @@ const BookManagementComponent = () => {
   };
   return (
     <>
+    {/* <div style={{ marginBottom: "20px" }}>
+        <input
+          type="text"
+          placeholder="Search by Card Number or Name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div> */}
     <ToastContainer position="top-right" autoClose={3000} />
       <div>
         <h2 className="heading1">

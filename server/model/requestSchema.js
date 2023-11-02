@@ -21,7 +21,11 @@ const requestSchema=new mongoose.Schema({
    },
    accessionnumber:{
       type:String,
-   }
+   },
+   requestDateTime: {
+    type: String,
+   
+  },
     
 })
 
