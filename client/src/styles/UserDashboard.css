@@ -3,6 +3,7 @@
   /* height: 300px; */
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .sec-2 {
   display: flex;
@@ -12,17 +13,16 @@
   margin-top: 35px;
 }
 
-.part1{
-  padding:5px;
+.part1 {
+  padding: 5px;
 }
-.part2{
+.part2 {
   padding: 5px;
 }
 
 .book-show {
   width: 70%;
   height: 100%;
-  
 }
 
 .table-heading {
@@ -32,7 +32,6 @@
 }
 .tbody {
   height: 265px;
-  
 }
 .table-data {
   color: black;
@@ -43,8 +42,8 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   margin: 20px;
-  /* height: 100%;
-  width: 30%; */
+  /* height: 100%; */
+  width: 30%;
   color: black;
   overflow-y: hidden;
 }
@@ -78,9 +77,110 @@
   padding-right: 10px; /* Add padding to separate the icon from the text */
 }
 
-@media screen and (max-width: 952px)  {
-  .sec-2{
-    margin-top:82px;
+@media screen and (max-width: 952px) {
+  .sec-2 {
+    margin-top: 13px;
   }
 }
 
+@media screen and (max-width: 916px) {
+  .sec-2 {
+    margin-top: 45px;
+  }
+  .book-show {
+    height: auto;
+  }
+}
+@media screen and (max-width: 506px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 486px;
+    font-size: 14px;
+  }
+  .notice {
+    width: 486px;
+    margin-top: 12px;
+  }
+  .sec-2{
+    flex-direction: column;
+  }
+
+
+}
+@media screen and (max-width: 486px) {
+  .heading-user h3 {
+    font-size: 14px;
+  }
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 466px;
+    font-size: 14px;
+  }
+  .notice {
+    width: 466px;
+    margin-top: 12px;
+  }
+  .sec-2{
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 412px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 390px;
+    font-size: 14px;
+  }
+  .heading-user h3 {
+    font-size: 14px;
+  }
+  .notice {
+    width: 390px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 380px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 360px;
+    font-size: 12px;
+  }
+  .heading-user h3 {
+    font-size: 13px;
+  }
+  .notice {
+    width: 346px;
+    margin-top: 21px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 360px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 340px;
+    font-size: 12px;
+  }
+  .heading-user h3 {
+    font-size: 13px;
+  }
+  .notice {
+    width: 346px;
+    margin-top: 21px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}

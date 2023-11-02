@@ -3,6 +3,7 @@ import axios from "axios";
 import "../styles/UserDashboard.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Footer from "./Footer";
 export default function UserDashboard() {
   const [books, setBooks] = useState([]);
   const [samebook, setsamebook] = useState(false);
@@ -247,151 +248,161 @@ export default function UserDashboard() {
 
   return (
     <>
-      <div style={{paddingLeft:"10px"}}>
-      <div className="heading-user" style={{paddingRight:"10px"}}>
-        <h3>Student</h3>
-        <h3>Welcome {name}</h3>
-      </div>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <div className="sec1">
-        <div className="book-show">
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th className="table-heading">Accession Number</th>
-                <th className="table-heading">Name</th>
-                <th className="table-heading">Author</th>
-                <th className="table-heading">Action</th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {books.map((book) => (
-                <tr key={book._id}>
-                  <td className="table-data">{book.accessionnumber}</td>
-                  <td className="table-data">{book.name}</td>
-                  <td className="table-data">{book.author}</td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleRequest(
-                          book._id,
-                          book.name,
-                          book.author,
-                          book.accessionnumber
-                        )
-                      }
-                      style={{
-                        color: "black",
-                        backgroundColor: "#149d14",
-                        color: "white",
-                        borderRadius: "5px",
-                      }}
-                      className="table-data"
-                    >
-                      Request
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div >
+        <div className="heading-user" style={{ padding: "5px" }}>
+          <h3>Student</h3>
+          <h3>Welcome {name}</h3>
         </div>
-        <div className="notice">
-          <div className="notice-header">
-            <span className="notice-icon"></span>{" "}
-            {/* You can replace 'ℹ️' with the icon of your choice */}
-            <h3>
-              📌<b>Notice</b>
-            </h3>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <div className="sec1">
+          <div className="book-show">
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th className="table-heading">Accession Number</th>
+                  <th className="table-heading">Name</th>
+                  <th className="table-heading">Author</th>
+                  <th className="table-heading">Action</th>
+                </tr>
+              </thead>
+              <tbody className="tbody">
+                {books.map((book) => (
+                  <tr key={book._id}>
+                    <td className="table-data">{book.accessionnumber}</td>
+                    <td className="table-data">{book.name}</td>
+                    <td className="table-data">{book.author}</td>
+                    <td style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                      <button
+                        onClick={() =>
+                          handleRequest(
+                            book._id,
+                            book.name,
+                            book.author,
+                            book.accessionnumber
+                          )
+                        }
+                        style={{
+                          height: "25px", // Set the button's height to 25px
+                          color: "white",
+                          backgroundColor: "#149d14",
+                          borderRadius: "5px",
+                          display: "flex",
+                          justifyContent: "center", // Center the text horizontally
+                          alignItems: "center",
+                        }}
+                        className="table-data"
+                      >
+                        Request
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <ul>
-            <li>You can Request:</li>
-            <ol>
-              <li>Artificial Intelligence</li>
-              <li>Design & Analysis of Algorithm</li>
-              <li>Software Engineering</li>
-              <li>Web Technology using PHP</li>
-              <li>Operational Research</li>
-            </ol>
-          </ul>
+          <div className="notice">
+            <div className="notice-header">
+              <span className="notice-icon"></span>{" "}
+              {/* You can replace 'ℹ️' with the icon of your choice */}
+              <h3>
+                📌<b>Notice</b>
+              </h3>
+            </div>
+            <ul>
+              <li>You can Request:</li>
+              <ol>
+                <li>Artificial Intelligence</li>
+                <li>Design & Analysis of Algorithm</li>
+                <li>Software Engineering</li>
+                <li>Web Technology using PHP</li>
+                <li>Operational Research</li>
+              </ol>
+            </ul>
+          </div>
+          <div className="requestedbook"></div>
         </div>
-        <div className="requestedbook"></div>
+        <div className="sec-2">
+          <div className="part1">
+            <h1 style={{ fontSize: "30px" }}>
+              <b>Your Requested Books</b>
+            </h1>
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th className="table-heading">Accession Number</th>
+                  <th className="table-heading">Book Name</th>
+                  <th className="table-heading">Book Author</th>
+                </tr>
+              </thead>
+              <tbody className="tbody">
+                {requestedBooks.map((requestedBook) => (
+                  <tr key={requestedBook._id}>
+                    <td className="table-data">
+                      {requestedBook.accessionnumber}
+                    </td>
+                    <td className="table-data">{requestedBook.bookName}</td>
+                    <td className="table-data">{requestedBook.bookAuthor}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="part2">
+            <h1 style={{ fontSize: "30px" }}>
+              <b>Your Approved Books</b>
+            </h1>
+            <table className="user-table">
+              <thead>
+                <tr>
+                  <th className="table-heading">Accession Number</th>
+                  <th className="table-heading">Book Name</th>
+                  <th className="table-heading">Book Author</th>
+
+                  <th className="table-heading">Action</th>
+                </tr>
+              </thead>
+              <tbody className="tbody">
+                {approvedBooks.map((approvedBook) => (
+                  <tr key={approvedBook._id}>
+                    <td className="table-data">
+                      {approvedBook.accessionNumber}
+                    </td>
+                    <td className="table-data">{approvedBook.bookName}</td>
+                    <td className="table-data">{approvedBook.bookAuthor}</td>
+
+                    <td style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                      <button
+                        onClick={() =>
+                          handleReturn(
+                            approvedBook._id,
+                            approvedBook.bookName,
+                            approvedBook.bookAuthor,
+                            approvedBook.accessionNumber
+                          )
+                        }
+                        style={{
+                          height: "25px", // Set the button's height to 25px
+                          color: "white",
+                          backgroundColor: "#149d14",
+                          borderRadius: "5px",
+                          display: "flex",
+                          justifyContent: "center", // Center the text horizontally
+                          alignItems: "center",
+                        }}
+                        className="table-data"
+                      >
+                        Return
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div className="sec-2">
-        <div className="part1">
-          <h1 style={{ fontSize: "30px" }}>
-            <b>Your Requested Books</b>
-          </h1>
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th className="table-heading">Accession Number</th>
-                <th className="table-heading">Book Name</th>
-                <th className="table-heading">Book Author</th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {requestedBooks.map((requestedBook) => (
-                <tr key={requestedBook._id}>
-                  <td className="table-data">
-                    {requestedBook.accessionnumber}
-                  </td>
-                  <td className="table-data">{requestedBook.bookName}</td>
-                  <td className="table-data">{requestedBook.bookAuthor}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="part2">
-          <h1 style={{ fontSize: "30px" }}>
-            <b>Your Approved Books</b>
-          </h1>
-          <table className="user-table">
-            <thead>
-              <tr>
-                <th className="table-heading">Accession Number</th>
-                <th className="table-heading">Book Name</th>
-                <th className="table-heading">Book Author</th>
-
-                <th className="table-heading">Action</th>
-              </tr>
-            </thead>
-            <tbody className="tbody">
-              {approvedBooks.map((approvedBook) => (
-                <tr key={approvedBook._id}>
-                  <td className="table-data">{approvedBook.accessionNumber}</td>
-                  <td className="table-data">{approvedBook.bookName}</td>
-                  <td className="table-data">{approvedBook.bookAuthor}</td>
-
-                  <td>
-                    <button
-                      onClick={() =>
-                        handleReturn(
-                          approvedBook._id,
-                          approvedBook.bookName,
-                          approvedBook.bookAuthor,
-                          approvedBook.accessionNumber
-                        )
-                      }
-                      style={{
-                        color: "white",
-                        backgroundColor: "#149d14",
-                        borderRadius: "5px",
-                      }}
-                      className="table-data"
-                    >
-                      Return
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </div>
-        </div>
+      <Footer />
     </>
   );
 }
