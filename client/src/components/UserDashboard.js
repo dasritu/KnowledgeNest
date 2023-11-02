@@ -7,7 +7,9 @@ export default function UserDashboard() {
   const [books, setBooks] = useState([]);
   const [samebook, setsamebook] = useState(false);
   const [requestedBooks, setRequestedBooks] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([]);
   const [approvedBooks, setApprovedBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [name, setName] = useState();
   const fetchRequestedBooks = async () => {
     try {
@@ -69,6 +71,7 @@ export default function UserDashboard() {
       try {
         const response = await axios.get("/showbooks");
         setBooks(response.data);
+        setFilteredBooks(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
       }
@@ -233,9 +236,9 @@ export default function UserDashboard() {
       });
 
       // Update the state to remove the returned book
-      setApprovedBooks((prevApprovedBooks) =>
-        prevApprovedBooks.filter((book) => book._id !== id)
-      );
+      // setApprovedBooks((prevApprovedBooks) =>
+      //   prevApprovedBooks.filter((book) => book._id !== id)
+      // );
 
       // Optionally, you can update the requestedBooks state as well if needed
 
@@ -244,7 +247,20 @@ export default function UserDashboard() {
       console.error("Error returning book:", error);
     }
   };
+  useEffect(() => {
+    const handleSearch = () => {
+      const lowercasedQuery = searchQuery.toLowerCase();
+      const filtered = books.filter(
+        (book) =>
+          book.name.toLowerCase().includes(lowercasedQuery) ||
+          book.author.toLowerCase().includes(lowercasedQuery)
+      );
+      setFilteredBooks(filtered);
+      // console.log(filteredBooks)
+    };
 
+    handleSearch();
+  }, [searchQuery, books]);
   return (
     <>
       <div style={{paddingLeft:"10px"}}>
@@ -255,6 +271,12 @@ export default function UserDashboard() {
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="sec1">
         <div className="book-show">
+        <input
+        type="text"
+        placeholder="Search by Book Name or Author"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
           <table className="user-table">
             <thead>
               <tr>
@@ -265,7 +287,7 @@ export default function UserDashboard() {
               </tr>
             </thead>
             <tbody className="tbody">
-              {books.map((book) => (
+              {filteredBooks.map((book) => (
                 <tr key={book._id}>
                   <td className="table-data">{book.accessionnumber}</td>
                   <td className="table-data">{book.name}</td>

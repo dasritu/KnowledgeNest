@@ -70,6 +70,8 @@ router.post('/register', async (req, res) => {
      return res.status(422).json({error:"Password doesnot match"});
     }
     else{
+      const currentYear = new Date().getFullYear();
+      const lastDigitOfYear = currentYear.toString().slice(-2);
         const lastUser = await User.findOne({ stream,year }).sort({ cardNo: -1 });
         
         let newcode = '001'; // Default if no user exists in the same stream
@@ -79,7 +81,7 @@ router.post('/register', async (req, res) => {
           newcode = String(parseInt(lastCode) + 1).padStart(3, '0');
         }
 
-    const cardNo = `${year.charAt(0)}${stream}${newcode}`;
+    const cardNo = `${lastDigitOfYear}${year.charAt(0)}${stream}${newcode}`;
       
       // const cardNo = crypto.randomBytes(4).toString('hex'); // Adjust the length as needed
     const new_user =new User({name,email,stream,year,phone,cardNo,password,cpassword,role});
