@@ -19,6 +19,7 @@ const BookManagementComponent = () => {
     purchasedate: "",
     accessionnumber: "",
   });
+  const [isAddButtonDisabled, setAddButtonDisabled] = useState(false);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -119,6 +120,7 @@ const BookManagementComponent = () => {
 
   const handleAddBook = async () => {
     try {
+      setAddButtonDisabled(true);
       const response = await axios.post("/addbook", editableBook);
       const updatedBooks = books.map((book) =>
         book.id === "new" ? response.data : book
@@ -133,6 +135,9 @@ const BookManagementComponent = () => {
       });
     } catch (error) {
       console.error("Error adding a new book:", error);
+    }finally {
+      // Enable the button after the operation is complete
+      setAddButtonDisabled(false);
     }
     toast.success(`Book  Added successfully!`);
   };
@@ -151,9 +156,13 @@ const BookManagementComponent = () => {
         <h2 className="heading1">
           <div> Books </div>
           <div>
-            {editableBook.id === "new" ? (
+          {editableBook.id === "new" ? (
               <>
-                <button onClick={handleAddBook} style={{ color: "white" }}>
+                {/* <button
+                  onClick={handleAddBook}
+                  style={{ color: "white" }}
+                  disabled={isAddButtonDisabled}
+                >
                   <FiSave />
                 </button>
                 <button
@@ -167,12 +176,17 @@ const BookManagementComponent = () => {
                     })
                   }
                   style={{ color: "white" }}
+                  disabled={isAddButtonDisabled}
                 >
                   <GiCancel />
-                </button>
+                </button> */}
               </>
             ) : (
-              <button onClick={handleAddRecord} style={{ color: "white" }}>
+              <button
+                onClick={handleAddRecord}
+                style={{ color: "white" }}
+                disabled={isAddButtonDisabled}
+              >
                 + Add Book
               </button>
             )}
@@ -254,7 +268,7 @@ const BookManagementComponent = () => {
                     {book._id === editableBook.id || book.id === "new" ? (
                       <input
                         type="date"
-                        value={editableBook.purchasedate}
+                        value={editableBook.purchasedate.toString()}
                         onChange={(e) =>
                           setEditableBook({
                             ...editableBook,
@@ -263,45 +277,74 @@ const BookManagementComponent = () => {
                         }
                       />
                     ) : (
-                      book.purchasedate
+                     new Date(book.purchasedate).toLocaleDateString()
                     )}
                   </td>
                   <td>
-                    {book._id === editableBook.id ? (
-                      <>
-                        <button onClick={handleUpdateBook} style={{ color: "black" }}>Update</button>
-                        <button
-                          onClick={() =>
-                            setEditableBook({
-                              id: "",
-                              name: "",
-                              author: "",
-                              purchasedate: "",
-                              accessionnumber: "",
-                            })
-                          } style={{ color: "black" }}
-                        >
-                          Cancel
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => handleEditBook(book._id)}
-                          style={{ color: "black" }}
-                        >
-                          <BiEdit />
-                          Edit
-                        </button>
-                        <button
-                          onClick={() => handleDeleteBook(book._id)}
-                          style={{ color: "black" }}
-                        >
-                          <MdDeleteForever />
-                          Delete
-                        </button>
-                      </>
-                    )}
+                  {book._id === editableBook.id ? (
+  <>
+    <button onClick={handleUpdateBook} style={{ color: "black" }}>Update</button>
+    <button
+      onClick={() =>
+        setEditableBook({
+          id: "",
+          name: "",
+          author: "",
+          purchasedate: "",
+          accessionnumber: "",
+        })
+      } style={{ color: "black" }}
+    >
+      Cancel
+    </button>
+  </>
+) : (
+  <>
+    {book.id === "new" ? (
+      <>
+        <button
+          onClick={handleAddBook}
+          style={{ color: "black" }}
+        >
+          <FiSave />
+          Save
+        </button>
+        <button
+          onClick={() =>
+            setEditableBook({
+              id: "",
+              name: "",
+              author: "",
+              purchasedate: "",
+              accessionnumber: "",
+            })
+          }
+          style={{ color: "black" }}
+        >
+          Cancel
+        </button>
+      </>
+    ) : (
+      <>
+        <button
+          onClick={() => handleEditBook(book._id)}
+          style={{ color: "black" }}
+        >
+          <BiEdit />
+          Edit
+        </button>
+        <button
+          onClick={() => handleDeleteBook(book._id)}
+          style={{ color: "black" }}
+        >
+          <MdDeleteForever />
+          Delete
+        </button>
+      </>
+    )}
+  </>
+)}
+
                   </td>
                 </tr>
               ))}
