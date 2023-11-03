@@ -61,7 +61,7 @@ export default function Signup() {
   return (
     <div>
       <form method="POST" class="signup-form">
-        <div className="form">
+        <div className="form-signup">
           <figure>
             <img src={sign} alt="" />
           </figure>
