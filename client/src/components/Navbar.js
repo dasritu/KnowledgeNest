@@ -162,7 +162,7 @@ export default function Navbar({ scrollToSection }) {
   };
   return (
     <div>
-        <nav
+      <nav
         className={`${navbarClass} fixed-top navbar-expand-lg`}
         style={{ background: scrolling ? "antiquewhite" : "transparent" }}
       >
@@ -173,7 +173,7 @@ export default function Navbar({ scrollToSection }) {
           <a
             className="navbar-brand custom-brand nav-title"
             href="/"
-            style={{ fontWeight: "bold",  color: "purple" }}
+            style={{ fontWeight: "bold", color: "purple" }}
           >
             KnowledgeNest
           </a>
