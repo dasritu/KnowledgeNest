@@ -13,10 +13,7 @@ const bookSchema=new mongoose.Schema({
         type:Date,
         
     },
-    accessionnumber:{
-        type:String,
-        
-    },
+    accessionnumber: { type: String, unique: true, required: true },
    
     
     
