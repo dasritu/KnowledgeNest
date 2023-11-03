@@ -106,3 +106,9 @@ a {
     font-size: 19px;
   }
 }
+@media screen and (max-width: 300px) {
+  .nav-title {
+    font-size: 15px;
+  }
+}
+

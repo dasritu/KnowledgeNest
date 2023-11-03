@@ -4,6 +4,7 @@ import "../styles/UserDashboard.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./Footer";
+import { BiSearchAlt } from "react-icons/bi";
 export default function UserDashboard() {
   const [books, setBooks] = useState([]);
   const [samebook, setsamebook] = useState(false);
@@ -276,7 +277,7 @@ export default function UserDashboard() {
           <div className="book-show">
             <input
               type="text"
-              placeholder="Search by Book Name or Author"
+              placeholder="🔍Search by Book Name or Author in this available table..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{ width: "100%" }}
