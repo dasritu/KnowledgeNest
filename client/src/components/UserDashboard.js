@@ -185,19 +185,14 @@ export default function UserDashboard() {
           bookName,
           bookAuthor,
           studentName,
-          accessionnumber
+          accessionnumber,
         },
       ]);
-      setBooks((prevBooks) =>
-      prevBooks.filter((book) => book._id !== bookId)
-    );
+      setBooks((prevBooks) => prevBooks.filter((book) => book._id !== bookId));
       toast.success(`Book ${bookName} requested successfully!`);
-   
-
     } catch (error) {
       console.error("Error making request:", error);
     }
-   
   };
 
   const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
