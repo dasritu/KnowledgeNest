@@ -264,7 +264,7 @@ export default function UserDashboard() {
   }, [searchQuery, books]);
   return (
     <>
-      <div >
+      <div style={{ padding: "5px" }}>
         <div className="heading-user" style={{ padding: "5px" }}>
           <h3>Student</h3>
           <h3>Welcome {name}</h3>
@@ -272,12 +272,13 @@ export default function UserDashboard() {
         <ToastContainer position="top-right" autoClose={3000} />
         <div className="sec1">
           <div className="book-show">
-        <input
-        type="text"
-        placeholder="Search by Book Name or Author"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+            <input
+              type="text"
+              placeholder="Search by Book Name or Author"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ width: "100%" }}
+            />
             <table className="user-table">
               <thead>
                 <tr>
@@ -293,7 +294,13 @@ export default function UserDashboard() {
                     <td className="table-data">{book.accessionnumber}</td>
                     <td className="table-data">{book.name}</td>
                     <td className="table-data">{book.author}</td>
-                    <td style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                    <td
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <button
                         onClick={() =>
                           handleRequest(
@@ -393,7 +400,13 @@ export default function UserDashboard() {
                     <td className="table-data">{approvedBook.bookName}</td>
                     <td className="table-data">{approvedBook.bookAuthor}</td>
 
-                    <td style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                    <td
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
                       <button
                         onClick={() =>
                           handleReturn(
