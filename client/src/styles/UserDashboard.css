@@ -91,16 +91,65 @@
     height: auto;
   }
 }
-@media screen and (max-width: 506px) {
+@media screen and (max-width: 780px) {
   .sec1 {
     flex-direction: column-reverse;
   }
   .book-show {
-    width: 486px;
+    width: 760px;
+    font-size: 20px;
+  }
+  .notice {
+    width: 765px;
+    margin-top: 19px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+  
+}
+@media screen and (max-width: 710px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 695px;
+    font-size: 20px;
+  }
+  .notice {
+    width: 695px;
+    margin-top: 19px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 640px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 625px;
+    font-size: 18px;
+  }
+  .notice {
+    width: 605px;
+    margin-top: 18px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 546px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 526px;
     font-size: 14px;
   }
   .notice {
-    width: 486px;
+    width: 526px;
     margin-top: 12px;
   }
   .sec-2 {
@@ -126,7 +175,7 @@
     flex-direction: column;
   }
 }
-@media screen and (max-width: 412px) {
+@media screen and (max-width: 419px) {
   .sec1 {
     flex-direction: column-reverse;
   }
@@ -144,19 +193,19 @@
     flex-direction: column;
   }
 }
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 400px) {
   .sec1 {
     flex-direction: column-reverse;
   }
   .book-show {
-    width: 360px;
+    width: 380px;
     font-size: 12px;
   }
   .heading-user h3 {
     font-size: 13px;
   }
   .notice {
-    width: 346px;
+    width: 386px;
     margin-top: 21px;
   }
   .sec-2 {
@@ -175,7 +224,45 @@
     font-size: 13px;
   }
   .notice {
-    width: 346px;
+    width: 340px;
+    margin-top: 21px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 340px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 325px;
+    font-size: 11px;
+  }
+  .heading-user h3 {
+    font-size: 13px;
+  }
+  .notice {
+    width: 326px;
+    margin-top: 21px;
+  }
+  .sec-2 {
+    flex-direction: column;
+  }
+}
+@media screen and (max-width: 290px) {
+  .sec1 {
+    flex-direction: column-reverse;
+  }
+  .book-show {
+    width: 275px;
+    font-size: 11px;
+  }
+  .heading-user h3 {
+    font-size: 13px;
+  }
+  .notice {
+    width: 276px;
     margin-top: 21px;
   }
   .sec-2 {
