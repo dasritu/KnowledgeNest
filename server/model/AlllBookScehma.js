@@ -1,5 +1,18 @@
 const mongoose=require('mongoose');
-
+const approvalSchema = new mongoose.Schema({
+    cardNumber: {
+        type: String,
+        required: true,
+    },
+    studentName: {
+        type: String,
+        required: true,
+    },
+    approvalDate: {
+        type: Date,
+        default: Date.now,
+    },
+});
 const bookSchema=new mongoose.Schema({
     name:{
         type:String,
@@ -18,7 +31,7 @@ const bookSchema=new mongoose.Schema({
         
     },
    
-    
+    approvals: [approvalSchema], 
     
 })
 

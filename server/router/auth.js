@@ -164,15 +164,20 @@ router.post('/addbook', async (req, res) => {
   try {
     console.log('Received request with name and author:', name, author);
 
-   
+    // Check if the accession number is already in use
+    const isAccessionNumberTaken = await AllBook.exists({ accessionnumber });
+
+    if (isAccessionNumberTaken) {
+      return res.status(400).json({ error: 'Accession number is already in use.' });
+    }
+
+    // Your existing code for updating the quantity
     const existingBook = await Quantity.findOne({ bookAuthor: author, bookName: name });
 
-    
     if (!existingBook) {
       const newQuantity = new Quantity({ bookAuthor: author, bookName: name, quantity: 1 });
       await newQuantity.save();
     } else {
-      
       existingBook.quantity += 1;
       await existingBook.save();
     }
@@ -180,8 +185,11 @@ router.post('/addbook', async (req, res) => {
     // Add a new record to the Book schema
     const newBook = new Book({ name, author, purchasedate, accessionnumber });
     await newBook.save();
-    const allnewbook=new AllBook({name,author,purchasedate,accessionnumber});
-    await allnewbook.save();
+
+    // Add a new record to the AllBook schema
+    const allNewBook = new AllBook({ name, author, purchasedate, accessionnumber });
+    await allNewBook.save();
+
     console.log('Added a new book:', newBook);
     res.json(newBook);
   } catch (error) {
@@ -189,7 +197,6 @@ router.post('/addbook', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 
 
@@ -564,10 +571,22 @@ router.post("/approve-book/:id", async (req, res) => {
       accessionNumber: requestedBook.accessionnumber,
       returnDate: returnDate,
     });
-
+    const allBook = await AllBook.findOneAndUpdate(
+      { /* Your filter criteria */ },
+      {
+        $push: {
+          approvals: {
+            cardNumber: requestedBook.cardNumber,
+            studentName: requestedBook.studentName,
+            approvalDate: new Date(),
+          },
+        },
+      },
+      { new: true }
+    );
     const user_data = await User.findOne({ cardNo: requestedBook.cardNumber });
     const email = user_data.email;
-
+ 
     console.log("Book Approved");
     // const bookrecord = await Book.findOne({ accessionnumber: requestedBook.accessionnumber });
     // const id_book = bookrecord._id;
@@ -580,6 +599,7 @@ router.post("/approve-book/:id", async (req, res) => {
 
     // Send a success response
     return res.json({ message: "Book approved successfully" });
+    
 
   } catch (error) {
     console.error("Error approving book:", error);
@@ -595,7 +615,15 @@ function calculateReturnDate() {
   returnDate.setMonth(returnDate.getMonth() + 3);
   return returnDate;
 }
-
+router.get('/show-allbooks',async(req,res)=>{
+  try{
+    const allbooks=await AllBook.find();
+    res.json(allbooks)
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+})
 router.get("/show-approrve",async(req,res)=>{
   try{
     const students = await ApproveBook.find();
@@ -715,3 +743,23 @@ router.get("/showbookquantity",async(req,res)=>{
 });
 
 module.exports = router;
+
+
+router.get('/get-approval-details/:accessionNumber', async (req, res) => {
+  try {
+    const { accessionNumber } = req.params;
+
+    // Find the book with the matching accession number
+    const book = await AllBook.findOne({ accessionnumber: accessionNumber });
+
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Return the approval details for that book
+    res.json({ accessionnumber: book.accessionnumber, approvals: book.approvals });
+  } catch (error) {
+    console.error("Error fetching approval details:", error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});

@@ -1,7 +1,6 @@
-// Assuming you have React and state management (e.g., useState, useEffect) set up
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Modal from 'react-modal'; // Import the Modal component
 import "../styles/Books.css";
 import { FiSave } from "react-icons/fi";
 import { GiCancel } from "react-icons/gi";
@@ -9,6 +8,7 @@ import { BiEdit } from "react-icons/bi";
 import { MdDeleteForever } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const BookManagementComponent = () => {
   const [books, setBooks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,6 +20,8 @@ const BookManagementComponent = () => {
     accessionnumber: "",
   });
   const [isAddButtonDisabled, setAddButtonDisabled] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State for modal visibility
+  const [selectedBookDetails, setSelectedBookDetails] = useState({});
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -37,14 +39,7 @@ const BookManagementComponent = () => {
     // Clear the timeout on component unmount or when searchQuery changes
     return () => clearTimeout(timeoutId);
   }, []);
-  // useEffect(() => {
-  //   // Filter the users based on the searchQuery
-  //   const filteredUsers = books.filter((user) =>
-  //     user.accessionnumber.includes(searchQuery)||
-  //     user.name.includes(searchQuery)
-  //   );
-  //   setBooks(filteredUsers);
-  // }, [searchQuery, books]);
+
   const handleEditBook = (id) => {
     const selectedBook = books.find((book) => book._id === id);
     setEditableBook({
@@ -92,16 +87,14 @@ const BookManagementComponent = () => {
       await axios.delete(`/deletebook/${id}`);
       const updatedBooks = books.filter((book) => book._id !== id);
       setBooks(updatedBooks);
-      const BookName=updatedBooks.name;
+      const BookName = updatedBooks.name;
       toast.success(`Book ${BookName} Deleted successfully!`);
     } catch (error) {
       console.error("Error deleting book:", error);
     }
-   
   };
 
   const handleAddRecord = () => {
-    // Set the editable book to the newly added record
     const newEditableBook = {
       id: "new",
       name: "",
@@ -109,14 +102,10 @@ const BookManagementComponent = () => {
       purchasedate: "",
       accessionnumber: "",
     };
-  
-    // Add the new record at the beginning of the books array
+
     setBooks([newEditableBook, ...books]);
-  
-    // Set the editable book
     setEditableBook(newEditableBook);
   };
-  
 
   const handleAddBook = async () => {
     try {
@@ -133,53 +122,43 @@ const BookManagementComponent = () => {
         purchasedate: "",
         accessionnumber: "",
       });
+      toast.success(`Book Added successfully!`);
     } catch (error) {
-      console.error("Error adding a new book:", error);
-    }finally {
-      // Enable the button after the operation is complete
+      if (error.response && error.response.status === 400) {
+        // Accession number already exists, show a warning
+        toast.warning("Accession number already exists. Please choose a different one.");
+      } else {
+        // Other errors, log to console and show a generic error message
+        console.error("Error adding a new book:", error);
+        toast.error("Error adding a new book. Please try again.");
+      }
+    } finally {
       setAddButtonDisabled(false);
     }
-    toast.success(`Book  Added successfully!`);
+  };
+  
+  const handleViewApprovalDetails = async (accessionNumber) => {
+    try {
+      const response = await axios.get(`/get-approval-details/${accessionNumber}`);
+      setSelectedBookDetails(response.data);
+      setModalIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching approval details:", error);
+    }
+  };
+  const handleCloseModal = () => {
+    setModalIsOpen(false);
   };
   return (
     <>
-    {/* <div style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          placeholder="Search by Card Number or Name"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div> */}
-    <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} />
       <div>
         <h2 className="heading1">
           <div> Books </div>
           <div>
-          {editableBook.id === "new" ? (
+            {editableBook.id === "new" ? (
               <>
-                {/* <button
-                  onClick={handleAddBook}
-                  style={{ color: "white" }}
-                  disabled={isAddButtonDisabled}
-                >
-                  <FiSave />
-                </button>
-                <button
-                  onClick={() =>
-                    setEditableBook({
-                      id: "",
-                      name: "",
-                      author: "",
-                      purchasedate: "",
-                      accessionnumber: "",
-                    })
-                  }
-                  style={{ color: "white" }}
-                  disabled={isAddButtonDisabled}
-                >
-                  <GiCancel />
-                </button> */}
+                {/* No buttons needed for new book */}
               </>
             ) : (
               <button
@@ -193,9 +172,7 @@ const BookManagementComponent = () => {
           </div>
         </h2>
 
-        {/* View Books Table */}
         <div>
-          {/* <h3>View Books</h3> */}
           <table className="table-container">
             <thead>
               <tr>
@@ -228,7 +205,9 @@ const BookManagementComponent = () => {
                         }
                       />
                     ) : (
-                      book.accessionnumber
+                      <button onClick={() => handleViewApprovalDetails(book.accessionnumber)} style={{ color: "black" }}>
+                        {book.accessionnumber}
+                      </button>
                     )}
                   </td>
 
@@ -277,74 +256,73 @@ const BookManagementComponent = () => {
                         }
                       />
                     ) : (
-                     new Date(book.purchasedate).toLocaleDateString()
+                      new Date(book.purchasedate).toLocaleDateString()
                     )}
                   </td>
                   <td>
-                  {book._id === editableBook.id ? (
-  <>
-    <button onClick={handleUpdateBook} style={{ color: "black" }}>Update</button>
-    <button
-      onClick={() =>
-        setEditableBook({
-          id: "",
-          name: "",
-          author: "",
-          purchasedate: "",
-          accessionnumber: "",
-        })
-      } style={{ color: "black" }}
-    >
-      Cancel
-    </button>
-  </>
-) : (
-  <>
-    {book.id === "new" ? (
-      <>
-        <button
-          onClick={handleAddBook}
-          style={{ color: "black" }}
-        >
-          <FiSave />
-          Save
-        </button>
-        <button
-          onClick={() =>
-            setEditableBook({
-              id: "",
-              name: "",
-              author: "",
-              purchasedate: "",
-              accessionnumber: "",
-            })
-          }
-          style={{ color: "black" }}
-        >
-          Cancel
-        </button>
-      </>
-    ) : (
-      <>
-        <button
-          onClick={() => handleEditBook(book._id)}
-          style={{ color: "black" }}
-        >
-          <BiEdit />
-          Edit
-        </button>
-        <button
-          onClick={() => handleDeleteBook(book._id)}
-          style={{ color: "black" }}
-        >
-          <MdDeleteForever />
-          Delete
-        </button>
-      </>
-    )}
-  </>
-)}
-
+                    {book._id === editableBook.id ? (
+                      <>
+                        <button onClick={handleUpdateBook} style={{ color: "black" }}>Update</button>
+                        <button
+                          onClick={() =>
+                            setEditableBook({
+                              id: "",
+                              name: "",
+                              author: "",
+                              purchasedate: "",
+                              accessionnumber: "",
+                            })
+                          } style={{ color: "black" }}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {book.id === "new" ? (
+                          <>
+                            <button
+                              onClick={handleAddBook}
+                              style={{ color: "black" }}
+                            >
+                              <FiSave />
+                              Save
+                            </button>
+                            <button
+                              onClick={() =>
+                                setEditableBook({
+                                  id: "",
+                                  name: "",
+                                  author: "",
+                                  purchasedate: "",
+                                  accessionnumber: "",
+                                })
+                              }
+                              style={{ color: "black" }}
+                            >
+                              Cancel
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() => handleEditBook(book._id)}
+                              style={{ color: "black" }}
+                            >
+                              <BiEdit />
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteBook(book._id)}
+                              style={{ color: "black" }}
+                            >
+                              <MdDeleteForever />
+                              Delete
+                            </button>
+                          </>
+                        )}
+                      </>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -352,8 +330,61 @@ const BookManagementComponent = () => {
           </table>
         </div>
       </div>
+
+      <Modal
+  isOpen={modalIsOpen}
+  onRequestClose={handleCloseModal}
+  style={{
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      boxShadow: "17px 24px 48px grey",
+      background: "purple",
+      height: "50vh",
+      width: "50vw",
+      borderRadius: "30px",
+      border: "1px solid #ddd", // Add a border to match the second modal
+    },
+  }}
+>
+  <div className="modal-content">
+    <span className="close" onClick={() => setModalIsOpen(false)}>
+      &times;
+    </span>
+    <h4 style={{ color: "white" }}>Approval Details for Accession Number: {selectedBookDetails.accessionnumber}</h4>
+    {selectedBookDetails.approvals && selectedBookDetails.approvals.length > 0 ? (
+      <table className="toaster-books" style={{ width: "100%" }}>
+        <thead className="toaster-head">
+          <tr>
+            <th style={{ textAlign: "center", color: "white" }}>Student CardNumber</th>
+            <th style={{ textAlign: "center", color: "white" }}>Student Name</th>
+            <th style={{ textAlign: "center", color: "white" }}>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selectedBookDetails.approvals.map((approval, index) => (
+            <tr key={index}>
+              <td style={{ textAlign: "center", color: "white" }}>{approval.cardNumber}</td>
+              <td style={{ textAlign: "center", color: "white" }}>{approval.studentName}</td>
+              <td style={{ textAlign: "center", color: "white" }}>{approval.approvalDate && new Date(approval.approvalDate).toLocaleDateString()}
+</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p style={{ textAlign: "center", color: "white" }}>No books approved</p>
+    )}
+  </div>
+</Modal>
+
     </>
   );
 };
 
 export default BookManagementComponent;
+
