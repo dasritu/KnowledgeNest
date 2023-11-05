@@ -1,5 +1,5 @@
 .form {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 15px;
   box-shadow: 5px 5px 10px purple;
   display: flex;
@@ -7,7 +7,7 @@
   height: 583px;
 }
 .form-signup {
-  background-color: #ffffff;
+  background-color: transparent;
   border-radius: 15px;
   box-shadow: 5px 5px 10px purple;
   display: flex;
@@ -89,16 +89,16 @@ figure img {
 } */
 
 input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: black;
-    border-bottom: 2px solid #007bff;
-    font-size: 16px;
-    margin: 0px;
-  }
+input[type="password"] {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: black;
+  border-bottom: 2px solid #007bff;
+  font-size: 16px;
+  margin: 0px;
+}
 
 .submit input[type="submit"] {
   background: #007bff;
@@ -153,7 +153,7 @@ input[type="email"],
     font-size: 16px;
     margin: 0px;
   }
-  .input-style{
+  .input-style {
     width: 100%;
     border: none;
     outline: none;

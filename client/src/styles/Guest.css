@@ -12,7 +12,6 @@ body {
   width: 100%;
 }
 
-
 .hero-guest1 {
   width: 60%;
   height: 100%;
@@ -156,6 +155,9 @@ body {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid blue;
 }
 
 .guest-input-msg {
@@ -163,6 +165,9 @@ body {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid blue;
 }
 
 .submit-guest {
@@ -392,5 +397,13 @@ body {
 }
 @media screen and (max-width: 340px) {
 }
-@media screen and (max-width: 290px) {
+@media screen and (max-width: 340px) {
+}
+@media screen and (max-width: 340px) {
+}
+@media screen and (max-width: 220px) {
+  body {
+    background-size: 460px auto; /* Set the background image width to 460px and maintain its aspect ratio */
+    background-position: right top; /* Display the left side of the background image */
+  }
 }
