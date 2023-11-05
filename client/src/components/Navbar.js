@@ -164,7 +164,7 @@ export default function Navbar({ scrollToSection }) {
     <div>
       <nav
         className={`${navbarClass} fixed-top navbar-expand-lg`}
-        style={{ background: scrolling ? "antiquewhite" : "transparent" }}
+        style={{ background: scrolling ? "#eed6ec" : "transparent" }}
       >
         <div className="container-fluid">
           <div className="logo">

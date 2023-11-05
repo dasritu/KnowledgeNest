@@ -29,7 +29,6 @@ body {
   display: block;
   text-align: center;
   width: 100%;
-  margin-top: -20px;
 }
 .text-guest h3 {
   font-weight: bold;
@@ -197,7 +196,66 @@ body {
     font-weight: bold;
     font-size: 38px;
   }
+  .firstdiv {
+    font-size: 15px;
+  }
+  .firstdiv .title {
+    font-size: 20px;
+  }
+  .seconddiv {
+    font-size: 15px;
+  }
+  .seconddiv .title {
+    font-size: 20px;
+  }
+  .thirddiv {
+    font-size: 15px;
+  }
+  .thirddiv .title {
+    font-size: 20px;
+  }
 }
+@media screen and (max-width: 1076px) {
+  .firstdiv {
+    font-size: 14px;
+  }
+  .firstdiv .title {
+    font-size: 18px;
+  }
+  .seconddiv {
+    font-size: 14px;
+  }
+  .seconddiv .title {
+    font-size: 18px;
+  }
+  .thirddiv {
+    font-size: 14px;
+  }
+  .thirddiv .title {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 965px) {
+  .firstdiv {
+    font-size: 13px;
+  }
+  .firstdiv .title {
+    font-size: 17px;
+  }
+  .seconddiv {
+    font-size: 13px;
+  }
+  .seconddiv .title {
+    font-size: 17px;
+  }
+  .thirddiv {
+    font-size: 13px;
+  }
+  .thirddiv .title {
+    font-size: 17px;
+  }
+}
+
 @media screen and (max-width: 912px) {
   .guest-logo img {
     width: 100px;
@@ -213,6 +271,44 @@ body {
   .text-guest h3 {
     font-weight: bold;
     font-size: 38px;
+  }
+  .firstdiv {
+    font-size: 13px;
+  }
+  .firstdiv .title {
+    font-size: 17px;
+  }
+  .seconddiv {
+    font-size: 13px;
+  }
+  .seconddiv .title {
+    font-size: 17px;
+  }
+  .thirddiv {
+    font-size: 13px;
+  }
+  .thirddiv .title {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 890px) {
+  .firstdiv {
+    font-size: 12px;
+  }
+  .firstdiv .title {
+    font-size: 16px;
+  }
+  .seconddiv {
+    font-size: 12px;
+  }
+  .seconddiv .title {
+    font-size: 16px;
+  }
+  .thirddiv {
+    font-size: 12px;
+  }
+  .thirddiv .title {
+    font-size: 16px;
   }
 }
 
@@ -234,6 +330,26 @@ body {
     padding: 10px;
   }
 }
+@media screen and (max-width: 785px) {
+  .firstdiv {
+    font-size: 11px;
+  }
+  .firstdiv .title {
+    font-size: 15px;
+  }
+  .seconddiv {
+    font-size: 11px;
+  }
+  .seconddiv .title {
+    font-size: 15px;
+  }
+  .thirddiv {
+    font-size: 11px;
+  }
+  .thirddiv .title {
+    font-size: 15px;
+  }
+}
 @media screen and (max-width: 750px) {
   .guest-logo img {
     width: 95px;
@@ -248,8 +364,27 @@ body {
   }
   .text-guest h3 {
     font-weight: bold;
-    font-size: 34px;
-    padding: 8px;
+    font-size: 30px;
+  }
+}
+@media screen and (max-width: 735px) {
+  .firstdiv {
+    font-size: 10px;
+  }
+  .firstdiv .title {
+    font-size: 14px;
+  }
+  .seconddiv {
+    font-size: 10px;
+  }
+  .seconddiv .title {
+    font-size: 14px;
+  }
+  .thirddiv {
+    font-size: 10px;
+  }
+  .thirddiv .title {
+    font-size: 14px;
   }
 }
 @media screen and (max-width: 710px) {
@@ -288,6 +423,29 @@ body {
     padding: 8px;
   }
 }
+@media screen and (max-width: 656px) {
+  .firstdiv {
+    font-size: 11px;
+    height: 60%;
+  }
+  .firstdiv .title {
+    font-size: 13px;
+  }
+  .seconddiv {
+    font-size: 11px;
+    height: 60%;
+  }
+  .seconddiv .title {
+    font-size: 13px;
+  }
+  .thirddiv {
+    font-size: 11px;
+    height: 60%;
+  }
+  .thirddiv .title {
+    font-size: 13px;
+  }
+}
 @media screen and (max-width: 635px) {
   .guest-logo img {
     width: 90px;
@@ -305,8 +463,36 @@ body {
     font-size: 28px;
     padding: 8px;
   }
+  .firstdiv {
+    font-size: 10px;
+    height: 58%;
+  }
+  .seconddiv {
+    font-size: 10px;
+    height: 58%;
+  }
+  .thirddiv {
+    font-size: 10px;
+    height: 58%;
+  }
+  .contact-image img {
+    display: none;
+  }
+  .contact-image {
+    flex: 0% 1;
+    text-align: center;
+  }
+  .guest-contact {
+    flex: 94% 1;
+  }
+  .guest-heading {
+    margin-top: -224px;
+    text-align: center;
+    font-size: 45px;
+    padding-top: 90px;
+  }
 }
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 585px) {
   .guest-logo img {
     width: 90px;
     height: 90px;
@@ -323,51 +509,59 @@ body {
     font-size: 27px;
     padding: 8px;
   }
-}
-@media screen and (max-width: 522px) {
-  .guest-logo img {
-    width: 90px;
-    height: 90px;
+  .firstdiv {
+    font-size: 10px;
+    height: 64%;
   }
-  .text-guest p {
+  .seconddiv {
+    font-size: 10px;
+    height: 64%;
+  }
+  .thirddiv {
+    font-size: 10px;
+    height: 64%;
+  }
+  .guest_about {
+    height: 100vh;
+    margin-top: -198px;
+  }
+  .guest-heading {
+    margin-top: 130px;
     text-align: center;
-    padding: 9px;
-    font-size: 13px;
-    margin-bottom: 0;
-    font-weight: bold;
+    font-size: 45px;
+    padding-top: 90px;
   }
-  .text-guest h3 {
-    font-weight: bold;
-    font-size: 26px;
-    padding: 8px;
+ 
+  /* .firstdiv {
+    font-size: 14px;
+    width: 76%;
   }
+  .firstdiv .title {
+    font-size: 12px;
+  }
+  .seconddiv {
+    font-size: 14px;
+    width: 76%;
+  }
+  .seconddiv .title {
+    font-size: 12px;
+  }
+  .thirddiv {
+    font-size: 14px;
+    width: 76%;
+  }
+  .thirddiv .title {
+    font-size: 12px;
+  } */
 }
-@media screen and (max-width: 496px) {
-  .guest-logo img {
-    width: 90px;
-    height: 90px;
-  }
-  .text-guest p {
-    text-align: center;
-    padding: 7px;
-    font-size: 11px;
-    margin-bottom: 0;
-    font-weight: bold;
-  }
-  .text-guest h3 {
-    font-weight: bold;
-    font-size: 26px;
-    padding: 5px;
-  }
-}
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 525px) {
   .guestbody {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 105vh;
-    width: 105%;
+    height: 115vh;
+    width: 113%;
   }
   .hero-guest1 img {
     display: none;
@@ -378,16 +572,122 @@ body {
   }
   .text-guest p {
     text-align: center;
-    padding: 7px;
-    font-size: 15px;
-    width: 100%;
+    padding: 9px;
+    font-size: 13px;
     margin-bottom: 0;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .text-guest h3 {
     font-weight: bold;
     font-size: 26px;
+    padding: 8px;
+  }
+  .guest-about {
+    flex-direction: column;
+    margin-top: 178px;
+  }
+  .guest-heading {
+    margin-top: -121px;
+    text-align: center;
+    font-size: 45px;
+  }
+  .hero-guest1 img {
+    display: none;
+  }
+  .guest-logo img {
+    width: 90px;
+    height: 90px;
+  }
+  .text-guest p {
+    padding: 7px;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text-guest h3 {
+    font-weight: bold;
+    font-size: 40px;
     padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-guest2 {
+    width: 82%;
+    height: 121%;
+    margin-top: -289px;
+  }
+  .guest_about {
+    height: 100vh;
+    margin-top: 50px;
+    width: 113vw;
+  }
+  .firstdiv {
+    font-size: 14px;
+    width: 76%;
+  }
+  .firstdiv .title {
+    font-size: 24px;
+  }
+  .seconddiv {
+    font-size: 14px;
+    width: 76%;
+  }
+  .seconddiv .title {
+    font-size: 24px;
+  }
+  .thirddiv {
+    font-size: 14px;
+    width: 76%;
+  }
+  .thirddiv .title {
+    font-size: 24px;
+  }
+  .contact-container {
+    margin-top: 207px;
+  }
+}
+@media screen and (max-width: 496px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 115vh;
+    width: 113%;
+  }
+
+  .hero-guest1 img {
+    display: none;
+  }
+  .guest-logo img {
+    width: 90px;
+    height: 90px;
+  }
+  .text-guest p {
+    padding: 7px;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text-guest h3 {
+    font-weight: bold;
+    font-size: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .hero-guest2 {
     width: 82%;
@@ -395,15 +695,171 @@ body {
     margin-top: -289px;
   }
 }
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 460px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 115vh;
+    width: 113%;
+  }
+  .hero-guest1 img {
+    display: none;
+  }
+  .guest-logo img {
+    width: 90px;
+    height: 90px;
+  }
+  .text-guest p {
+    padding: 7px;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text-guest h3 {
+    font-weight: bold;
+    font-size: 40px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-guest2 {
+    width: 82%;
+    height: 121%;
+    margin-top: -289px;
+  }
+  .guest-about {
+    flex-direction: column;
+    margin-top: 206px;
+  }
 }
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 380px) {
+  .guest_about {
+    height: 100vh;
+    margin-top: 71px;
+    width: 121vw;
+  }
+  .guest-about {
+    flex-direction: column;
+    margin-top: 247px;
+  }
 }
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 360px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 119vh;
+    width: 116%;
+  }
+  .hero-guest1 img {
+    display: none;
+  }
+  .guest-logo img {
+    width: 90px;
+    height: 90px;
+  }
+  .text-guest p {
+    padding: 7px;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text-guest h3 {
+    font-weight: bold;
+    font-size: 36px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-guest2 {
+    width: 82%;
+    height: 121%;
+    margin-top: -289px;
+  }
+  .firstdiv {
+    font-size: 13px;
+    width: 76%;
+  }
+  .seconddiv {
+    font-size: 13px;
+    width: 76%;
+  }
+  .thirddiv {
+    font-size: 13px;
+    width: 76%;
+  }
+}
+@media screen and (max-width: 330px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 119vh;
+    width: 120%;
+  }
+  .guest-about {
+    flex-direction: column;
+    margin-top: 275px;
+  }
+  .contact-container {
+    margin-top: 321px;
+  }
+}
+@media screen and (max-width: 300px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 120%;
+  }
+}
+@media screen and (max-width: 280px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 120%;
+  }
+  .guest-about {
+    flex-direction: column;
+    margin-top: 322px;
+  }
+}
+@media screen and (max-width: 260px) {
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 120%;
+  }
 }
 @media screen and (max-width: 220px) {
-  body {
-    background-size: 460px auto; /* Set the background image width to 460px and maintain its aspect ratio */
-    background-position: right top; /* Display the left side of the background image */
+  .guestbody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 120%;
   }
 }
