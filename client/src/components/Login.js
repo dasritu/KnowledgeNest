@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import login from "../image/login.jpg";
+import login from "../image/login.png";
 import "../styles/Signup.css";
 import { UserContext } from "../App";
 export default function Login() {

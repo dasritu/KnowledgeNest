@@ -1,8 +1,8 @@
 import React from "react";
 import "../styles/Guest.css";
-import { default as img } from "../image/3d-render-online-education-survey-test-concept.jpg";
+import { default as img } from "../image/3d-render-online-education-survey-test-concept-removebg-preview.png";
 import { default as logo } from "../image/reading.png";
-import { default as contact } from "../image/5124556.jpg";
+import { default as contact } from "../image/5124556-removebg-preview.png";
 import { MdTravelExplore } from "react-icons/md";
 import { GrContactInfo } from "react-icons/gr";
 import { default as img1 } from "../image/online-learning.png";
