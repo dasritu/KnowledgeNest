@@ -543,7 +543,7 @@ router.post("/approve-book/:id", async (req, res) => {
 
     // Find the requested book by ID in your Request schema
     const requestedBook = await Request.findById(id);
-
+    const accession=requestedBook.accessionnumber
     // Decrease quantity in quantitySchema
     // const prevQuantity = await Quantity.findOneAndUpdate(
     //   { bookAuthor: requestedBook.bookAuthor, bookName: requestedBook.bookName },
@@ -572,7 +572,7 @@ router.post("/approve-book/:id", async (req, res) => {
       returnDate: returnDate,
     });
     const allBook = await AllBook.findOneAndUpdate(
-      { /* Your filter criteria */ },
+      { accessionnumber:accession },
       {
         $push: {
           approvals: {
@@ -761,5 +761,39 @@ router.get('/get-approval-details/:accessionNumber', async (req, res) => {
   } catch (error) {
     console.error("Error fetching approval details:", error);
     res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.put('/editstudent/:id', async (req, res) => {
+  try {
+    console.log("Received PUT request:", req.params.id, req.body);
+const {id}=req.params
+    // Use findByIdAndUpdate with { new: true } to return the modified document
+    const updatedStudent = await User.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    console.log("Updated student:", updatedStudent);
+    res.json(updatedStudent);
+  } catch (error) {
+    console.error("Error updating student:", error);
+    res.status(500).json({ error: "Error updating student" });
+  }
+});
+
+
+router.delete("/deletestudent/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    res.status(500).json({ error: "Error deleting student" });
   }
 });
