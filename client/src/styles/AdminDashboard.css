@@ -16,8 +16,8 @@
   margin: 0 5px;
   background-color: white;
   color: purple;
-  height: 250px;
-  width: 245px;
+  height: 200px;
+  width: 200px;
   border-radius: 31px;
   display: flex;
   align-items: center;
@@ -35,10 +35,9 @@
     left: 5px;
     background: linear-gradient(to bottom right, #f7f4f41a, rgba(0, 0, 0, 0.1));
     z-index: 0;
-    border-radius: 26px;/* Adjust the border-radius to match your card's border-radius */
+    border-radius: 26px; /* Adjust the border-radius to match your card's border-radius */
   }
 }
-
 
 .item {
   display: block;
@@ -154,8 +153,170 @@
   border-radius: 23px;
   z-index: 0;
   border: 3px solid #f7ecec;
-    box-shadow: -9px 12px 45px 2px grey;
+  box-shadow: -9px 12px 45px 2px grey;
 }
 
-
-
+@media screen and (max-width: 1920px) {
+}
+@media screen and (max-width: 1020px) {
+}
+@media screen and (max-width: 920px) {
+}
+@media screen and (max-width: 845px) {
+  .pie-container {
+    position: relative;
+    height: 52%;
+    width: 55%;
+  }
+  .stream {
+    margin: 0 5px;
+    background-color: white;
+    color: purple;
+    height: 180px;
+    width: 180px;
+    border-radius: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 9px 16px 15px grey;
+    position: relative;
+  }
+}
+@media screen and (max-width: 740px) {
+  .stream {
+    margin: 0 5px;
+    background-color: white;
+    color: purple;
+    height: 160px;
+    width: 160px;
+    border-radius: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 9px 16px 15px grey;
+    position: relative;
+  }
+  .right-side {
+    background-color: #ebdbef;
+    color: purple;
+    width: 81%;
+    border-radius: 10px;
+  }
+  .pie-container {
+    position: relative;
+    height: 52%;
+    width: 56%;
+  }
+}
+@media screen and (max-width: 712px) {
+  .right-side {
+    background-color: #ebdbef;
+    color: purple;
+    width: 85%;
+    border-radius: 10px;
+  }
+  .pie-container {
+    /* position: relative; */
+    height: 57%;
+    width: 57%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .right-side {
+    background-color: #ebdbef;
+    color: purple;
+    width: 85%;
+    border-radius: 10px;
+  }
+}
+@media screen and (max-width: 620px) {
+  .stream {
+    margin: 0 5px;
+    background-color: white;
+    color: purple;
+    height: 140px;
+    width: 140px;
+    border-radius: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 9px 16px 15px grey;
+    position: relative;
+  }
+  .item {
+    display: flex;
+    justify-content: column;
+    align-items: center;
+    margin-top: 22px;
+    font-size: 35px;
+  }
+}
+@media screen and (max-width: 595px) {
+  .right-side {
+    background-color: #ebdbef;
+    color: purple;
+    width: 91%;
+    border-radius: 10px;
+  }
+  .stream {
+    margin: 0 5px;
+    background-color: white;
+    color: purple;
+    height: 140px;
+    width: 140px;
+    border-radius: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 9px 16px 15px grey;
+    position: relative;
+  }
+  .item {
+    display: flex;
+    justify-content: column;
+    align-items: center;
+    margin-top: 22px;
+    font-size: 35px;
+  }
+  .pie-container {
+    height: 57%;
+    width: 64%;
+  }
+}
+@media screen and (max-width: 575px) {
+  .right-side {
+    background-color: #ebdbef;
+    color: purple;
+    width: 91%;
+    border-radius: 10px;
+    
+  }
+  .stream {
+    margin: 0 5px;
+    background-color: white;
+    color: purple;
+    height: 140px;
+    width: 140px;
+    border-radius: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 9px 16px 15px grey;
+    position: relative;
+  }
+  .item {
+    display: flex;
+    justify-content: column;
+    align-items: center;
+    margin-top: 22px;
+    font-size: 35px;
+  }
+  .pie-container {
+    height: 57%;
+    width: 64%;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -31,8 +31,6 @@ export default function Login() {
       dispatch({ type: "USER", payload: true });
       // window.alert("Login Successfull");
     }
-
-    
   };
 
   return (
@@ -48,9 +46,10 @@ export default function Login() {
             <div className="name"></div>
             <div className="email">
               <label htmlFor="">Email:</label>
-              <div className="input">
+              <div className="form-input">
                 {" "}
                 <input
+                  className="input-style-login"
                   type="email"
                   name="email"
                   id=""
@@ -63,8 +62,9 @@ export default function Login() {
 
             <div className="password">
               <label htmlFor="">Password:</label>
-              <div className="input">
+              <div className="form-input">
                 <input
+                  className="input-style-login"
                   type="password"
                   name="password"
                   id=""
