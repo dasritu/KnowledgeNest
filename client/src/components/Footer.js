@@ -12,7 +12,7 @@ const Footer = () => {
 
   const columnStyle = {
     flex: 1,
-    // textAlign: "center",
+    textAlign: "center",
     padding: "20px",
   };
 
@@ -21,7 +21,7 @@ const Footer = () => {
 
   return (
     <footer style={footerStyle}>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" }} className="footer-style">
         <div style={columnStyle}>
           <h3>Terms and Conditions</h3>
           <p>📚 Extensive Resource Collection</p>
@@ -34,18 +34,18 @@ const Footer = () => {
           <h3>Contact Details</h3>
           <p>Email: knowledgenestsr23@gmail.com</p>
           <p>Phone: +91 7585957009</p>
-          <div class="social-icons">
-            <a href="/" class="social-icon">
+          <div class="social-icons" style={{textAlign:"center"}}>
+            <a href="/" className="social-icon">
               <img
                 src={img1}
                 alt="Facebook"
                 style={{ height: "50px", width: "50px" }}
               />
             </a>
-            <a href="/" class="social-icon">
+            <a href="/" className="social-icon">
               <img src={img2} alt="Twitter" style={{ height: "50px", width: "50px" }} />
             </a>
-            <a href="/" class="social-icon">
+            <a href="/" className="social-icon">
               <img src={img3} alt="Instagram" style={{ height: "50px", width: "50px" }} />
             </a>
           </div>
@@ -59,10 +59,12 @@ const Footer = () => {
               width: "600",
               height: "350",
               border: 0,
+              textAlign:"center",
               allowfullscreen: "",
               loading: "lazy",
               referrerpolicy: "no-referrer-when-downgrade",
             }}
+            className="map"
           ></iframe>
         </div>
       </div>

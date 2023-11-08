@@ -50,7 +50,7 @@ const Request=require('../model/requestSchema');
 const ApproveBook=require('../model/approve-bookSchema')
 const Return=require('../model/returnScehma');
 const AllBook=require('../model/AlllBookScehma');
-
+const QuantityStudent=require('../model/qstudent')
 
 
 
@@ -70,6 +70,8 @@ router.post('/register', async (req, res) => {
      return res.status(422).json({error:"Password doesnot match"});
     }
     else{
+      const currentYear = new Date().getFullYear();
+      const lastDigitOfYear = currentYear.toString().slice(-2);
         const lastUser = await User.findOne({ stream,year }).sort({ cardNo: -1 });
         
         let newcode = '001'; // Default if no user exists in the same stream
@@ -79,12 +81,22 @@ router.post('/register', async (req, res) => {
           newcode = String(parseInt(lastCode) + 1).padStart(3, '0');
         }
 
-    const cardNo = `${year.charAt(0)}${stream}${newcode}`;
+    const cardNo = `${lastDigitOfYear}${year.charAt(0)}${stream}${newcode}`;
       
       // const cardNo = crypto.randomBytes(4).toString('hex'); // Adjust the length as needed
     const new_user =new User({name,email,stream,year,phone,cardNo,password,cpassword,role});
-
+    
     const user_reg=await new_user.save();
+
+    const existstream= await QuantityStudent.findOne({stream})
+    if(!existstream){
+      const newQuantity=new QuantityStudent({stream,quantity:1})
+      await newQuantity.save()
+    }
+    else{
+      existstream.quantity+=1;
+      await existstream.save();
+    }
              if(user_reg){
               const emailText = `Thank you for registering in Student Library Path. Your card number is: ${cardNo}`;
               sendEmail(email, 'Registration Confirmation', emailText);
@@ -152,15 +164,20 @@ router.post('/addbook', async (req, res) => {
   try {
     console.log('Received request with name and author:', name, author);
 
-   
+    // Check if the accession number is already in use
+    const isAccessionNumberTaken = await AllBook.exists({ accessionnumber });
+
+    if (isAccessionNumberTaken) {
+      return res.status(400).json({ error: 'Accession number is already in use.' });
+    }
+
+    // Your existing code for updating the quantity
     const existingBook = await Quantity.findOne({ bookAuthor: author, bookName: name });
 
-    
     if (!existingBook) {
       const newQuantity = new Quantity({ bookAuthor: author, bookName: name, quantity: 1 });
       await newQuantity.save();
     } else {
-      
       existingBook.quantity += 1;
       await existingBook.save();
     }
@@ -168,8 +185,11 @@ router.post('/addbook', async (req, res) => {
     // Add a new record to the Book schema
     const newBook = new Book({ name, author, purchasedate, accessionnumber });
     await newBook.save();
-    const allnewbook=new AllBook({name,author,purchasedate,accessionnumber});
-    await allnewbook.save();
+
+    // Add a new record to the AllBook schema
+    const allNewBook = new AllBook({ name, author, purchasedate, accessionnumber });
+    await allNewBook.save();
+
     console.log('Added a new book:', newBook);
     res.json(newBook);
   } catch (error) {
@@ -177,7 +197,6 @@ router.post('/addbook', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 
 
@@ -245,6 +264,38 @@ router.get("/showstudent",async(req,res)=>{
 // Assuming you have something like this in your server code
 
 // Update a book by ID
+
+router.get("/showquantitystudent",async(req,res)=>{
+  try{
+    const quantity=await QuantityStudent.find();
+    res.json(quantity)
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+})
+router.put('/updatestudent/:id', async (req, res) => {
+  try {
+    const stdid = req.params.id;
+
+    // Extract non-sensitive fields from req.body
+    const { name, email, stream, year, phone } = req.body;
+
+    // Update the user with non-sensitive fields only
+    const updateStudent = await User.findByIdAndUpdate(
+      stdid,
+      { name, email, stream, year, phone },
+      { new: true }
+    );
+
+    res.json(updateStudent);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 router.put('/updatebook/:id', async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -294,11 +345,27 @@ router.put('/updatebook/:id', async (req, res) => {
 });
 
 router.post("/request-book",async(req,res)=>{
-  const { studentName, cardNumber,stream,bookName,bookAuthor,accessionnumber } = req.body;
+  const { studentName, cardNumber,stream,bookName,bookAuthor,accessionnumber,requestDateTime } = req.body;
   try { 
-    const newRequest = new Request({ studentName,cardNumber, stream,bookName,bookAuthor,accessionnumber });
+   
+    const newRequest = new Request({ studentName,cardNumber, stream,bookName,bookAuthor,accessionnumber,requestDateTime });
     await newRequest.save();
     res.json(newRequest);
+
+    const book = await Book.findOneAndDelete({ accessionnumber });
+    const prevQuantity = await Quantity.findOneAndUpdate(
+      { bookAuthor: newRequest.bookAuthor, bookName: newRequest.bookName },
+      { $inc: { quantity: -1 } },
+      { new: true }
+    );
+
+    // Check if the previous book is no longer in stock, delete the quantity record
+    if (prevQuantity && prevQuantity.quantity <= 0) {
+      await Quantity.findOneAndDelete({
+        bookAuthor: newRequest.bookAuthor,
+        bookName: newRequest.bookName,
+      });
+    }
   } catch (error) {
     console.error('Error adding a new request:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -312,22 +379,27 @@ router.post("/return-book", async (req, res) => {
     console.log(`Attempting to return book with ID ${id}`);
 
     // Delete the book from the ApproveBook collection
-    const deletedBook = await ApproveBook.findByIdAndRemove(id);
+   // const deletedBook = await ApproveBook.findByIdAndRemove(id);
 
-    if (!deletedBook) {
-      console.log(`Book with ID ${id} not found in ApproveBook collection.`);
-      return res.status(404).json({ error: 'Book not found' });
-    }
+    // if (!deletedBook) {
+    //   console.log(`Book with ID ${id} not found in ApproveBook collection.`);
+    //   return res.status(404).json({ error: 'Book not found' });
+    // }
 
-    console.log(`Deleted book from ApproveBook collection: ${deletedBook}`);
+    // console.log(`Deleted book from ApproveBook collection: ${deletedBook}`);
 
     // Add the returned book details to the Return collection
     const newReturn = new Return({ studentName, cardNumber, stream, bookName, bookAuthor, accessionNumber, returnDate });
     await newReturn.save();
-
+    
     console.log(`Added returned book to Return collection: ${newReturn}`);
 
     res.json(newReturn);
+
+    const user_data = await User.findOne({ cardNo: newReturn.cardNumber });
+    const email = user_data.email;
+    const emailText = `${newReturn.studentName} Your  book ${newReturn.bookName} , Author: ${newReturn.bookAuthor} is Returned. Please Submit The Book In Library Within Your Return Date ,Otherwise fine will be added to Your Account .`;
+    sendEmail(email, 'Book Returned', emailText);
   } catch (error) {
     console.error('Error handling book return:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -471,6 +543,109 @@ router.post("/approve-book/:id", async (req, res) => {
 
     // Find the requested book by ID in your Request schema
     const requestedBook = await Request.findById(id);
+    const accession=requestedBook.accessionnumber
+    // Decrease quantity in quantitySchema
+    // const prevQuantity = await Quantity.findOneAndUpdate(
+    //   { bookAuthor: requestedBook.bookAuthor, bookName: requestedBook.bookName },
+    //   { $inc: { quantity: -1 } },
+    //   { new: true }
+    // );
+
+    // // Check if the previous book is no longer in stock, delete the quantity record
+    // if (prevQuantity && prevQuantity.quantity <= 0) {
+    //   await Quantity.findOneAndDelete({
+    //     bookAuthor: requestedBook.bookAuthor,
+    //     bookName: requestedBook.bookName,
+    //   });
+    // }
+
+    // Calculate return date
+    const returnDate = calculateReturnDate();
+
+    // Create a new entry in the ApprovedBook schema
+    await ApproveBook.create({
+      studentName: requestedBook.studentName,
+      cardNumber: requestedBook.cardNumber,
+      bookName: requestedBook.bookName,
+      bookAuthor: requestedBook.bookAuthor,
+      accessionNumber: requestedBook.accessionnumber,
+      returnDate: returnDate,
+    });
+    const allBook = await AllBook.findOneAndUpdate(
+      { accessionnumber:accession },
+      {
+        $push: {
+          approvals: {
+            cardNumber: requestedBook.cardNumber,
+            studentName: requestedBook.studentName,
+            approvalDate: new Date(),
+          },
+        },
+      },
+      { new: true }
+    );
+    const user_data = await User.findOne({ cardNo: requestedBook.cardNumber });
+    const email = user_data.email;
+ 
+    console.log("Book Approved");
+    // const bookrecord = await Book.findOne({ accessionnumber: requestedBook.accessionnumber });
+    // const id_book = bookrecord._id;
+    // await Book.findByIdAndDelete(id_book);
+    // Delete the approved request
+    await Request.findByIdAndDelete(id);
+
+    const emailText = `${requestedBook.studentName} Your requested book ${requestedBook.bookName}, Author: ${requestedBook.bookAuthor} is approved of card no: ${requestedBook.cardNumber}. Please collect your book from Library. Your Return Date is : ${returnDate.toDateString()}`;
+    sendEmail(email, 'Book Approved', emailText);
+
+    // Send a success response
+    return res.json({ message: "Book approved successfully" });
+    
+
+  } catch (error) {
+    console.error("Error approving book:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+
+// Move the function outside of the router.post block
+function calculateReturnDate() {
+  const currentDate = new Date();
+  const returnDate = new Date(currentDate);
+  returnDate.setMonth(returnDate.getMonth() + 3);
+  return returnDate;
+}
+router.get('/show-allbooks',async(req,res)=>{
+  try{
+    const allbooks=await AllBook.find();
+    res.json(allbooks)
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+})
+router.get("/show-approrve",async(req,res)=>{
+  try{
+    const students = await ApproveBook.find();
+    res.json(students);
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+});
+
+
+router.delete("/delete-request/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    // Fetch the requested book before deleting
+    const requestedBook = await Request.findById(id);
+
+    if (!requestedBook) {
+      return res.status(404).json({ error: "Request not found" });
+    }
+
+    await Request.findByIdAndDelete(id);
 
     // Decrease quantity in quantitySchema
     const prevQuantity = await Quantity.findOneAndUpdate(
@@ -487,66 +662,23 @@ router.post("/approve-book/:id", async (req, res) => {
       });
     }
 
-    // Calculate return date
-    const returnDate = calculateReturnDate();
-
-    // Create a new entry in the ApprovedBook schema
-    await ApproveBook.create({
-      studentName: requestedBook.studentName,
-      cardNumber: requestedBook.cardNumber,
-      bookName: requestedBook.bookName,
-      bookAuthor: requestedBook.bookAuthor,
-      accessionNumber: requestedBook.accessionnumber,
-      returnDate: returnDate,
-    });
-
     const user_data = await User.findOne({ cardNo: requestedBook.cardNumber });
     const email = user_data.email;
+    const emailText = `${requestedBook.studentName} Your requested book ${requestedBook.bookName}, Author: ${requestedBook.bookAuthor} is not available. Please request other books.`;
+    sendEmail(email, 'Book Not Available', emailText);
 
-    console.log("Book Approved");
-    const bookrecord = await Book.findOne({ accessionnumber: requestedBook.accessionnumber });
-    const id_book = bookrecord._id;
-    await Book.findByIdAndDelete(id_book);
-    // Delete the approved request
-    await Request.findByIdAndDelete(id);
-
-    const emailText = `${requestedBook.studentName} Your requested book ${requestedBook.bookName}, Author: ${requestedBook.bookAuthor} is approved of card no: ${requestedBook.cardNumber}. Please collect your book from Library. Your Return Date is : ${returnDate.toDateString()}`;
-    sendEmail(email, 'Book Approved', emailText);
-
-    // Send a success response
-    return res.json({ message: "Book approved successfully" });
-
+    res.status(200).json({ message: "Request deleted successfully" });
   } catch (error) {
-    console.error("Error approving book:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error deleting request:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-// Move the function outside of the router.post block
-function calculateReturnDate() {
-  const currentDate = new Date();
-  const returnDate = new Date(currentDate);
-  returnDate.setMonth(returnDate.getMonth() + 3);
-  return returnDate;
-}
-
-router.get("/show-approrve",async(req,res)=>{
-  try{
-    const students = await ApproveBook.find();
-    res.json(students);
-  }
-  catch(error){
-    res.status(500).json({error:"Internal Server Error"})
-  }
-});
-
-
 
 router.post("/accept-book/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const returnBook = await Return.findById(id);
-
+    await ApproveBook.findOneAndDelete({accessionNumber:returnBook.accessionNumber})
     if (!returnBook) {
       return res.status(404).json({ error: 'Return record not found' });
     }
@@ -600,4 +732,68 @@ router.get("/showreturn",async(req,res)=>{
   }
 });
 
+router.get("/showbookquantity",async(req,res)=>{
+  try{
+    const return_book = await Quantity.find();
+    res.json(return_book);
+  }
+  catch(error){
+    res.status(500).json({error:"Internal Server Error"})
+  }
+});
+
 module.exports = router;
+
+
+router.get('/get-approval-details/:accessionNumber', async (req, res) => {
+  try {
+    const { accessionNumber } = req.params;
+
+    // Find the book with the matching accession number
+    const book = await AllBook.findOne({ accessionnumber: accessionNumber });
+
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    // Return the approval details for that book
+    res.json({ accessionnumber: book.accessionnumber, approvals: book.approvals });
+  } catch (error) {
+    console.error("Error fetching approval details:", error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.put('/editstudent/:id', async (req, res) => {
+  try {
+    console.log("Received PUT request:", req.params.id, req.body);
+const {id}=req.params
+    // Use findByIdAndUpdate with { new: true } to return the modified document
+    const updatedStudent = await User.findByIdAndUpdate(
+      id,
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    console.log("Updated student:", updatedStudent);
+    res.json(updatedStudent);
+  } catch (error) {
+    console.error("Error updating student:", error);
+    res.status(500).json({ error: "Error updating student" });
+  }
+});
+
+
+router.delete("/deletestudent/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "Student deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting student:", error);
+    res.status(500).json({ error: "Error deleting student" });
+  }
+});

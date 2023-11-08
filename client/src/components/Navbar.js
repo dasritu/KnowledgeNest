@@ -7,9 +7,23 @@ import read from "../image/reading.png";
 
 export default function Navbar({ scrollToSection }) {
   const [role, setRole] = useState("user");
-
+  const [scrolling, setScrolling] = useState(false);
   const { state, dispatch } = useContext(UserContext);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true);
+      } else {
+        setScrolling(false);
+      }
+    };
 
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   const userHome = async () => {
     try {
       const response = await fetch("/about", {
@@ -47,7 +61,7 @@ export default function Navbar({ scrollToSection }) {
       dispatch({ type: "USER", payload: false });
     }
   }, []);
-
+  const navbarClass = scrolling ? "navbar scrolled" : "navbar";
   const RenderMenu = () => {
     if (state) {
       if (role === "user") {
@@ -149,17 +163,17 @@ export default function Navbar({ scrollToSection }) {
   return (
     <div>
       <nav
-        className="navbar fixed-top navbar-expand-lg "
-        style={{ background: "transparent" }}
+        className={`${navbarClass} fixed-top navbar-expand-lg`}
+        style={{ background: scrolling ? "#eed6ec" : "transparent" }}
       >
         <div className="container-fluid">
           <div className="logo">
             <img src={read} alt="" />
           </div>
           <a
-            className="navbar-brand custom-brand"
+            className="navbar-brand custom-brand nav-title"
             href="/"
-            style={{ fontWeight: "bold", "font-size": "28px", color: "purple" }}
+            style={{ fontWeight: "bold", color: "purple" }}
           >
             KnowledgeNest
           </a>

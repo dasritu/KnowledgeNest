@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import sign from "../image/signup.jpg";
+import sign from "../image/signup.png";
 import ReCAPTCHA from "react-google-recaptcha";
 import "../styles/Signup.css";
 export default function Signup() {
@@ -61,7 +61,7 @@ export default function Signup() {
   return (
     <div>
       <form method="POST" class="signup-form">
-        <div className="form">
+        <div className="form-signup">
           <figure>
             <img src={sign} alt="" />
           </figure>
@@ -71,9 +71,10 @@ export default function Signup() {
               <h2>Sign Up</h2>
             </div>
             <div className="form-style">
-              <div>Name:</div>
+              <label className="label-style" htmlFor="">Name: </label>
               <div className="form-input">
                 <input
+                  className="input-style"
                   type="text"
                   name="name"
                   id=""
@@ -84,20 +85,22 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <div>Email:</div>
+              <label className="label-style" htmlFor="">Email: </label>
               <div className="form-input">
                 {" "}
                 <input
+                  className="input-style"
                   type="email"
                   name="email"
                   id=""
                   value={user.email}
                   onChange={handleInputs}
+                  placeholder="Enter your valid email id..."
                 />
               </div>
             </div>
             <div className="form-style">
-              <div>Stream:</div>
+              <label className="label-style" htmlFor="">Stream: </label>
               <div className="form-input">
                 <select
                   name="stream"
@@ -105,7 +108,7 @@ export default function Signup() {
                   value={user.stream}
                   onChange={handleInputs}
                   className="form-input"
-                  style={{ width: "200px" }}
+                  style={{ width: "200px", backgroundColor:"transparent" }}
                 >
                   <option value="BCA">BCA</option>
                   <option value="BBA">BBA</option>
@@ -114,7 +117,7 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label htmlFor="">Year:</label>
+              <label className="label-style" htmlFor="">Year:</label>
               <div className="form-input">
                 <select
                   name="year"
@@ -122,7 +125,7 @@ export default function Signup() {
                   value={user.year}
                   onChange={handleInputs}
                   className="form-input"
-                  style={{ width: "200px" }}
+                  style={{ width: "200px", backgroundColor:"transparent" }}
                 >
                   <option value="First">First</option>
                   <option value="Second">Second</option>
@@ -131,39 +134,45 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label htmlFor="">Phone:</label>
+              <label className="label-style" htmlFor="">Phone:</label>
               <div className="form-input">
                 {" "}
                 <input
+                  className="input-style"
                   type="number"
                   name="phone"
                   id=""
                   value={user.phone}
                   onChange={handleInputs}
+                  placeholder="Enter your phone number..."
                 />
               </div>
             </div>
             <div className="form-style">
-              <div>Password:</div>
+              <label className="label-style" htmlFor="">Password: </label>
               <div className="form-input">
                 <input
+                  className="input-style"
                   type="password"
                   name="password"
                   id=""
                   value={user.password}
                   onChange={handleInputs}
+                  placeholder="Enter new password..."
                 />
               </div>
             </div>
             <div className="form-style">
-              <div>Confirm Password:</div>
+              <label className="label-style" htmlFor="">Confirm Password:</label>
               <div className="form-input">
                 <input
+                  className="input-style"
                   type="password"
                   name="cpassword"
                   id=""
                   value={user.cpassword}
                   onChange={handleInputs}
+                  placeholder="Enter password to confirm..."
                 />
               </div>
             </div>
@@ -171,6 +180,7 @@ export default function Signup() {
               <ReCAPTCHA
                 sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                 onChange={onChange}
+                style={{ height:"40px"}}
               />
             </div>
             <div className="bottom">

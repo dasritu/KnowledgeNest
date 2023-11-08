@@ -110,7 +110,7 @@ export default function Approve() {
                 <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
                 <StyledTableCell align="center">{user.bookName}</StyledTableCell>
                 <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
-                <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
+                <StyledTableCell align="center">  {new Date(user.returnDate).toLocaleDateString()}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
