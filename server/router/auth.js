@@ -51,7 +51,7 @@ const ApproveBook=require('../model/approve-bookSchema')
 const Return=require('../model/returnScehma');
 const AllBook=require('../model/AlllBookScehma');
 const QuantityStudent=require('../model/qstudent')
-
+const Message=require('../model/MessageSchema')
 
 
 
@@ -797,3 +797,15 @@ router.delete("/deletestudent/:id", async (req, res) => {
     res.status(500).json({ error: "Error deleting student" });
   }
 });
+
+router.post('/save-message',async(req,res)=>{
+  try{
+    const {name,email,message}=req.body;
+    const data=new Message({name,email,message})
+    await data.save();
+  }
+  catch(error){
+    console.error("Error deleting student:", error);
+    res.status(500).json({ error: "Error deleting student" });
+  }
+})

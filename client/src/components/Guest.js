@@ -1,20 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Guest.css";
 import { default as img } from "../image/3d-render-online-education-survey-test-concept-removebg-preview.png";
 import { default as logo } from "../image/reading.png";
-import { default as contact } from "../image/5124556-removebg-preview.png";
+import { default as contact } from "../image/ContactUs.png";
 import { MdTravelExplore } from "react-icons/md";
 import { GrContactInfo } from "react-icons/gr";
 import { default as img1 } from "../image/online-learning.png";
 import { default as img2 } from "../image/book-stack.png";
 import { default as img3 } from "../image/notebook.png";
+import styled, { keyframes } from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 import Footer from "./Footer";
+
+
+
+
+const floatAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+`;
+
+const FloatingImage = styled.img`
+  animation: ${floatAnimation} 2s infinite;
+`;
+
+
 export default function Guest() {
+  const [text, setMessage] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+ let name, value;
+  const handleInputs = (e) => {
+    console.log(e);
+    name = e.target.name;
+    value = e.target.value;
+
+    setMessage({ ...text, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, email, message } = text;
+  
+    try {
+      const response = await fetch("/save-message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+        }),
+      });
+  
+      if (response.ok) {
+        toast.success("Message submitted successfully!");
+        window.alert("Message Sent Successfully");
+        console.log("Message Sent");
+  
+        // Clear the form fields
+        setMessage({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        toast.error("Error submitting message");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error submitting message");
+    }
+  };
+  
   return (
     <>
+    
       <div className="guestbody" id="home">
         <div className="hero-guest1">
-          <img src={img} alt="" />
+        <FloatingImage src={img} alt="Floating Image" />
+
         </div>
         <div className="hero-guest2">
           <div className="text-guest">
@@ -88,7 +161,7 @@ export default function Guest() {
         </div>
         <div class="contact-container">
           <div class="contact-image" id="contact">
-            <img src={contact} alt="Contact Image" />
+            <img className="flipped" src={contact} alt="Contact Image" />
           </div>
           <div class="guest-contact" >
             <h1 class="guest-heading-contact">
@@ -96,18 +169,28 @@ export default function Guest() {
               <strong>Contact US</strong>
             </h1>
 
-            <form action="" class="guest-form">
-              <label for="name">Name: </label>
-              <input type="text" id="name" class="guest-input" />
-              <label for="email">Email: </label>
-              <input type="email" id="email" class="guest-input" />
-              <label for="message">Message:</label>
-              <input type="text" id="message" class="guest-input-msg" />
-              <input type="submit" class="submit-guest" value="Submit" />
-            </form>
+         
+      <form
+       
+        method="POST"
+        className="guest-form"
+       onSubmit={handleSubmit}
+      >
+        <label htmlFor="name">Name: </label>
+        <input type="text" id="name" name="name" onChange={handleInputs} value={text.name}   className="guest-input" />
+
+        <label htmlFor="email">Email: </label>
+        <input type="email" id="email" name="email"  onChange={handleInputs}  value={text.email}className="guest-input" />
+
+        <label htmlFor="message">Message:</label>
+        <input type="text" id="message" name="message"  onChange={handleInputs} value={text.message}className="guest-input-msg" />
+
+        <input type="submit" className="submit-guest" value="Submit"  />
+      </form>
+    
           </div>
         </div>
-
+        <ToastContainer />
         <Footer />
       </div>
     </>
