@@ -110,13 +110,14 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: aliceblue;
+  background-color: transparent;
 }
 .header h1 {
   font-weight: bold;
   color: purple;
-  background-color: aliceblue;
+  background-color: transparent;
   padding: 0 10px;
+  font-size: 28px;
 }
 .main {
   margin-top: 70px;
@@ -128,25 +129,24 @@ label {
 }
 .left-side {
   color: purple;
-  background-color: white;
-  width: 15%;
+  background-color: #f4c9e2;
+  width: 14%;
   height: 600px;
+  margin: 0 10px;
   border-radius: 10px;
 }
-.right-side {
-  color: purple;
-  background-color: aliceblue;
-}
-button ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center items horizontally */
-  justify-content: center; /* Center items vertically */
-  height: 100%; /* Ensure the ul takes the full height of its parent */
-  padding: 0; /* Remove default padding */
-  margin: 0;
+.home-button {
   list-style: none;
+  color: purple;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
 }
+
 li {
   list-style: none;
 }
@@ -154,8 +154,12 @@ ul {
   display: block;
   align-items: center;
   justify-content: center;
+  padding-left: 12px;
 }
-ul li button {
+.unlist {
+  padding-left: 5px;
+}
+/* ul li button {
   list-style: none;
   color: purple;
   cursor: pointer;
@@ -164,12 +168,13 @@ ul li button {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 12px 0; /* Add margin to space out the list items vertically */
-}
+  margin: 12px 0; /* Add margin to space out the list items vertically 
+} */
 .right-side {
-  background-color: aliceblue;
+  background-color: #ebdbef;
   color: purple;
   width: 85%;
+  border-radius: 10px;
 }
 
 .heading-user {
@@ -182,4 +187,57 @@ ul li button {
   font-size: 25px;
   font-weight: bold;
   color: purple;
+}
+@media screen and (max-width: 1020px) {
+  .left-side {
+    color: purple;
+    background-color: #f4c9e2;
+    width: 16%;
+    height: 600px;
+    margin: 0 10px;
+    border-radius: 10px;
+  }
+  .home-button {
+    list-style: none;
+    color: purple;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+  }
+}
+@media screen and (max-width: 850px) {
+  .left-side {
+    width: 19%;
+  }
+  .home-button {
+    list-style: none;
+    color: purple;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+  }
+}
+@media screen and (max-width: 650px) {
+  .left-side {
+    width: 20%;
+  }
+  .home-button {
+    list-style: none;
+    color: purple;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+  }
 }

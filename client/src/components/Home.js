@@ -19,7 +19,6 @@ import { FcAcceptDatabase } from "react-icons/fc";
 import Approve from "./Approve";
 import Guest from "./Guest";
 
-
 export default function Home() {
   const [userName, setUserName] = useState("");
   const [role, setRole] = useState("user");
@@ -68,9 +67,10 @@ export default function Home() {
           </div>
           <div className="dashboard">
             <div className="left-side">
-              <ul>
+              <ul className="unlist">
                 <li>
                   <button
+                    className="home-button"
                     onClick={() => handleNavLinkClick(<AdminDashboard />)}
                   >
                     <MdSpaceDashboard />
@@ -79,6 +79,7 @@ export default function Home() {
                 </li>
                 <li>
                   <button
+                    className="home-button"
                     onClick={() =>
                       handleNavLinkClick(<BookManagementComponent />)
                     }
@@ -89,6 +90,7 @@ export default function Home() {
                 </li>
                 <li>
                   <button
+                    className="home-button"
                     onClick={() => handleNavLinkClick(<CustomizedTables />)}
                   >
                     <IoIosPeople />
@@ -96,19 +98,26 @@ export default function Home() {
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick(<Request />)}>
+                  <button
+                    className="home-button"
+                    onClick={() => handleNavLinkClick(<Request />)}
+                  >
                     <BiSolidNotification />
                     Requests
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick(<Approve />)}>
+                  <button
+                    className="home-button"
+                    onClick={() => handleNavLinkClick(<Approve />)}
+                  >
                     <FcApproval />
                     Approve
                   </button>
                 </li>
                 <li>
-                  <button onClick={() => handleNavLinkClick(<Accept />)}>
+                  <button className="home-button"
+                    onClick={() => handleNavLinkClick(<Accept />)}>
                     <FcAcceptDatabase />
                     Return
                   </button>

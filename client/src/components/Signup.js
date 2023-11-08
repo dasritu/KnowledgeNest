@@ -1,15 +1,10 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import sign from "../image/signup.png";
-import ReCAPTCHA from "react-google-recaptcha";
 import "../styles/Signup.css";
-export default function Signup() {
-  const [verified, setVerified] = useState(false);
 
-  function onChange(value) {
-    console.log("Captcha value:", value);
-    setVerified(true);
-  }
+export default function Signup() {
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const history = useNavigate();
   const [user, setUser] = useState({
@@ -22,17 +17,19 @@ export default function Signup() {
     cpassword: "",
   });
 
-  let name, value;
   const handleInputs = (e) => {
-    console.log(e);
-    name = e.target.name;
-    value = e.target.value;
-
+    const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+
   const PostData = async (e) => {
     e.preventDefault();
     const { name, email, stream, year, phone, password, cpassword } = user;
+
+    if (!termsAccepted) {
+      window.alert("Please accept the terms and conditions.");
+      return;
+    }
 
     const res = await fetch("/register", {
       method: "POST",
@@ -54,13 +51,14 @@ export default function Signup() {
     if (res.status === 422 || !data.message) {
       window.alert("Invalid Registration");
     } else {
-      window.alert("Registration Successfull");
+      window.alert("Registration Successful");
       history("/login");
     }
   };
+
   return (
     <div>
-      <form method="POST" class="signup-form">
+      <form method="POST" className="signup-form">
         <div className="form-signup">
           <figure>
             <img src={sign} alt="" />
@@ -71,13 +69,15 @@ export default function Signup() {
               <h2>Sign Up</h2>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Name: </label>
+              <label className="label-style" htmlFor="name">
+                Name:
+              </label>
               <div className="form-input">
                 <input
                   className="input-style"
                   type="text"
                   name="name"
-                  id=""
+                  id="name"
                   value={user.name}
                   onChange={handleInputs}
                   placeholder="Enter your name..."
@@ -85,14 +85,15 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Email: </label>
+              <label className="label-style" htmlFor="email">
+                Email:
+              </label>
               <div className="form-input">
-                {" "}
                 <input
                   className="input-style"
                   type="email"
                   name="email"
-                  id=""
+                  id="email"
                   value={user.email}
                   onChange={handleInputs}
                   placeholder="Enter your valid email id..."
@@ -100,15 +101,17 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Stream: </label>
+              <label className="label-style" htmlFor="stream">
+                Stream:
+              </label>
               <div className="form-input">
                 <select
                   name="stream"
                   id="stream"
                   value={user.stream}
                   onChange={handleInputs}
-                  className="form-input"
-                  style={{ width: "200px", backgroundColor:"transparent" }}
+                  className="input-style"
+                  
                 >
                   <option value="BCA">BCA</option>
                   <option value="BBA">BBA</option>
@@ -117,15 +120,17 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Year:</label>
-              <div className="form-input">
+              <label className="label-style" htmlFor="year">
+                Year:
+              </label>
+              <div className="form-style">
                 <select
                   name="year"
                   id="year"
                   value={user.year}
                   onChange={handleInputs}
-                  className="form-input"
-                  style={{ width: "200px", backgroundColor:"transparent" }}
+                  className="input-style"
+                  
                 >
                   <option value="First">First</option>
                   <option value="Second">Second</option>
@@ -134,14 +139,15 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Phone:</label>
+              <label className="label-style" htmlFor="phone">
+                Phone:
+              </label>
               <div className="form-input">
-                {" "}
                 <input
                   className="input-style"
                   type="number"
                   name="phone"
-                  id=""
+                  id="phone"
                   value={user.phone}
                   onChange={handleInputs}
                   placeholder="Enter your phone number..."
@@ -149,13 +155,15 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Password: </label>
+              <label className="label-style" htmlFor="password">
+                Password:
+              </label>
               <div className="form-input">
                 <input
                   className="input-style"
                   type="password"
                   name="password"
-                  id=""
+                  id="password"
                   value={user.password}
                   onChange={handleInputs}
                   placeholder="Enter new password..."
@@ -163,13 +171,15 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <label className="label-style" htmlFor="">Confirm Password:</label>
+              <label className="label-style" htmlFor="cpassword">
+                Confirm Password:
+              </label>
               <div className="form-input">
                 <input
                   className="input-style"
                   type="password"
                   name="cpassword"
-                  id=""
+                  id="cpassword"
                   value={user.cpassword}
                   onChange={handleInputs}
                   placeholder="Enter password to confirm..."
@@ -177,11 +187,18 @@ export default function Signup() {
               </div>
             </div>
             <div className="form-style">
-              <ReCAPTCHA
-                sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                onChange={onChange}
-                style={{ height:"40px"}}
-              />
+              <div className="form-style">
+                <div className="form-input">
+                  <input
+                    type="checkbox"
+                    name="termsAccepted"
+                    id="termsAccepted"
+                    checked={termsAccepted}
+                    onChange={() => setTermsAccepted(!termsAccepted)}
+                  />
+                  I accept the terms and conditions
+                </div>
+              </div>
             </div>
             <div className="bottom">
               <div className="submit">
@@ -190,7 +207,6 @@ export default function Signup() {
                   name="signup"
                   id="signup"
                   value="Register"
-                  disabled={!verified}
                   onClick={PostData}
                 />
               </div>

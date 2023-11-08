@@ -58,7 +58,7 @@ class AdminDashboard extends Component {
         ...entry,
         bookNameAuthor: `${entry.bookName}-${entry.bookAuthor}`,
       }));
-    
+
       this.setState({ lineChartData: updatedLineChartData });
       console.log("Updated lineChartData:", updatedLineChartData);
     } catch (error) {
@@ -95,7 +95,7 @@ class AdminDashboard extends Component {
 
   render() {
     const { lineChartData, streamData } = this.state;
-    
+
     const transformedData = streamData.map(({ quantity, stream }) => ({
       value: quantity,
       label: stream,
@@ -105,7 +105,7 @@ class AdminDashboard extends Component {
       <div className="container">
         <div className="first">{this.renderStreamCards()}</div>
         <div className="second">
-        <div className="linediagram" style={{width:"50%"}}>
+          <div className="linediagram" style={{ width: "50%" }}>
             <ResponsiveContainer width="100%" height={300} minWidth={116}>
               <BarChart data={lineChartData}>
                 <CartesianGrid strokeDasharray="5 5" />
@@ -120,7 +120,6 @@ class AdminDashboard extends Component {
           <div className="pie-container">
             <div className="pie-3d-effect"></div>
             <PieChart
-
               series={[
                 {
                   arcLabel: (item) => `${item.label} (${item.value})`,
@@ -134,7 +133,7 @@ class AdminDashboard extends Component {
                   fontWeight: "bold",
                 },
               }}
-              width={400}
+              width={300}
               height={200}
             />
           </div>
@@ -145,4 +144,3 @@ class AdminDashboard extends Component {
 }
 
 export default AdminDashboard;
-
