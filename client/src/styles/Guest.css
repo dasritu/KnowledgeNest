@@ -2,6 +2,8 @@ body {
   background: url("../image/AboutBackground.png") fixed; /* Set the background image for the body and make it fixed */
   background-size: cover;
   background-repeat: no-repeat;
+
+  
 }
 
 .guestbody {
@@ -129,7 +131,7 @@ body {
 }
 
 .contact-image img {
-  width: 100%;
+  width: 77%;
   max-width: 100%; /* Ensure the image doesn't exceed its container */
   height: auto;
   margin-top: 85px;
@@ -179,7 +181,13 @@ body {
   background-color: purple;
   border-radius: 10px;
 }
-
+.flipped {
+  transform: scaleX(-1);
+ 
+}
+.flipped img{
+  width:80%;
+}
 @media screen and (max-width: 1920px) {
   .guest-logo img {
     width: 100px;
