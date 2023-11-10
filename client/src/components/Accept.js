@@ -105,7 +105,32 @@ export default function Accept() {
 
     return fine > 0 ? fine : 0;
   };
-
+  const handleRenew = async (accessionNumber) => {
+    try {
+      // Make a POST request to the /renew-book route
+      const response = await fetch("/renew-book", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ accessionNumber }),
+      });
+  
+      // Assuming your server returns a JSON response, you can handle it here if needed
+      const result = await response.json();
+      console.log("Renew Book Response:", result);
+  
+      // Delete the record from the return table
+      setAllUsers((prevUsers) => prevUsers.filter((user) => user.accessionNumber !== accessionNumber));
+      setFilteredUsers((prevUsers) => prevUsers.filter((user) => user.accessionNumber !== accessionNumber));
+  
+      toast.success(`Book renewed successfully!`);
+    } catch (error) {
+      console.error("Error renewing book:", error);
+    }
+  };
+  
   const handleAccept = async (id, bookName, bookAuthor, accessionNumber) => {
     try {
       // Make a POST request to the /accept-book/:id route
@@ -183,7 +208,14 @@ export default function Accept() {
                 <StyledTableCell align="center">
                   <RejectButton>Fine & Accept</RejectButton>
                 </StyledTableCell>
+                <StyledTableCell align="center">
+  <Button onClick={() => handleRenew(user.accessionNumber)}>
+    Renew
+  </Button>
+</StyledTableCell>
+
               </StyledTableRow>
+              
             ))}
           </TableBody>
         </Table>

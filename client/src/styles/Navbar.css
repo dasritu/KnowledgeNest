@@ -100,7 +100,12 @@ a {
   align-items: center;
 }
 
-
+.custom-collapse{
+  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for darkness */
+  z-index: 1000; /* Ensure it's above other elements */
+  transition: background-color 0.3s ease-in-out;
+}
 @media screen and (max-width: 360px) {
   .nav-title {
     font-size: 19px;
