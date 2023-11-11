@@ -12,6 +12,7 @@ export default function UserDashboard() {
   const [filteredBooks, setFilteredBooks] = useState([]);
   const [approvedBooks, setApprovedBooks] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const[returnDate,setreturnDate]=useState();
   const [name, setName] = useState();
   const fetchRequestedBooks = async () => {
     try {
@@ -57,7 +58,8 @@ export default function UserDashboard() {
       const approvedBooksResponse = await axios.get("/approve-find", {
         params: { cardNo: cardNumber },
       });
-
+      const date_new=new Date(approvedBooksResponse.returnDate).toDateString()
+      setreturnDate(date_new)
       setApprovedBooks(
         Array.isArray(approvedBooksResponse.data)
           ? approvedBooksResponse.data
@@ -390,6 +392,7 @@ export default function UserDashboard() {
                   <th className="table-heading">Accession Number</th>
                   <th className="table-heading">Book Name</th>
                   <th className="table-heading">Book Author</th>
+                  <th className="table-heading">Return Date</th>
 
                   <th className="table-heading">Action</th>
                 </tr>
@@ -402,6 +405,8 @@ export default function UserDashboard() {
                     </td>
                     <td className="table-data">{approvedBook.bookName}</td>
                     <td className="table-data">{approvedBook.bookAuthor}</td>
+                    <td className="table-data">{new Date(approvedBook.returnDate).toLocaleDateString()}</td>
+
 
                     <td
                       style={{

@@ -798,14 +798,47 @@ router.delete("/deletestudent/:id", async (req, res) => {
   }
 });
 
-router.post('/save-message',async(req,res)=>{
-  try{
-    const {name,email,message}=req.body;
-    const data=new Message({name,email,message})
+router.post('/save-message', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+    console.log("Received message:", { name, email, message });
+
+    const data = new Message({ name, email, message });
     await data.save();
+
+    console.log("Message saved successfully");
+    res.status(200).json({ message: "Message saved successfully" });
+  } catch (error) {
+    console.error("Error saving message:", error);
+    res.status(500).json({ error: "Error saving message" });
   }
-  catch(error){
-    console.error("Error deleting student:", error);
-    res.status(500).json({ error: "Error deleting student" });
+});
+
+
+router.post("/renew-book", async (req, res) => {
+  const { accessionNumber } = req.body;
+  const returnDate = calculateReturnDate();
+  try {
+    // Delete the record from the return table
+    const returnBook=await Return.findOne({accessionNumber})
+    const card=returnBook.cardNumber;
+    await Return.deleteOne({ accessionNumber });
+
+    // Update the return date in the approve table
+    const renewedBook = await ApproveBook.findOneAndUpdate(
+      { accessionNumber },
+      { $set: { returnDate } },
+      { new: true }
+    );
+
+    res.json(renewedBook);
+    const user_data = await User.findOne({ cardNo: card });
+    const email = user_data.email;
+    const emailText = `${returnBook.studentName} Your returned book ${returnBook.bookName}, Author: ${returnBook.bookAuthor} is Renewed and Updated Return Date Will be shown Into your Profile ,Please check .  card no: ${returnBook.cardNumber}`;
+    sendEmail(email, 'Book Renewed', emailText);
+  } catch (error) {
+    console.error("Error renewing book:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
-})
+});
+
