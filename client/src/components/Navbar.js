@@ -9,6 +9,7 @@ export default function Navbar({ scrollToSection }) {
   const [role, setRole] = useState("user");
   const [scrolling, setScrolling] = useState(false);
   const { state, dispatch } = useContext(UserContext);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -61,7 +62,13 @@ export default function Navbar({ scrollToSection }) {
       dispatch({ type: "USER", payload: false });
     }
   }, []);
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   const navbarClass = scrolling ? "navbar scrolled" : "navbar";
+  const mobileMenuBackground = mobileMenuOpen ? "#eed6ec" : "transparent";
+
   const RenderMenu = () => {
     if (state) {
       if (role === "user") {
@@ -180,13 +187,20 @@ export default function Navbar({ scrollToSection }) {
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={() => {
+              handleMobileMenuToggle();
+              document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
+            }}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            className="collapse navbar-collapse custom-collapse"
-            id="navbarSupportedContent"
-          >
+          className={`collapse navbar-collapse custom-collapse ${
+            mobileMenuOpen ? "mobile-menu-open" : ""
+          }`}
+          id="navbarSupportedContent"
+          style={{ backgroundColor: mobileMenuBackground }}
+        >
             <ul className="navbar-nav ms-auto">
               <RenderMenu />
             </ul>
