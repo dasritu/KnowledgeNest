@@ -60,13 +60,8 @@ export default function Guest() {
           message,
         }),
       });
-<<<<<<< HEAD
-
-      if (response.ok) {
-=======
   
       if (response.status===200) {
->>>>>>> 66472c83d9f2b3b0ebb0d9e8cf468b12816bebb8
         toast.success("Message submitted successfully!");
         window.alert("Message Sent Successfully");
         console.log("Message Sent");
