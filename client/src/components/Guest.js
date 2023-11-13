@@ -13,9 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import Footer from "./Footer";
 
-
-
-
 const floatAnimation = keyframes`
   0%, 100% {
     transform: translateY(5px);
@@ -28,7 +25,9 @@ const floatAnimation = keyframes`
 const FloatingImage = styled.img`
   animation: ${floatAnimation} 2s infinite;
 `;
-
+const FloatText = styled.div`
+  animation: ${floatAnimation} 2s infinite;
+`;
 
 export default function Guest() {
   const [text, setMessage] = useState({
@@ -36,7 +35,7 @@ export default function Guest() {
     email: "",
     message: "",
   });
- let name, value;
+  let name, value;
   const handleInputs = (e) => {
     console.log(e);
     name = e.target.name;
@@ -48,7 +47,7 @@ export default function Guest() {
     console.log("Message")
     e.preventDefault();
     const { name, email, message } = text;
-  
+
     try {
       const response = await fetch("/save-message", {
         method: "POST",
@@ -66,7 +65,7 @@ export default function Guest() {
         toast.success("Message submitted successfully!");
         window.alert("Message Sent Successfully");
         console.log("Message Sent");
-  
+
         // Clear the form fields
         setMessage({
           name: "",
@@ -81,21 +80,21 @@ export default function Guest() {
       toast.error("Error submitting message");
     }
   };
-  
+
   return (
     <>
-    
       <div className="guestbody" id="home">
         <div className="hero-guest1">
-        <FloatingImage src={img} alt="Floating Image" />
-
+          <FloatingImage src={img} alt="Floating Image" />
         </div>
         <div className="hero-guest2">
           <div className="text-guest">
             <div className="guest-logo">
               <img src={logo} style={{ color: "Purple" }} />
             </div>
-            <h3>KnowledgeNest</h3>
+            <FloatText>
+              <h3>KnowledgeNest</h3>
+            </FloatText>
             <p>
               Empowering Education at KnowledgeNest Unleashing the Power of
               Knowledge through Seamless Book management.
@@ -110,12 +109,12 @@ export default function Guest() {
           </div>
         </div>
       </div>
-      <div className="guest_about" >
+      <div className="guest_about">
         <h1 className="guest-heading" id="about">
-          <GrContactInfo style={{margin: "10px"}} />
+          <GrContactInfo style={{ margin: "10px" }} />
           About US
         </h1>
-        <div className="guest-about" >
+        <div className="guest-about">
           <div className="firstdiv">
             <div className="icon-g">
               <img src={img1} style={{ height: "75px", width: "75px" }} />
@@ -164,31 +163,48 @@ export default function Guest() {
           <div class="contact-image" id="contact">
             <img className="flipped" src={contact} alt="Contact Image" />
           </div>
-          <div class="guest-contact" >
+          <div class="guest-contact">
             <h1 class="guest-heading-contact">
               {/* <GrContactInfo /> */}
               <strong>Contact US</strong>
             </h1>
 
-         
-      <form
-       
-        method="POST"
-        className="guest-form"
-       onSubmit={handleSubmit}
-      >
-        <label htmlFor="name">Name: </label>
-        <input type="text" id="name" name="name" onChange={handleInputs} value={text.name}   className="guest-input" />
+            <form method="POST" className="guest-form" onSubmit={handleSubmit}>
+              <label htmlFor="name">Name: </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                onChange={handleInputs}
+                value={text.name}
+                className="guest-input"
+                placeholder="Enter your full name..."
+              />
 
-        <label htmlFor="email">Email: </label>
-        <input type="email" id="email" name="email"  onChange={handleInputs}  value={text.email}className="guest-input" />
+              <label htmlFor="email">Email: </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={handleInputs}
+                value={text.email}
+                className="guest-input"
+                placeholder="Enter your email id ...."
+              />
 
-        <label htmlFor="message">Message:</label>
-        <input type="text" id="message" name="message"  onChange={handleInputs} value={text.message}className="guest-input-msg" />
+              <label htmlFor="message">Message:</label>
+              <input
+                type="text"
+                id="message"
+                name="message"
+                onChange={handleInputs}
+                value={text.message}
+                className="guest-input-msg"
+                placeholder="Write your Query...."
+              />
 
-        <input type="submit" className="submit-guest" value="Submit"  />
-      </form>
-    
+              <input type="submit" className="submit-guest" value="Submit" />
+            </form>
           </div>
         </div>
         <ToastContainer />

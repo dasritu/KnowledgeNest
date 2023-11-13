@@ -188,6 +188,23 @@ body {
 .flipped img{
   width:80%;
 }
+.firstdiv,
+  .seconddiv,
+  .thirddiv {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .firstdiv:hover,
+  .seconddiv:hover,
+  .thirddiv:hover {
+    background-color: purple;
+    transition: background-color 0.3s ease;
+    color: white;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  
 @media screen and (max-width: 1920px) {
   .guest-logo img {
     width: 100px;

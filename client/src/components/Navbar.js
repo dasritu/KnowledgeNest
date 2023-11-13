@@ -80,11 +80,6 @@ export default function Navbar({ scrollToSection }) {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/contact">
-                Contact
-              </NavLink>
-            </li>
-            <li className="nav-item">
               <NavLink className="nav-link" to="/about">
                 Student Profile
               </NavLink>
