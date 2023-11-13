@@ -136,11 +136,11 @@ export default function UserDashboard() {
         );
         return;
       }
-      // console.warn("data,",userRequestedBooksResponse);
+     
       const userRequestedBooksCount = userRequestedBooksResponse.data.length;
 
       console.log(userRequestedBooksCount);
-      // Check if the user has already requested or been approved for this book
+      
       if (userRequestedBooksCount >= 5) {
         alert("You cannot request more than 5 books.");
         return;
@@ -184,7 +184,7 @@ export default function UserDashboard() {
       setRequestedBooks((prevRequestedBooks) => [
         ...prevRequestedBooks,
         {
-          _id: bookId, // Adjust the ID based on your API response
+          _id: bookId, 
           bookName,
           bookAuthor,
           studentName,
@@ -241,12 +241,7 @@ export default function UserDashboard() {
         returnDate: currentDate,
       });
 
-      // Update the state to remove the returned book
-      // setApprovedBooks((prevApprovedBooks) =>
-      //   prevApprovedBooks.filter((book) => book._id !== id)
-      // );
-
-      // Optionally, you can update the requestedBooks state as well if needed
+      
 
       toast.success(`Returned book `);
     } catch (error) {
@@ -316,12 +311,12 @@ export default function UserDashboard() {
                           )
                         }
                         style={{
-                          height: "25px", // Set the button's height to 25px
+                          height: "25px", 
                           color: "white",
                           backgroundColor: "#149d14",
                           borderRadius: "5px",
                           display: "flex",
-                          justifyContent: "center", // Center the text horizontally
+                          justifyContent: "center", 
                           alignItems: "center",
                         }}
                         className="table-data"
@@ -425,12 +420,12 @@ export default function UserDashboard() {
                           )
                         }
                         style={{
-                          height: "25px", // Set the button's height to 25px
+                          height: "25px", 
                           color: "white",
                           backgroundColor: "#149d14",
                           borderRadius: "5px",
                           display: "flex",
-                          justifyContent: "center", // Center the text horizontally
+                          justifyContent: "center", 
                           alignItems: "center",
                         }}
                         className="table-data"

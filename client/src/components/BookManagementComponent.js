@@ -36,7 +36,7 @@ const BookManagementComponent = () => {
     fetchBooks();
     const timeoutId = setTimeout(fetchBooks, 300);
 
-    // Clear the timeout on component unmount or when searchQuery changes
+    
     return () => clearTimeout(timeoutId);
   }, []);
 

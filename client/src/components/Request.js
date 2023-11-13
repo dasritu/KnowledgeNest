@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "purple", // Change to your desired background color
+    backgroundColor: "purple", 
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -28,7 +28,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+ 
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -46,9 +46,9 @@ const RejectButton = styled(Button)(({ theme }) => ({
   backgroundColor: "red",
   color: theme.palette.common.white,
   "&:hover": {
-    backgroundColor: "red", // Keep it red on hover
-    opacity: 0.8, // You can adjust the opacity
-    // Show the disabled cursor on hover
+    backgroundColor: "red",
+    opacity: 0.8,
+   
   },
 }));
 
@@ -69,7 +69,7 @@ export default function Request() {
         const data = await response.json();
         console.log(data);
 
-        // Set the data directly to the state
+      
         setUsers(data);
         console.log(users);
       } catch (e) {
@@ -100,12 +100,12 @@ export default function Request() {
             const approveData = await approveResponse.json();
             console.log(approveData);
 
-            // Show an alert after successful approval
+           
             toast.success(`Book  Approved successfully!`);
             setUsers((prevUsers) =>
               prevUsers.filter((prevUser) => prevUser._id !== user._id)
             );
-            // Update the state or perform any other actions as needed
+            
           } else {
             console.error(`Error approving book`);
           }
@@ -130,7 +130,7 @@ export default function Request() {
             <StyledTableCell align="center">Accsession Number</StyledTableCell>
             <StyledTableCell align="center">Requested Time</StyledTableCell>
             <StyledTableCell align="center">Approve</StyledTableCell>
-            {/* <StyledTableCell align="center">Reject</StyledTableCell> */}
+            
           </TableRow>
         </TableHead>
         <TableBody>
@@ -158,12 +158,7 @@ export default function Request() {
                   <SendIcon />
                 </ApproveButton>
               </StyledTableCell>
-              {/* <StyledTableCell align="center">
-                <RejectButton>
-                  Reject
-                  <DeleteIcon />
-                </RejectButton>
-              </StyledTableCell> */}
+              
             </StyledTableRow>
           ))}
         </TableBody>
