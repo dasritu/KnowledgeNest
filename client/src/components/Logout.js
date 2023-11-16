@@ -24,7 +24,7 @@ const {state,dispatch}=useContext(UserContext);
          
         } else {
           console.error('Error:', response.status);
-          // You can log more details about the error here if available.
+        
           throw new Error('Error fetching data');
         }
       } catch (e) {

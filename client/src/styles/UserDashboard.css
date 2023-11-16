@@ -1,3 +1,7 @@
+*{
+  font-weight: lighter;
+  font-family: cursive;
+}
 .sec1 {
   display: flex;
   /* height: 300px; */

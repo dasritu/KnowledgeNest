@@ -1,9 +1,16 @@
+*{
+  font-weight: lighter;
+  font-family: cursive;
+}
 body {
   background: url("../image/AboutBackground.png") fixed; /* Set the background image for the body and make it fixed */
   background-size: cover;
   background-repeat: no-repeat;
 
   
+}
+.floating-image-active {
+  transform: translateY(-10px) rotateX(45deg);
 }
 
 .guestbody {

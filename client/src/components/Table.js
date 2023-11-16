@@ -315,7 +315,7 @@ export default function CustomizedTables() {
       }
     />
   </label>
-  {/* Add similar labels and input fields for other student details */}
+ 
   <button type="submit">Save Changes</button>
 </form>
 
