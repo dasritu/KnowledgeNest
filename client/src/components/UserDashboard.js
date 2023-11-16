@@ -198,7 +198,7 @@ export default function UserDashboard() {
     }
   };
 
-  const handleReturn = async (id, bookName, bookAuthor, accessionNumber) => {
+  const handleReturn = async (id, bookName, bookAuthor, accessionNumber,returnDate) => {
     try {
       const responsereturn = await fetch("/showreturn", {
         method: "GET",
@@ -228,7 +228,7 @@ export default function UserDashboard() {
 
       const data = await response.json();
       const { name: studentName, cardNo: cardNumber } = data;
-      const currentDate = new Date().toLocaleDateString();
+      //const currentDate = new Date().toLocaleDateString();
 
       // Make the API call to return the book
       await axios.post("/return-book", {
@@ -238,7 +238,7 @@ export default function UserDashboard() {
         bookName,
         bookAuthor,
         accessionNumber,
-        returnDate: currentDate,
+        returnDate,
       });
 
       
@@ -416,7 +416,8 @@ export default function UserDashboard() {
                             approvedBook._id,
                             approvedBook.bookName,
                             approvedBook.bookAuthor,
-                            approvedBook.accessionNumber
+                            approvedBook.accessionNumber,
+                            approvedBook.returnDate
                           )
                         }
                         style={{
