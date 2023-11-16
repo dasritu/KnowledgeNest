@@ -21,12 +21,41 @@ const floatAnimation = keyframes`
     transform: translateY(-10px);
   }
 `;
+const floattextanimation = keyframes`
+  0%{
 
+    color:purple;
+  }
+  
+  50% {
+    
+    color:black;
+    
+  }
+  65%{
+    color:purple;
+  }
+  75%{
+    color:black;
+  }
+  85%{
+    color:purple;
+  }
+
+`;
+const fadeInAnimation = keyframes`
+0%    { opacity: 0; }
+100%  { opacity: 1; }
+`;
+
+const CardContainer = styled.div`
+  animation: ${fadeInAnimation} 5s infinite;
+`;
 const FloatingImage = styled.img`
   animation: ${floatAnimation} 2s infinite;
 `;
 const FloatText = styled.div`
-  animation: ${floatAnimation} 2s infinite;
+  animation: ${floattextanimation} 3s infinite;
 `;
 
 export default function Guest() {
@@ -115,7 +144,7 @@ export default function Guest() {
           About US
         </h1>
         <div className="guest-about">
-          <div className="firstdiv">
+          <CardContainer className="firstdiv">
             <div className="icon-g">
               <img src={img1} style={{ height: "75px", width: "75px" }} />
             </div>
@@ -128,8 +157,8 @@ export default function Guest() {
               quality learning resources. KnowledgeNest is the realization of
               this vision, a haven for academic growth and exploration.{" "}
             </p>
-          </div>
-          <div className="seconddiv">
+          </CardContainer>
+          <CardContainer className="seconddiv">
             <div className="icon-g">
               <img src={img2} style={{ height: "75px", width: "75px" }} />
             </div>
@@ -143,8 +172,8 @@ export default function Guest() {
               engage with a diverse array of educational materials tailored to
               their needs.{" "}
             </p>
-          </div>
-          <div className="thirddiv">
+          </CardContainer>
+          <CardContainer className="thirddiv">
             <div className="icon-g">
               <img src={img3} style={{ height: "75px", width: "75px" }} />
             </div>
@@ -157,7 +186,7 @@ export default function Guest() {
               users to request books relevant to their semester, ensuring that
               the learning journey is personalized and meaningful.{" "}
             </p>
-          </div>
+          </CardContainer>
         </div>
         <div class="contact-container">
           <div class="contact-image" id="contact">
