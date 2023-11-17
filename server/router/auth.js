@@ -546,7 +546,7 @@ router.post("/approve-book/:id", async (req, res) => {
       returnDate: returnDate,
     });
     const allBook = await AllBook.findOneAndUpdate(
-      { accessionnumber: accession },
+      { accessionnumber:requestedBook.accessionnumber },
       {
         $push: {
           approvals: {

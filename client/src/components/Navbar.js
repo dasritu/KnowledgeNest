@@ -67,7 +67,7 @@ export default function Navbar({ scrollToSection }) {
   };
 
   const navbarClass = scrolling ? "navbar scrolled" : "navbar";
-  const mobileMenuBackground = mobileMenuOpen ? "#eed6ec" : "transparent";
+  // const mobileMenuBackground = mobileMenuOpen ? "#eed6ec" : "transparent";
 
   const RenderMenu = () => {
     if (state) {
@@ -187,10 +187,10 @@ export default function Navbar({ scrollToSection }) {
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
             aria-label="Toggle navigation"
-            onClick={() => {
-              handleMobileMenuToggle();
-              document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
-            }}
+            // onClick={() => {
+            //   handleMobileMenuToggle();
+            //   document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
+            // }}
           >
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -199,7 +199,7 @@ export default function Navbar({ scrollToSection }) {
             mobileMenuOpen ? "mobile-menu-open" : ""
           }`}
           id="navbarSupportedContent"
-          style={{ backgroundColor: mobileMenuBackground }}
+          // style={{ backgroundColor: mobileMenuBackground }}
         >
             <ul className="navbar-nav ms-auto">
               <RenderMenu />

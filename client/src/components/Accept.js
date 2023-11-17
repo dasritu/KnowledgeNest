@@ -98,13 +98,14 @@ export default function Accept() {
   const calculateFine = (returnDate) => {
     const finePerDay = 1; // 1 rupee per day
     const currentDate = new Date();
-    const returnedDate = returnDate
-    const timeDifference = currentDate - returnedDate;
+    const returnedDate = new Date(returnDate); // Convert returnDate to a Date object
+    const timeDifference = currentDate.getTime() - returnedDate.getTime(); // Get time difference in milliseconds
     const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
     const fine = daysDifference * finePerDay;
-
+  
     return fine > 0 ? fine : 0;
   };
+  
   const handleRenew = async (accessionNumber) => {
     try {
       // Make a POST request to the /renew-book route
@@ -178,6 +179,7 @@ export default function Accept() {
               <StyledTableCell align="center">Fine </StyledTableCell>
               <StyledTableCell align="center">Accept</StyledTableCell>
               <StyledTableCell align="center">Fine & Accept</StyledTableCell>
+              <StyledTableCell align="center">Renew</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -188,7 +190,7 @@ export default function Accept() {
                 <StyledTableCell align="center">{user.accessionNumber}</StyledTableCell>
                 <StyledTableCell align="center">{user.bookName}</StyledTableCell>
                 <StyledTableCell align="center">{user.bookAuthor}</StyledTableCell>
-                <StyledTableCell align="center">{user.returnDate}</StyledTableCell>
+                <StyledTableCell align="center">{new Date(user.returnDate).toLocaleDateString()}</StyledTableCell>
                 <StyledTableCell align="center">{calculateFine(user.returnDate)}</StyledTableCell>
                 <StyledTableCell align="center">
                   <ApproveButton

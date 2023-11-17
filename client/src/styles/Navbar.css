@@ -101,9 +101,10 @@ a {
 }
 
 .custom-collapse{
-  backdrop-filter: blur(10px); /* Adjust the blur value as needed */
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the alpha value for darkness */
-  z-index: 1000; /* Ensure it's above other elements */
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(9px);
+  background-color: rgb(136 46 206 / 2%);
+  z-index: 1000;
   transition: background-color 0.3s ease-in-out;
 }
 @media screen and (max-width: 360px) {
